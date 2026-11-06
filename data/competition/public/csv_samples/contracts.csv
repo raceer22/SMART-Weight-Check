@@ -1,0 +1,26 @@
+contract_id,customer_id,site_id,device_id,material_stream,operator_id,pricing_model_initial,contract_start,notice_period_days,price_index_id,synthetic,note
+CTR-00001,ORG-0001,SITE-00001,CMP-00001,mixed_waste,OP-E,FIXED_PER_LIFT,2023-05-15,90,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00002,ORG-0001,SITE-00001,CMP-00002,cardboard,OP-E,HYBRID,2020-08-16,60,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00003,ORG-0001,SITE-00002,CMP-00003,mixed_waste,OP-B,PER_TONNE,2023-06-21,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00004,ORG-0001,SITE-00002,CMP-00004,cardboard,OP-B,FIXED_PER_LIFT,2025-01-08,90,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00005,ORG-0001,SITE-00002,CMP-00005,plastic_film,OP-B,HYBRID,2021-07-23,30,IDX-FILM,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00006,ORG-0001,SITE-00003,CMP-00006,mixed_waste,OP-E,HYBRID,2020-10-14,90,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00007,ORG-0001,SITE-00003,CMP-00007,cardboard,OP-E,HYBRID_MIN,2021-07-31,30,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00008,ORG-0001,SITE-00003,CMP-00008,mixed_plastic,OP-E,FIXED_PER_LIFT,2022-01-24,90,IDX-MIXPL,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00009,ORG-0001,SITE-00003,CMP-00009,plastic_film,OP-E,HYBRID,2020-11-24,90,IDX-FILM,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00010,ORG-0001,SITE-00004,CMP-00010,mixed_waste,OP-B,HYBRID_MIN,2022-01-23,60,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00011,ORG-0001,SITE-00004,CMP-00011,cardboard,OP-B,FIXED_PER_LIFT,2022-08-10,90,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00012,ORG-0001,SITE-00004,CMP-00012,plastic_film,OP-B,HYBRID_MIN,2023-11-28,60,IDX-FILM,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00013,ORG-0001,SITE-00005,CMP-00013,mixed_waste,OP-E,HYBRID,2024-02-06,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00014,ORG-0001,SITE-00005,CMP-00014,cardboard,OP-E,PER_TONNE,2023-11-29,60,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00015,ORG-0001,SITE-00005,CMP-00015,mixed_plastic,OP-E,PER_TONNE,2021-09-10,90,IDX-MIXPL,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00022,ORG-0003,SITE-00008,CMP-00022,paper,OP-A,HYBRID,2021-04-24,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00023,ORG-0003,SITE-00008,CMP-00023,cardboard,OP-A,HYBRID,2023-10-24,60,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00024,ORG-0003,SITE-00008,CMP-00024,mixed_waste,OP-A,HYBRID,2024-08-09,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00025,ORG-0003,SITE-00009,CMP-00025,paper,OP-D,FIXED_PER_LIFT,2020-11-21,60,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00026,ORG-0003,SITE-00009,CMP-00026,mixed_waste,OP-A,FIXED_PER_LIFT,2022-03-23,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00027,ORG-0003,SITE-00010,CMP-00027,mixed_waste,OP-A,HYBRID,2023-01-06,60,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00028,ORG-0003,SITE-00010,CMP-00028,cardboard,OP-A,HYBRID_MIN,2021-04-26,30,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00029,ORG-0004,SITE-00011,CMP-00029,cardboard,OP-C,HYBRID,2024-02-24,60,IDX-OCC,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00030,ORG-0004,SITE-00011,CMP-00030,plastic_film,OP-C,HYBRID,2022-09-24,90,IDX-FILM,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.
+CTR-00031,ORG-0004,SITE-00011,CMP-00031,mixed_waste,OP-C,HYBRID_MIN,2023-07-16,30,,true,HYPOTHETICAL illustrative customer–operator tariff. Europress is not a party. Not an actual operator contract.

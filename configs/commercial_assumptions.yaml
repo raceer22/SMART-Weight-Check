@@ -1,0 +1,50 @@
+# ---------------------------------------------------------------------------
+# Business-case PARAMETER TEMPLATE for a new service or business model built on device data
+# (Europress review 30.10.2026).
+#
+# This file deliberately contains NO prices, NO cost structure, NO adoption rates and NO purchase
+# condition. Every commercial value is a PARAMETER that your team chooses and justifies with value
+# evidence from the data and a sensitivity analysis (Task D). Nothing here may be read as a Europress
+# price, a Europress cost structure or validated willingness to pay.
+#
+# Europress is currently not a party to waste transport or treatment. Tariffs, processing fees and
+# material credits are agreed between the customer and the waste operator. All prices in this dataset
+# are hypothetical.
+#
+# Usage: copy this file, fill in your values, run
+#   python baselines/business_case.py competition --params my_params.yaml --out my_business_case
+# configs/business_case_example_params.yaml shows a filled-in CALCULATION EXAMPLE (not a price estimate).
+# ---------------------------------------------------------------------------
+status: "PARAMETER TEMPLATE - values are chosen and justified by each team"
+
+pricing:                                   # how the new service is charged; null = not used
+  price_per_device_month_eur: []           # list -> one scenario per value
+  price_per_site_month_eur: null
+  share_of_verified_savings_pct: null      # outcome-based alternative
+costs:                                     # cost to serve the new service (the team's own assumption)
+  onboarding_per_customer_eur: null
+  onboarding_per_device_eur: null
+  operating_cost_per_device_month_eur: null
+  customer_support_per_customer_month_eur: null
+adoption:
+  adoption_share_of_eligible_pct: []       # list -> sensitivity
+  purchase_condition_value_multiple: null  # a customer is "eligible" if realisable value >= this x annual fee
+value_realisation:                         # share (0..1) of the identified value that you assume is realisable
+  billing_review: null                     # document-backed: contract vs invoice
+  over_servicing: null                     # unnecessary lifts (hygiene, access and peaks limit this)
+  contamination: null                      # needs behaviour change at the site
+  contract_review: null                    # credit share / terms; needs negotiation with the operator
+  operator_performance: null               # service-level costs (emergency, side waste, wasted trips) a scorecard can contest
+  operator_tendering: null                 # cheaper terms through renegotiation or tendering (Task C2)
+future_models:                             # FUTURE HYPOTHESES - they differ from today's situation
+  transport_procurement:                   # Europress procures transport on the customer's behalf (pooled volume)
+    enabled: false
+    discount_on_logistics_pct: null
+    realisation: null
+  tonne_based_full_service:                # one per-tonne price for the whole service, Europress in the middle
+    enabled: false
+    margin_on_customer_spend_pct: null
+  materials_marketplace:                   # better material value for credit-eligible streams (cardboard, plastics)
+    enabled: false
+    credit_uplift_eur_per_t: null
+    realisation: null

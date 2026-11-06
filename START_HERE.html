@@ -1,0 +1,282 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMART Material Value Engine: start here</title>
+<meta name="description" content="Plain-language overview of the Europress x Since AI Hackathon 2026 synthetic dataset">
+<style>
+:root{--bg:#fbfbfa;--panel:#ffffff;--ink:#101418;--ink2:#4a5058;--muted:#767b82;--line:#e3e4e6;--accent:#0f5fa8;--accent-soft:#e9f1fa;
+--warn:#7a4d00;--warn-soft:#fbf0d9;--code:#f1f2f3}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181b;--panel:#1d2125;--ink:#eceef0;--ink2:#c0c5ca;--muted:#959ba1;
+--line:#33383d;--accent:#5aa2e6;--accent-soft:#1c2c3d;--warn:#f0c46b;--warn-soft:#3a3020;--code:#262b30}}
+:root[data-theme="dark"]{--bg:#15181b;--panel:#1d2125;--ink:#eceef0;--ink2:#c0c5ca;--muted:#959ba1;--line:#33383d;--accent:#5aa2e6;
+--accent-soft:#1c2c3d;--warn:#f0c46b;--warn-soft:#3a3020;--code:#262b30}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px}
+header{border-bottom:1px solid var(--line);background:var(--panel)}
+header .wrap{padding-top:40px;padding-bottom:28px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.15;margin:0 0 10px;letter-spacing:-.01em}
+.sub{color:var(--ink2);margin:0 0 16px}
+.badge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:999px;
+background:var(--warn-soft);color:var(--warn);margin:0 8px 6px 0}
+nav.toc{margin:28px 0 8px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+nav.toc ol{margin:0;padding-left:22px;columns:2;column-gap:28px}nav.toc li{margin:0 0 4px;break-inside:avoid}
+nav.toc a{color:var(--ink);text-decoration:none}nav.toc a:hover{color:var(--accent)}
+main h2{font-size:22px;margin:44px 0 12px;padding-top:8px;letter-spacing:-.005em}
+p,li{color:var(--ink)}a{color:var(--accent)}
+blockquote{margin:16px 0;padding:10px 16px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 8px 8px 0}
+blockquote p{margin:4px 0}
+code{font:13.5px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;background:var(--code);padding:1px 5px;border-radius:4px}
+p code,li code,td code{overflow-wrap:anywhere}
+pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow-x:auto}pre code{padding:0;background:none}
+.tbl{overflow-x:auto;margin:14px 0}table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--ink2);border-bottom:2px solid var(--line)}
+.gsearch{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink);margin:6px 0 4px}
+footer{border-top:1px solid var(--line);margin-top:56px}footer .wrap{padding:20px 16px 40px;color:var(--muted);font-size:13.5px}
+@media (max-width:640px){nav.toc ol{columns:1}}
+</style></head><body>
+<header><div class="wrap"><p class="kicker">Turku · 6–8 November 2026 · challenge partner Europress Group Oy · synthetic data v1.0.1</p><h1>Europress × Since AI Hackathon 2026: SMART Material Value Engine</h1>
+<p class="sub">An overview for everyone: participants, mentors, jury and partners. Then open <code>docs/QUICKSTART_FOR_BUILDERS.md</code>.</p>
+<span class="badge">SYNTHETIC DATA</span><span class="badge">ALL PRICES HYPOTHETICAL</span><span class="badge">HUMAN APPROVAL REQUIRED</span></div></header>
+<div class="wrap"><nav class="toc" aria-label="Contents"><ol><li><a href="#the-challenge-in-one-minute">The challenge in one minute</a></li><li><a href="#who-is-who">Who is who</a></li><li><a href="#the-two-machine-types">The two machine types</a></li><li><a href="#what-can-go-wrong-and-is-in-the-data">What can go wrong (and is in the data)</a></li><li><a href="#what-you-can-build">What you can build</a></li><li><a href="#your-first-30-minutes">Your first 30 minutes</a></li><li><a href="#where-things-are">Where things are</a></li><li><a href="#ground-rules">Ground rules</a></li><li><a href="#glossary">Glossary</a></li></ol></nav><main><h2 id="the-challenge-in-one-minute">The challenge in one minute</h2>
+<p>Shops, warehouses, factories and hotels press their cardboard, plastic and waste into <strong>compactors</strong>. A truck
+from a <strong>waste operator</strong> empties them, weighs the load at the operator's facility and sends the customer an
+invoice. Today the operator holds the weight, judges the material quality and defines most of the service. The
+customer has little independent evidence of what actually happened.</p>
+<p>Europress makes the compactors. Its SMART service already knows each device's fill level and operating status,
+and in future the device could also know its <strong>weight</strong>. The question:</p>
+<blockquote>
+<p><strong>From smart device data to a stronger customer position in the waste value chain.</strong> How can trustworthy
+device data (precise operating status today, and weight in the future) give customers an independent,
+explainable view of the waste services they buy, support decisions that a human approves, and enable new
+Europress business models?</p>
+</blockquote>
+<p>The official brief has two parts: <strong>1. Get the weight</strong> (an affordable, accurate, retrofit-friendly weighing
+concept) and <strong>2. Create value from the weight</strong> (software, analytics and business models). This dataset is
+the evidence base for both.</p>
+<p>Everything here is <strong>synthetic</strong>: about 500 invented compactors over one year, invented customers, contracts
+and invoices. You can use it freely; nothing in it is real Europress, customer or operator data.</p><h2 id="who-is-who">Who is who</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Party</th>
+<th>Role in reality</th>
+<th>In the data</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer (fictional shops, factories, …)</td>
+<td>owns the waste, signs the contract with the operator, pays</td>
+<td><code>customers</code>, <code>sites</code>, <code>contracts</code>, <code>invoices</code> (the customer's own papers)</td>
+</tr>
+<tr>
+<td>Waste operator (fictional "Hauler Alpha–Epsilon")</td>
+<td>empties, transports, weighs, judges quality, invoices</td>
+<td><code>collection_events</code>, <code>weighbridge_tickets</code> and <code>quality_assessments</code> (only when the operator shares them)</td>
+</tr>
+<tr>
+<td>Europress</td>
+<td>makes the device; SMART monitors it</td>
+<td><code>devices</code>, <code>telemetry_hourly</code> (fill, mass, status)</td>
+</tr>
+</tbody>
+</table></div>
+<p>Europress is currently <strong>not a party</strong> to transport or treatment: prices are agreed between the customer and
+the operator, and every price in this dataset is hypothetical.</p><h2 id="the-two-machine-types">The two machine types</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Type</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>COMBI</strong></td>
+<td>compactor and container permanently joined; the whole unit is taken away and emptied (all biowaste units)</td>
+</tr>
+<tr>
+<td><strong>DUO</strong></td>
+<td>the compactor stays on site; only the detachable container is emptied (all mixed-plastic units)</td>
+</tr>
+</tbody>
+</table></div><h2 id="what-can-go-wrong-and-is-in-the-data">What can go wrong (and is in the data)</h2>
+<ul>
+<li><strong>Unnecessary lifts</strong>: a container emptied half-empty, because a schedule is too frequent, a customer orders
+  "to be safe" before the weekend, or a fill sensor reads "full" while the weight shows it is not.</li>
+<li><strong>Late lifts</strong>: the container overflows, side waste piles up, emergency fees follow.</li>
+<li><strong>Weight differences</strong>: the device weight and the operator's weighbridge disagree (sensor drift, an outdated
+  vehicle tare, two loads on one truck, side waste).</li>
+<li><strong>Billing discrepancies</strong>: a duplicated line, a wrong surcharge, an old tariff, a tonnage that differs from the weighbridge record, a lift
+  that was never invoiced. They are discrepancies, not accusations.</li>
+<li><strong>Value lost</strong>: cardboard spoiled by contamination, a contract that gives the customer no material credit.</li>
+</ul>
+<p>Only cardboard and plastics can earn a material credit; paper, mixed waste and biowaste cost money to treat.</p><h2 id="what-you-can-build">What you can build</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Task</th>
+<th>In plain words</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>Recompute what every lift should have cost under the contract, and the cost per tonne</td>
+</tr>
+<tr>
+<td>B</td>
+<td>Find the irregular lifts and invoice lines (and do not flag the ones that have a good reason)</td>
+</tr>
+<tr>
+<td>B2</td>
+<td>Build an <strong>operator scorecard</strong>: punctuality, missed visits, data sharing, billing accuracy, weight differences</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Operational decisions for a device (context: schedules and thresholds are SMART's existing domain)</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Recommend <strong>dispute an invoice / request weighbridge data / renegotiate / tender the operator</strong></td>
+</tr>
+<tr>
+<td>D</td>
+<td>A business case for a new Europress service: <strong>you choose and justify the price and adoption</strong></td>
+</tr>
+<tr>
+<td>E</td>
+<td>Explain everything so a human can check and approve it</td>
+</tr>
+</tbody>
+</table></div>
+<p>A strong solution combines device data with the customer's own papers, shows its evidence, states its
+uncertainty, stays neutral towards operators and never acts without human approval.</p><h2 id="your-first-30-minutes">Your first 30 minutes</h2>
+<pre><code class="language-bash">python -m venv .venv &amp;&amp; source .venv/bin/activate     # Windows: .venv\Scripts\activate
+pip install -e &quot;.[dev]&quot;
+python examples/first_analysis.py data/quickstart/public
+python baselines/run_all.py quickstart
+</code></pre>
+<p>Then read <code>docs/QUICKSTART_FOR_BUILDERS.md</code>. Spreadsheet users: the quickstart pack has every table as CSV in
+<code>data/quickstart/public/csv/</code>.</p><h2 id="where-things-are">Where things are</h2>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>You want to…</th>
+<th>Open</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>get going</td>
+<td><code>docs/QUICKSTART_FOR_BUILDERS.md</code>, <code>examples/</code></td>
+</tr>
+<tr>
+<td>know the tables and columns</td>
+<td><code>docs/SCHEMA.md</code>, <code>docs/DATA_DICTIONARY.md</code></td>
+</tr>
+<tr>
+<td>understand the money</td>
+<td><code>docs/ECONOMIC_MODEL.md</code></td>
+</tr>
+<tr>
+<td>know the tasks, metrics and baselines</td>
+<td><code>docs/BENCHMARK.md</code></td>
+</tr>
+<tr>
+<td>see what is assumed and what is not known</td>
+<td><code>docs/ASSUMPTIONS_AND_LIMITATIONS.md</code></td>
+</tr>
+<tr>
+<td>see how the data were made</td>
+<td><code>docs/DATA_GENERATION_METHODOLOGY.md</code>, <code>docs/SCENARIO_CATALOG.md</code></td>
+</tr>
+<tr>
+<td>see what Europress asked to change</td>
+<td><code>docs/EUROPRESS_REVIEW.md</code></td>
+</tr>
+</tbody>
+</table></div><h2 id="ground-rules">Ground rules</h2>
+<ul>
+<li><strong>Synthetic data only.</strong> Never present a number from it as a real saving or a real price.</li>
+<li><strong>Advice only.</strong> Your system proposes; a human approves.</li>
+<li><strong>Neutral towards operators.</strong> They are fictional; part of every difference is caused by sensors or data gaps.</li>
+<li><strong>Do not tune on the test period.</strong> Score yourself on the validation labels.</li>
+</ul><h2 id="glossary">Glossary</h2><input id="gq" class="gsearch" type="search" placeholder="Filter terms (e.g. tare, credit, on call)" aria-label="Filter glossary"><div id="glossary">
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compactor</td>
+<td>machine that presses waste into a container to fit more in</td>
+</tr>
+<tr>
+<td>Lift / collection</td>
+<td>the operator empties the container</td>
+</tr>
+<tr>
+<td>Fill level</td>
+<td>how full the container is (%), estimated by the device</td>
+</tr>
+<tr>
+<td>On call</td>
+<td>the device or customer orders a lift when the container is full enough (most devices)</td>
+</tr>
+<tr>
+<td>Fixed schedule</td>
+<td>lifts on booked weekdays, whether full or not</td>
+</tr>
+<tr>
+<td>Weighbridge</td>
+<td>the scale at the operator's facility that weighs the truck in and out</td>
+</tr>
+<tr>
+<td>Tare</td>
+<td>the weight of the empty truck; an outdated stored tare biases every net weight</td>
+</tr>
+<tr>
+<td>Net weight</td>
+<td>gross minus tare = the material's weight</td>
+</tr>
+<tr>
+<td>Material credit</td>
+<td>money the operator credits the customer for valuable material (cardboard, plastics)</td>
+</tr>
+<tr>
+<td>Processing fee</td>
+<td>money the customer pays for treating the material (per tonne)</td>
+</tr>
+<tr>
+<td>Contamination</td>
+<td>wrong material in a load (e.g. food in cardboard); lowers the quality grade A/B/C/R</td>
+</tr>
+<tr>
+<td>€/t</td>
+<td>euros per tonne, the key cost measure; needs a known mass</td>
+</tr>
+<tr>
+<td>Side waste</td>
+<td>material left next to a full container</td>
+</tr>
+<tr>
+<td>Peer median terms</td>
+<td>the typical tariff of similar contracts (same region, material, pricing model, size)</td>
+</tr>
+<tr>
+<td>Dev / test labels</td>
+<td>answers you may use (dev) and answers the organisers keep (test)</td>
+</tr>
+</tbody>
+</table></div></div></main></div>
+<footer><div class="wrap">Europress × Since AI Hackathon 2026 · SMART Material Value Engine synthetic data. All data in this package are synthetic and
+must not be presented as measurements, prices or savings of any real company, customer, operator or person.</div></footer>
+<script>
+const q=document.getElementById('gq');if(q){q.addEventListener('input',()=>{const v=q.value.toLowerCase();
+document.querySelectorAll('#glossary tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(v)?'':'none';});});}
+</script></body></html>

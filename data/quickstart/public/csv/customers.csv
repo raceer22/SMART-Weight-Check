@@ -1,0 +1,5 @@
+customer_id,customer_name,primary_sector,n_sites,synthetic
+ORG-0001,Fictional Manufacturing Customer 0001,manufacturing,3,True
+ORG-0002,Fictional Manufacturing Customer 0002,manufacturing,2,True
+ORG-0003,Fictional Logistics Customer 0003,logistics_warehouse,3,True
+ORG-0004,Fictional Manufacturing Customer 0004,manufacturing,8,True

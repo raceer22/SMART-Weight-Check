@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# CALCULATION EXAMPLE ONLY - NOT A PRICE ESTIMATE.
+# These round numbers exist only to show how baselines/business_case.py works. They are not market
+# research, not Europress prices, not a Europress cost structure and not a forecast of adoption.
+# Replace every value with your own, justified one. Europress is currently not a party to waste
+# transport or treatment; all prices in this dataset are hypothetical.
+# ---------------------------------------------------------------------------
+status: "CALCULATION EXAMPLE - not a price estimate"
+pricing:
+  price_per_device_month_eur: [10, 25, 50]
+  price_per_site_month_eur: null
+  share_of_verified_savings_pct: 25
+costs:
+  onboarding_per_customer_eur: 500
+  onboarding_per_device_eur: 50
+  operating_cost_per_device_month_eur: 5
+  customer_support_per_customer_month_eur: 30
+adoption:
+  adoption_share_of_eligible_pct: [10, 25, 50]
+  purchase_condition_value_multiple: 2
+value_realisation:
+  billing_review: 0.5
+  over_servicing: 0.5
+  contamination: 0.5
+  contract_review: 0.5
+  operator_performance: 0.5
+  operator_tendering: 0.5
+future_models:
+  transport_procurement:
+    enabled: true
+    discount_on_logistics_pct: 5
+    realisation: 0.5
+  tonne_based_full_service:
+    enabled: true
+    margin_on_customer_spend_pct: 3
+  materials_marketplace:
+    enabled: true
+    credit_uplift_eur_per_t: 5
+    realisation: 0.5

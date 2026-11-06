@@ -1,0 +1,20 @@
+profile: competition
+description: "Primary public dataset: ~500 fictional compactors, 365 days, hourly telemetry, partitioned Parquet."
+target_devices: 500
+start_date: "2025-10-01"
+n_days: 365
+hourly_telemetry: true
+write_csv: false
+write_parquet: true
+csv_sample_devices: 25
+holdout_org_fraction: 0.10
+label_periods:
+  train: ["2025-10-01", "2026-06-01"]
+  validation: ["2026-06-01", "2026-08-01"]
+  test: ["2026-08-01", "2026-10-01"]
+decision_case_every_days: 28
+decision_replications: 6
+decision_horizon_days: 56
+private_decision_cutoff: "2026-08-01"
+scenario_intensity: 1.0
+chunk_devices: 100

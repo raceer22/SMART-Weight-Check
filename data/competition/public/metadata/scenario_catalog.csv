@@ -1,0 +1,41 @@
+scenario_id,name,mechanism,tables_affected,label_entity,description
+S01,Premature collection,emergent,"collection_events, invoice_lines",collection,"Fixed schedules sized on a mis-estimate, closures not cancelled, extra lifts after ad-hoc pickups -> low true fill at pickup."
+S02,Excessively delayed collection,injected,"collection_events, telemetry",collection,Operator delay episodes (driver shortage) and multi-day delays; container reaches 100 % and side waste accumulates.
+S03,"Low tonnage, expensive transport",emergent,"collection_events, invoice_lines",collection,Fixed lift and km fees spread over little mass -> high EUR/t.
+S04,Unusually expensive route,injected,"sites, contract_versions",site,"Remote regions (Lappi, Pohjois-Pohjanmaa) with long billable km and remote surcharges; structural, not an anomaly."
+S05,Material value collapse,injected,price_index_monthly,month,Cardboard index -48 % and paper -30 % for three months.
+S06,Temporary material price spike,injected,price_index_monthly,month,"Plastic film index +55 % for one month, +25 % the next."
+S07,Contamination reducing recyclable value,injected,"quality_assessments, invoice_lines",collection,Site contamination incidents of 2-6 days raise contamination by 8-30 percentage points.
+S08,Unusually high material generation,injected,"telemetry, collection_events",device_period,Campaign/inventory periods multiply generation by 1.6-2.5 for 3-10 days.
+S09,Seasonal low-volume period,emergent,"telemetry, collection_events",device_period,"Manufacturing July shutdown, office summer lull, retail January trough."
+S10,Holiday peaks,emergent,"telemetry, collection_events",device_period,"Retail December peak, pre-Christmas and post-Christmas returns surges."
+S11,Site closure,injected,"site_calendar, collection_events",site_period,Planned closures of 5-28 days; some customers forget to cancel fixed lifts (empty lifts).
+S12,Missing weight observation,injected,telemetry,device_period,"Weight sensor fault periods (mass NULL, status FAULT) and devices with no weight measurement."
+S13,Sensor drift,injected,telemetry,device_period,"Gradual gain drift 0.1-0.4 %/day, not reported by the device; fixed only by recalibration/replacement."
+S14,Sensor replacement,injected,"sensor_registry, maintenance_work_orders, telemetry",device_period,"New sensor id, new calibration (step change), often preceded by a fault period."
+S15,Sensor calibration error,injected,"telemetry, maintenance_work_orders",device_period,"Offset/gain error introduced at a maintenance visit, persisting until next recalibration."
+S16,Delayed telemetry,injected,telemetry,device_period,Latency bursts (hours) and buffered delivery after connectivity outages.
+S17,Duplicate sensor events,derived,telemetry,message,Re-sent messages with identical message_id; bursts in some devices.
+S18,Out-of-order messages,derived,telemetry,message,Buffered flushes and latency jitter deliver older measurements after newer ones.
+S19,Delayed operator weighbridge records,derived,weighbridge_tickets,ticket,"Operator-specific sharing lags (0-45 days), extra-late tickets, some still unpublished at extraction."
+S20,Compactor vs weighbridge discrepancy,emergent,"collection_events, weighbridge_tickets",collection,"Causes: sensor drift/calibration, side waste on same truck, combined loads split 50/50, outdated stored tare."
+S21,Collection cancellation,injected,"collection_events, invoice_lines",collection,"Customer cancellations (fee if <24 h notice), hybrid skips at low fill."
+S22,Partial collection,injected,"collection_events, telemetry",collection,"Container not fully emptied (frozen biowaste in winter, jams); residual mass remains."
+S23,Contract price changes,injected,"contract_versions, invoice_lines",contract_version,"Annual indexation on 1 January and mid-period amendments (lift fee, fuel, credit share, processing, minimum)."
+S24,Incorrect invoice surcharges,derived,invoice_lines,invoice_line,"Wrong fuel surcharge rate, doubled km, remote surcharge on non-remote site."
+S25,Duplicate invoicing,derived,invoice_lines,invoice_line,Lift/transport line billed twice for one job.
+S26,Unmatched collection and invoice,derived,"invoice_lines, collection_events",invoice_line/collection,"Phantom job lines without a collection, completed collections never invoiced, job refs with typos."
+S27,Maintenance downtime,injected,"maintenance_work_orders, telemetry",device_period,Breakdowns (4-96 h) and preventive maintenance; material during downtime becomes side waste.
+S28,Moisture increasing mass,injected,"telemetry, weighbridge_tickets, quality_assessments",collection,"Rain on outdoor-staged cardboard/paper adds water mass; heavier, denser loads, possible grade downgrade."
+S29,Change in material density,injected,"telemetry, maintenance_work_orders",device_period,"Material mix change (lower density) or compaction setting change (higher density, logged as CONFIG_CHANGE)."
+S30,Multiple fractions at one site,injected,"devices, telemetry, invoice_lines",device,Sites with 2-5 streams; recyclables mis-sorted into mixed waste lower its density and waste credit value.
+S31,Near-threshold ambiguous decisions,emergent,decision_cases,decision_case,Actions whose simulated benefit is within +/- EUR 25 or 3 % of doing nothing.
+S32,False-positive cost anomalies,emergent,collection_events,collection,"High EUR/t explained by hygiene max interval, pre-closure requests, decommissioning, partial lifts, minimum charges."
+S33,Economic opportunities masked by missing data,emergent,"telemetry, weighbridge_tickets",device_period,Over-servicing on devices with no weight sensor and an operator that does not share weighbridge data.
+S34,Competing operational constraints,emergent,decision_cases,decision_case,Reducing frequency violates biowaste hygiene limits or causes overflow during peaks.
+S35,Apparent savings disappear after hidden costs,emergent,decision_cases,decision_case,"Fewer lifts trigger emergency collections, side-waste fees and minimum charges."
+S36,No action is correct,emergent,decision_cases,decision_case,Well-tuned devices where every alternative is neutral or harmful.
+S37,Wasted trip,injected,"collection_events, invoice_lines",collection,"Blocked access: operator arrives, cannot lift, charges a wasted-trip fee and returns next day."
+S38,Rejected load,emergent,"quality_assessments, invoice_lines",collection,Contamination above grade C threshold: no credit and reprocessing fee at mixed-waste rate.
+S39,Precautionary on-call order,injected,"collection_events, invoice_lines",collection,On-call customers order a lift 'to be safe' before a weekend or holiday although the fill trigger has not fired; published as CUSTOMER_REQUEST.
+S40,Fill sensor reads falsely high,injected,"telemetry_hourly, collection_events",device_period,Material bridging or an object near the fill sensor makes the fill estimate read 88-97 % for 1-4 days while true fill and mass are low; on-call orders follow. The mass reading reveals it. S40 and its frequency are synthetic assumptions and do not describe the performance of the SMART fill measurement.

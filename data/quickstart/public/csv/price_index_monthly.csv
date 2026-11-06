@@ -1,0 +1,13 @@
+index_id,material,month,price_eur_per_t,published_on,source
+IDX-OCC,cardboard,2026-06,96.17,2026-07-03,SYNTHETIC illustrative index
+IDX-OCC,cardboard,2026-07,89.76,2026-08-03,SYNTHETIC illustrative index
+IDX-OCC,cardboard,2026-08,90.68,2026-09-03,SYNTHETIC illustrative index
+IDX-OCC,cardboard,2026-09,100.82,2026-10-03,SYNTHETIC illustrative index
+IDX-FILM,plastic_film,2026-06,128.02,2026-07-03,SYNTHETIC illustrative index
+IDX-FILM,plastic_film,2026-07,105.34,2026-08-03,SYNTHETIC illustrative index
+IDX-FILM,plastic_film,2026-08,142.87,2026-09-03,SYNTHETIC illustrative index
+IDX-FILM,plastic_film,2026-09,150.99,2026-10-03,SYNTHETIC illustrative index
+IDX-MIXPL,mixed_plastic,2026-06,3.67,2026-07-03,SYNTHETIC illustrative index
+IDX-MIXPL,mixed_plastic,2026-07,29.3,2026-08-03,SYNTHETIC illustrative index
+IDX-MIXPL,mixed_plastic,2026-08,28.78,2026-09-03,SYNTHETIC illustrative index
+IDX-MIXPL,mixed_plastic,2026-09,44.49,2026-10-03,SYNTHETIC illustrative index

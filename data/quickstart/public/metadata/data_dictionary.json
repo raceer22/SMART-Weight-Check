@@ -1,0 +1,5488 @@
+{
+ "reference/customers": {
+  "package": "public",
+  "description": "Fictional customer organisations (no real companies).",
+  "primary_key": [
+   "customer_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer organisation id ORG-nnnn.",
+    "values": null
+   },
+   {
+    "name": "customer_name",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Generated fictional name.",
+    "values": null
+   },
+   {
+    "name": "primary_sector",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Main sector of the organisation.",
+    "values": "grocery_retail|nonfood_retail|shopping_center|logistics_warehouse|manufacturing|hospitality_hotel|food_processing|office_services"
+   },
+   {
+    "name": "n_sites",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Number of sites of this customer in this package.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   }
+  ]
+ },
+ "reference/sites": {
+  "package": "public",
+  "description": "Customer sites/facilities. Municipality is real geography; everything else is invented.",
+  "primary_key": [
+   "site_id"
+  ],
+  "foreign_keys": {
+   "customer_id": "reference/customers.customer_id",
+   "region_code": "reference/regions.region_code"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site id SITE-nnnnn.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Owning customer.",
+    "values": null
+   },
+   {
+    "name": "site_name",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Generated label (municipality + ordinal).",
+    "values": null
+   },
+   {
+    "name": "sector",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site sector (drives generation rhythm and material mix).",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region code (FI-xx).",
+    "values": null
+   },
+   {
+    "name": "municipality",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Municipality name.",
+    "values": null
+   },
+   {
+    "name": "billable_round_trip_km",
+    "type": "int64",
+    "unit": "km",
+    "nullable": false,
+    "description": "Round-trip distance used by contracts for transport charges.",
+    "values": null
+   },
+   {
+    "name": "outdoor_material_staging",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Material is staged outdoors before compaction (rain adds water mass).",
+    "values": null
+   },
+   {
+    "name": "opening_days_mon_sun",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "7-char mask Mon..Sun, 1 = normally open.",
+    "values": null
+   },
+   {
+    "name": "opening_hours_local",
+    "type": "str",
+    "unit": "local time",
+    "nullable": false,
+    "description": "Normal opening hours HH-HH (local).",
+    "values": null
+   },
+   {
+    "name": "timezone",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "IANA timezone of local times.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   }
+  ]
+ },
+ "reference/site_calendar": {
+  "package": "public",
+  "description": "Daily operating calendar per site (holidays, summer shutdowns, planned closures).",
+  "primary_key": [
+   "site_id",
+   "date"
+  ],
+  "foreign_keys": {
+   "site_id": "reference/sites.site_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "date",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "Local calendar date.",
+    "values": null
+   },
+   {
+    "name": "is_open",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Site operates (generates material) on this date.",
+    "values": null
+   },
+   {
+    "name": "open_hour_local",
+    "type": "float64",
+    "unit": "hour",
+    "nullable": true,
+    "description": "Opening hour; NULL when closed.",
+    "values": null
+   },
+   {
+    "name": "close_hour_local",
+    "type": "float64",
+    "unit": "hour",
+    "nullable": true,
+    "description": "Closing hour (exclusive); NULL when closed.",
+    "values": null
+   },
+   {
+    "name": "closure_reason",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Why closed.",
+    "values": "WEEKLY_CLOSED|PUBLIC_HOLIDAY|SUMMER_SHUTDOWN|PLANNED_CLOSURE"
+   },
+   {
+    "name": "public_holiday_name",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Finnish public holiday name, if any.",
+    "values": null
+   }
+  ]
+ },
+ "reference/devices": {
+  "package": "public",
+  "description": "Fictional compactors. equipment_class uses Europress machine-type categories (COMBI, DUO); no model names, model numbers or model-specific technical data. The dataset depicts a future scenario in which most devices have integrated weighing; sensor install dates are synthetic and do not imply that weighing has been deployed in the past.",
+  "primary_key": [
+   "device_id"
+  ],
+  "foreign_keys": {
+   "site_id": "reference/sites.site_id",
+   "customer_id": "reference/customers.customer_id",
+   "contract_id": "reference/contracts.contract_id",
+   "operator_id": "reference/operators.operator_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device id CMP-nnnnn.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Installed site.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "equipment_class",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Europress machine-type category. COMBI = compactor and container permanently joined, emptied as one unit; DUO = stationary compactor, the detachable container is emptied. No model-specific data.",
+    "values": "COMBI|DUO"
+   },
+   {
+    "name": "container_volume_m3",
+    "type": "float64",
+    "unit": "m3",
+    "nullable": false,
+    "description": "Physical container volume.",
+    "values": null
+   },
+   {
+    "name": "material_stream",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material stream handled.",
+    "values": "cardboard|paper|plastic_film|mixed_plastic|mixed_waste|biowaste"
+   },
+   {
+    "name": "commissioned_on",
+    "type": "date",
+    "unit": null,
+    "nullable": false,
+    "description": "Commissioning date.",
+    "values": null
+   },
+   {
+    "name": "lifecycle_status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Status at extraction.",
+    "values": "ACTIVE|DECOMMISSIONED"
+   },
+   {
+    "name": "active_from",
+    "type": "date",
+    "unit": null,
+    "nullable": true,
+    "description": "First active date within the data window (NULL = before window).",
+    "values": null
+   },
+   {
+    "name": "active_to",
+    "type": "date",
+    "unit": null,
+    "nullable": true,
+    "description": "Last active date if decommissioned in window.",
+    "values": null
+   },
+   {
+    "name": "weight_measurement",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Assumed integrated weight measurement availability (future scenario, simulated; not evidence that weighing exists today).",
+    "values": "INTEGRATED_SIMULATED|NONE"
+   },
+   {
+    "name": "fill_measurement",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Fill-level estimate source (simulated).",
+    "values": null
+   },
+   {
+    "name": "collection_policy",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Current collection policy.",
+    "values": "FIXED_SCHEDULE|ON_CALL|HYBRID"
+   },
+   {
+    "name": "fixed_schedule_per_week",
+    "type": "float64",
+    "unit": "lifts/week",
+    "nullable": true,
+    "description": "Booked lifts per week (fixed/hybrid).",
+    "values": null
+   },
+   {
+    "name": "fixed_schedule_weekdays",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Comma list of weekdays 0=Mon (fixed/hybrid).",
+    "values": null
+   },
+   {
+    "name": "on_call_threshold_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Fill threshold that triggers an order (on-call).",
+    "values": null
+   },
+   {
+    "name": "hybrid_skip_below_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Hybrid: booked lift is skipped if fill is below this ~26 h before.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Hauler serving this device.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract covering this stream.",
+    "values": null
+   },
+   {
+    "name": "has_weight_measurement",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Convenience flag: weight_measurement != NONE.",
+    "values": null
+   }
+  ]
+ },
+ "reference/device_installations": {
+  "package": "public",
+  "description": "Installation history (one installation per device in v1).",
+  "primary_key": [
+   "installation_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id",
+   "site_id": "reference/sites.site_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "installation_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Installation id.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "installed_on",
+    "type": "date",
+    "unit": null,
+    "nullable": false,
+    "description": "Installation date.",
+    "values": null
+   },
+   {
+    "name": "removed_on",
+    "type": "date",
+    "unit": null,
+    "nullable": true,
+    "description": "Removal date if removed within the window.",
+    "values": null
+   }
+  ]
+ },
+ "reference/sensor_registry": {
+  "package": "public",
+  "description": "Simulated integrated weight sensors (future scenario). A replacement creates a new sensor id. Install dates are synthetic and do not imply that weighing has been deployed in the past. Nominal noise is a challenge simulation target (about 100 kg on a 3 t load), not a specification of any Europress weighing solution.",
+  "primary_key": [
+   "sensor_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "sensor_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Sensor id WS-nnnnn-k.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "sensor_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Generic, simulated.",
+    "values": null
+   },
+   {
+    "name": "nominal_sigma_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Nominal absolute 1-sigma noise.",
+    "values": null
+   },
+   {
+    "name": "nominal_sigma_rel",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "Nominal relative 1-sigma noise.",
+    "values": null
+   },
+   {
+    "name": "installed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Installation time.",
+    "values": null
+   },
+   {
+    "name": "removed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "Removal (replacement) time.",
+    "values": null
+   }
+  ]
+ },
+ "reference/contracts": {
+  "package": "public",
+  "description": "HYPOTHETICAL service contracts between a customer site and a waste operator (one per device stream). Europress is currently not a party to waste transport or treatment: tariffs, processing fees and material credits are agreed between the customer and the waste operator. In a real service this is data the customer hands over to the service, or an estimate. All prices are hypothetical.",
+  "primary_key": [
+   "contract_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id",
+   "operator_id": "reference/operators.operator_id",
+   "site_id": "reference/sites.site_id",
+   "customer_id": "reference/customers.customer_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract id.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device/stream covered.",
+    "values": null
+   },
+   {
+    "name": "material_stream",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Hauler.",
+    "values": null
+   },
+   {
+    "name": "pricing_model_initial",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Pricing model of version 1.",
+    "values": "FIXED_PER_LIFT|PER_TONNE|HYBRID|HYBRID_MIN"
+   },
+   {
+    "name": "contract_start",
+    "type": "date",
+    "unit": null,
+    "nullable": false,
+    "description": "Start date (before the data window).",
+    "values": null
+   },
+   {
+    "name": "notice_period_days",
+    "type": "int64",
+    "unit": "days",
+    "nullable": false,
+    "description": "Notice period.",
+    "values": null
+   },
+   {
+    "name": "price_index_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Material index used for credits (credit-eligible streams only: cardboard and plastics).",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   },
+   {
+    "name": "note",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Status note: HYPOTHETICAL customer-operator tariff; Europress is not a party; not an actual operator contract.",
+    "values": null
+   }
+  ]
+ },
+ "reference/contract_versions": {
+  "package": "public",
+  "description": "Customer-operator tariff versions (HYPOTHETICAL; agreed between customer and operator, Europress is not a party). In a real service this is data the customer hands over to the service or the operator shares, or an estimate. Validity [effective_from, effective_to). Integer cents / basis points for exact arithmetic. See docs/ECONOMIC_MODEL.md.",
+  "primary_key": [
+   "contract_version_id"
+  ],
+  "foreign_keys": {
+   "contract_id": "reference/contracts.contract_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "contract_version_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Version id <contract>-Vn.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "version_no",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "1..n.",
+    "values": null
+   },
+   {
+    "name": "effective_from",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "First valid local date (inclusive).",
+    "values": null
+   },
+   {
+    "name": "effective_to",
+    "type": "date",
+    "unit": "local date",
+    "nullable": true,
+    "description": "End (exclusive); NULL = open.",
+    "values": null
+   },
+   {
+    "name": "change_reason",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Why this version exists.",
+    "values": "INITIAL|ANNUAL_INDEXATION|AMENDMENT_LIFT_FEE|AMENDMENT_FUEL|AMENDMENT_CREDIT_SHARE|AMENDMENT_PROCESSING|AMENDMENT_MIN_CHARGE"
+   },
+   {
+    "name": "pricing_model",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Pricing model.",
+    "values": "FIXED_PER_LIFT|PER_TONNE|HYBRID|HYBRID_MIN"
+   },
+   {
+    "name": "lift_fee_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Fixed fee per completed lift.",
+    "values": null
+   },
+   {
+    "name": "per_km_cents",
+    "type": "int64",
+    "unit": "EUR cents/km",
+    "nullable": false,
+    "description": "Transport rate per billable km.",
+    "values": null
+   },
+   {
+    "name": "free_km",
+    "type": "int64",
+    "unit": "km",
+    "nullable": false,
+    "description": "Km included before transport is charged.",
+    "values": null
+   },
+   {
+    "name": "contract_km",
+    "type": "int64",
+    "unit": "km",
+    "nullable": false,
+    "description": "Contracted billable round-trip km.",
+    "values": null
+   },
+   {
+    "name": "remote_surcharge_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Regional remote surcharge per lift.",
+    "values": null
+   },
+   {
+    "name": "fuel_surcharge_bp",
+    "type": "int64",
+    "unit": "basis points",
+    "nullable": false,
+    "description": "Fuel surcharge on (lift + transport + remote).",
+    "values": null
+   },
+   {
+    "name": "haul_fee_cents_per_t",
+    "type": "int64",
+    "unit": "EUR cents/t",
+    "nullable": false,
+    "description": "Per-tonne haulage fee (PER_TONNE model).",
+    "values": null
+   },
+   {
+    "name": "processing_fee_cents_per_t",
+    "type": "int64",
+    "unit": "EUR cents/t",
+    "nullable": false,
+    "description": "Treatment / gate fee per tonne.",
+    "values": null
+   },
+   {
+    "name": "min_charge_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Minimum charge per lift (0 = none).",
+    "values": null
+   },
+   {
+    "name": "credit_share_bp",
+    "type": "int64",
+    "unit": "basis points",
+    "nullable": false,
+    "description": "Share of index price credited to the customer for credit-eligible streams (0 = operator keeps the value).",
+    "values": null
+   },
+   {
+    "name": "credit_floor_cents_per_t",
+    "type": "int64",
+    "unit": "EUR cents/t",
+    "nullable": false,
+    "description": "Floor of the credit price before quality factor.",
+    "values": null
+   },
+   {
+    "name": "contamination_penalty_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Penalty for grade C loads.",
+    "values": null
+   },
+   {
+    "name": "rejection_fee_cents_per_t",
+    "type": "int64",
+    "unit": "EUR cents/t",
+    "nullable": false,
+    "description": "Reprocessing fee for rejected (grade R) credit-eligible loads.",
+    "values": null
+   },
+   {
+    "name": "cancellation_fee_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Fee for customer cancellation with < 24 h notice.",
+    "values": null
+   },
+   {
+    "name": "wasted_trip_fee_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Fee when the operator arrives but cannot lift.",
+    "values": null
+   },
+   {
+    "name": "side_waste_fee_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Fee when loose side waste is loaded at a lift.",
+    "values": null
+   },
+   {
+    "name": "emergency_surcharge_cents",
+    "type": "int64",
+    "unit": "EUR cents/lift",
+    "nullable": false,
+    "description": "Surcharge for ad-hoc emergency lifts.",
+    "values": null
+   },
+   {
+    "name": "rental_cents_per_month",
+    "type": "int64",
+    "unit": "EUR cents/month",
+    "nullable": false,
+    "description": "Monthly equipment rental billed by the operator.",
+    "values": null
+   },
+   {
+    "name": "default_weight_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Contractual default billing weight when no weighbridge ticket exists.",
+    "values": null
+   },
+   {
+    "name": "target_collection_cost_cents_per_t",
+    "type": "int64",
+    "unit": "EUR cents/t",
+    "nullable": false,
+    "description": "Site/contract benchmark for collection cost per tonne (KPI, not a price).",
+    "values": null
+   }
+  ]
+ },
+ "reference/operators": {
+  "package": "public",
+  "description": "Fictional haulers/treatment operators.",
+  "primary_key": [
+   "operator_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator id.",
+    "values": null
+   },
+   {
+    "name": "operator_name",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Fictional name.",
+    "values": null
+   },
+   {
+    "name": "regions_served",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Comma list of region codes.",
+    "values": null
+   },
+   {
+    "name": "weighbridge_data_shared",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator shares weighbridge tickets with customers at all.",
+    "values": null
+   },
+   {
+    "name": "api_feed",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Shares via near-real-time feed.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   }
+  ]
+ },
+ "truth/facilities": {
+  "package": "private",
+  "description": "Fictional treatment facilities. Operator-side information: Europress does not know where the operator takes the material, so this table is not published. Public weighbridge tickets (records the operator chooses to share) carry the facility id.",
+  "primary_key": [
+   "facility_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "facility_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Facility id.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator.",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region.",
+    "values": null
+   },
+   {
+    "name": "facility_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Type.",
+    "values": null
+   }
+  ]
+ },
+ "reference/regions": {
+  "package": "public",
+  "description": "Regions with illustrative distance and surcharge assumptions.",
+  "primary_key": [
+   "region_code"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Code.",
+    "values": null
+   },
+   {
+    "name": "region_name",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Name.",
+    "values": null
+   },
+   {
+    "name": "median_billable_km",
+    "type": "int64",
+    "unit": "km",
+    "nullable": false,
+    "description": "Median billable km assumption.",
+    "values": null
+   },
+   {
+    "name": "remote_surcharge_eur",
+    "type": "int64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Remote surcharge assumption per lift.",
+    "values": null
+   }
+  ]
+ },
+ "reference/price_index_monthly": {
+  "package": "public",
+  "description": "SYNTHETIC monthly reference prices for credit-eligible streams (cardboard, plastic film, mixed plastic); not market data. Includes a cardboard value collapse and a film price spike. Material credits are agreed between customer and operator; Europress is not a party. In a real service, credit prices come from the customer's operator contract (customer-provided or operator-shared) or are an estimate.",
+  "primary_key": [
+   "index_id",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "index_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Index id.",
+    "values": null
+   },
+   {
+    "name": "material",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Month the price applies to (collection month).",
+    "values": null
+   },
+   {
+    "name": "price_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": false,
+    "description": "Reference price (can be negative for mixed plastics).",
+    "values": null
+   },
+   {
+    "name": "published_on",
+    "type": "date",
+    "unit": null,
+    "nullable": false,
+    "description": "Date the price becomes known (3rd of next month).",
+    "values": null
+   },
+   {
+    "name": "source",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Always 'SYNTHETIC illustrative index'.",
+    "values": null
+   }
+  ]
+ },
+ "reference/material_classes": {
+  "package": "public",
+  "description": "Illustrative material assumptions. Only cardboard and plastics can earn a material credit; all other streams, including paper, are chargeable to the customer.",
+  "primary_key": [
+   "material_stream"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "material_stream",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "credit_eligible",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "TRUE only for cardboard and plastics: the operator may credit the customer for material value (if the contract has a credit share). FALSE = chargeable stream: the customer pays a treatment fee.",
+    "values": null
+   },
+   {
+    "name": "typical_compacted_density_kg_m3",
+    "type": "int64",
+    "unit": "kg/m3",
+    "nullable": false,
+    "description": "Typical compacted density assumption (devices vary).",
+    "values": null
+   },
+   {
+    "name": "max_days_between_collections",
+    "type": "int64",
+    "unit": "days",
+    "nullable": false,
+    "description": "Hygiene/fire-safety/contract maximum interval.",
+    "values": null
+   },
+   {
+    "name": "customer_economics",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "CREDIT_ELIGIBLE (credit possible) or CHARGEABLE (customer pays treatment).",
+    "values": "CREDIT_ELIGIBLE|CHARGEABLE"
+   },
+   {
+    "name": "price_index_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Index for credits.",
+    "values": null
+   },
+   {
+    "name": "assumption_note",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Status note.",
+    "values": null
+   }
+  ]
+ },
+ "reference/quality_grade_rules": {
+  "package": "public",
+  "description": "Operator quality grading rules for credit-eligible loads. Quality is determined only by the waste operator at its facility, using its own assessment; Europress has no technology to determine material quality before the facility.",
+  "primary_key": [
+   "grade"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "grade",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Grade.",
+    "values": "A|B|C|R"
+   },
+   {
+    "name": "max_contamination_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": false,
+    "description": "Upper contamination bound.",
+    "values": null
+   },
+   {
+    "name": "credit_quality_factor",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "Multiplier on the credit price.",
+    "values": null
+   },
+   {
+    "name": "consequence",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Economic consequence.",
+    "values": null
+   }
+  ]
+ },
+ "telemetry/telemetry_hourly": {
+  "package": "public",
+  "description": "Hourly device messages AS DELIVERED (ingest log): includes duplicates (same message_id), out-of-order and buffered delivery, gaps. Partitioned by local month of measured_at (hive key 'month').",
+  "primary_key": [
+   "delivery_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id",
+   "sensor_id": "reference/sensor_registry.sensor_id"
+  },
+  "partitioned": true,
+  "columns": [
+   {
+    "name": "message_id",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Measurement id (device-hour). NOT unique: re-sent duplicates share it.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "sensor_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Weight sensor id; NULL if no weight sensor.",
+    "values": null
+   },
+   {
+    "name": "measured_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Measurement time (end of the hour).",
+    "values": null
+   },
+   {
+    "name": "received_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Ingest time. received_at >= measured_at.",
+    "values": null
+   },
+   {
+    "name": "fill_pct",
+    "type": "float32",
+    "unit": "%",
+    "nullable": false,
+    "description": "Assumed fill-level estimate (noisy, 0-100).",
+    "values": null
+   },
+   {
+    "name": "mass_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Assumed measured container mass. NULL if sensor fault or no sensor. May be negative near empty, may be drifted/biased.",
+    "values": null
+   },
+   {
+    "name": "mass_uncertainty_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Device-reported 1-sigma uncertainty (does not know about drift).",
+    "values": null
+   },
+   {
+    "name": "compaction_cycles",
+    "type": "int16",
+    "unit": "count",
+    "nullable": false,
+    "description": "Compaction cycles in the hour.",
+    "values": null
+   },
+   {
+    "name": "press_load_index",
+    "type": "float32",
+    "unit": "0-100",
+    "nullable": true,
+    "description": "Generic normalised peak press load (NULL if no cycle).",
+    "values": null
+   },
+   {
+    "name": "operational_state",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device state.",
+    "values": "IDLE|ACTIVE|FULL|DOWN"
+   },
+   {
+    "name": "sensor_status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Weight sensor self-diagnosis.",
+    "values": "OK|DEGRADED|FAULT|NOT_INSTALLED"
+   },
+   {
+    "name": "quality_flag",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Quality flag of mass_kg.",
+    "values": "VALID|LOW_CONFIDENCE|NEGATIVE_READING|SUSPECT_SPIKE|SENSOR_FAULT|NO_WEIGHT_SENSOR"
+   },
+   {
+    "name": "delivery_mode",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "LIVE or BUFFERED (sent after a connectivity outage).",
+    "values": "LIVE|BUFFERED"
+   },
+   {
+    "name": "ingest_seq",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Per-device ingest order (by received_at).",
+    "values": null
+   },
+   {
+    "name": "delivery_id",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Unique delivery id (primary key).",
+    "values": null
+   }
+  ]
+ },
+ "telemetry/telemetry_daily_summary": {
+  "package": "public",
+  "description": "Per device and local date, derived ONLY from published telemetry (deduplicated by message_id).",
+  "primary_key": [
+   "device_id",
+   "date"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "date",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "Local date of measured_at.",
+    "values": null
+   },
+   {
+    "name": "n_messages",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Unique messages.",
+    "values": null
+   },
+   {
+    "name": "fill_pct_first",
+    "type": "float32",
+    "unit": "%",
+    "nullable": true,
+    "description": "First fill of the day.",
+    "values": null
+   },
+   {
+    "name": "fill_pct_last",
+    "type": "float32",
+    "unit": "%",
+    "nullable": true,
+    "description": "Last fill of the day.",
+    "values": null
+   },
+   {
+    "name": "fill_pct_max",
+    "type": "float32",
+    "unit": "%",
+    "nullable": true,
+    "description": "Max fill.",
+    "values": null
+   },
+   {
+    "name": "fill_pct_min",
+    "type": "float32",
+    "unit": "%",
+    "nullable": true,
+    "description": "Min fill.",
+    "values": null
+   },
+   {
+    "name": "mass_kg_last_valid",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Last VALID/LOW_CONFIDENCE mass.",
+    "values": null
+   },
+   {
+    "name": "mass_kg_max_valid",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Max valid mass.",
+    "values": null
+   },
+   {
+    "name": "n_valid_mass",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Messages with valid mass.",
+    "values": null
+   },
+   {
+    "name": "compaction_cycles",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Sum of cycles.",
+    "values": null
+   },
+   {
+    "name": "hours_down",
+    "type": "int64",
+    "unit": "h",
+    "nullable": false,
+    "description": "Messages in DOWN state.",
+    "values": null
+   },
+   {
+    "name": "hours_full",
+    "type": "int64",
+    "unit": "h",
+    "nullable": false,
+    "description": "Messages in FULL state.",
+    "values": null
+   },
+   {
+    "name": "n_buffered",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Buffered messages.",
+    "values": null
+   },
+   {
+    "name": "data_completeness_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": false,
+    "description": "n_messages / 24 (capped at 100).",
+    "values": null
+   }
+  ]
+ },
+ "operations/collection_events": {
+  "package": "public",
+  "description": "Every scheduled/ordered collection event and its outcome, with device-side before/after observations.",
+  "primary_key": [
+   "collection_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id",
+   "contract_id": "reference/contracts.contract_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event id COL-nnnnn-ssss.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Hauler.",
+    "values": null
+   },
+   {
+    "name": "operator_job_ref",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Hauler's job reference; the join key to weighbridge tickets and invoice lines.",
+    "values": null
+   },
+   {
+    "name": "trigger_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Why the event exists.",
+    "values": "SCHEDULED|ON_CALL_ORDER|MAX_INTERVAL_RULE|AD_HOC_CUSTOMER|CUSTOMER_REQUEST|CUSTOMER_REQUEST_PRE_CLOSURE|DECOMMISSION|RESCHEDULED"
+   },
+   {
+    "name": "original_trigger_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "For RESCHEDULED events: the trigger of the event that was rescheduled; otherwise = trigger_type.",
+    "values": "SCHEDULED|ON_CALL_ORDER|MAX_INTERVAL_RULE|AD_HOC_CUSTOMER|CUSTOMER_REQUEST|CUSTOMER_REQUEST_PRE_CLOSURE|DECOMMISSION"
+   },
+   {
+    "name": "status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Outcome.",
+    "values": "COMPLETED|PARTIAL|SKIPPED_LOW_FILL|CANCELLED_BY_CUSTOMER|MISSED_BY_OPERATOR|WASTED_TRIP"
+   },
+   {
+    "name": "cancellation_notice_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "Notice given for cancellations/skips.",
+    "values": null
+   },
+   {
+    "name": "wasted_trip_reason",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Reason for wasted trip.",
+    "values": "ACCESS_BLOCKED|NOTHING_TO_COLLECT"
+   },
+   {
+    "name": "vehicle_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Vehicle (from the operator ticket, if any).",
+    "values": null
+   },
+   {
+    "name": "driver_reported_side_waste",
+    "type": "bool",
+    "unit": null,
+    "nullable": true,
+    "description": "Driver loaded loose side waste (overflow) at this lift.",
+    "values": null
+   },
+   {
+    "name": "driver_reported_partial",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Container could not be fully emptied.",
+    "values": null
+   },
+   {
+    "name": "device_fill_pct_before",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Device fill reading for the hour before the lift (NULL if not delivered).",
+    "values": null
+   },
+   {
+    "name": "device_fill_pct_after",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Device fill reading for the hour of the lift.",
+    "values": null
+   },
+   {
+    "name": "device_mass_kg_before",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Valid device mass before the lift.",
+    "values": null
+   },
+   {
+    "name": "device_mass_kg_after",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Valid device mass after the lift.",
+    "values": null
+   },
+   {
+    "name": "device_estimated_collected_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "before - after; NULL if either is missing. A device-side estimate, not a weighbridge value.",
+    "values": null
+   },
+   {
+    "name": "weight_reconciliation_status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Naive pipeline status (device vs published weighbridge) computed AT EXTRACTION TIME \u2014 recompute as-of for decision features.",
+    "values": "WITHIN_10PCT|DIFFERENCE_GT_10PCT|WEIGHBRIDGE_NOT_AVAILABLE|DEVICE_ESTIMATE_MISSING|NOT_APPLICABLE|UNKNOWN_AS_OF"
+   },
+   {
+    "name": "invoice_match_status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Naive exact job-ref match against invoice lines, computed AT EXTRACTION TIME.",
+    "values": "MATCHED_BY_JOB_REF|NOT_FOUND_ON_INVOICES|NO_CHARGE_EXPECTED|UNKNOWN_AS_OF"
+   },
+   {
+    "name": "order_placed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "Order time (on-call / ad-hoc / requests).",
+    "values": null
+   },
+   {
+    "name": "scheduled_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Planned service time.",
+    "values": null
+   },
+   {
+    "name": "actual_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "Actual service time (completed, partial, wasted trip).",
+    "values": null
+   }
+  ]
+ },
+ "operations/weighbridge_tickets": {
+  "package": "public",
+  "description": "Operator weighbridge tickets SHARED with the customer and published before extraction (operator data, visible only when the operator shares it). Some operators never share; others share late.",
+  "primary_key": [
+   "ticket_id"
+  ],
+  "foreign_keys": {
+   "operator_id": "reference/operators.operator_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "ticket_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Ticket (one per job; combined loads get -1/-2).",
+    "values": null
+   },
+   {
+    "name": "weighing_event_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Physical weighing event (shared by combined loads).",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator.",
+    "values": null
+   },
+   {
+    "name": "operator_job_ref",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Job reference.",
+    "values": null
+   },
+   {
+    "name": "vehicle_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Vehicle.",
+    "values": null
+   },
+   {
+    "name": "facility_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Receiving facility.",
+    "values": null
+   },
+   {
+    "name": "arrival_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Weighing time.",
+    "values": null
+   },
+   {
+    "name": "gross_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Gross weight (20 kg resolution).",
+    "values": null
+   },
+   {
+    "name": "tare_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Tare used.",
+    "values": null
+   },
+   {
+    "name": "tare_method",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "WEIGHED or STORED tare.",
+    "values": "WEIGHED|STORED"
+   },
+   {
+    "name": "net_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "gross - tare of the weighing event (all loads on the vehicle).",
+    "values": null
+   },
+   {
+    "name": "allocated_net_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Net allocated to this job (billing basis).",
+    "values": null
+   },
+   {
+    "name": "allocation_method",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Allocation.",
+    "values": "SINGLE_LOAD|EQUAL_SPLIT_COMBINED_LOAD"
+   },
+   {
+    "name": "loads_on_vehicle",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Jobs weighed together.",
+    "values": null
+   },
+   {
+    "name": "material_declared",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Declared material.",
+    "values": null
+   },
+   {
+    "name": "published_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "When the ticket became available to the customer.",
+    "values": null
+   }
+  ]
+ },
+ "operations/quality_assessments": {
+  "package": "public",
+  "description": "Operator quality grading of credit-eligible loads (published subset). The operator's own assessment at its facility; not measured by the device.",
+  "primary_key": [
+   "quality_assessment_id"
+  ],
+  "foreign_keys": {
+   "ticket_id": "operations/weighbridge_tickets.ticket_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "quality_assessment_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Assessment id.",
+    "values": null
+   },
+   {
+    "name": "ticket_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Ticket.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator.",
+    "values": null
+   },
+   {
+    "name": "assessed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Assessment time.",
+    "values": null
+   },
+   {
+    "name": "published_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Publication time.",
+    "values": null
+   },
+   {
+    "name": "material_declared",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "contamination_pct_est",
+    "type": "float64",
+    "unit": "%",
+    "nullable": false,
+    "description": "Operator's visual contamination estimate (whole %).",
+    "values": null
+   },
+   {
+    "name": "grade",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Grade.",
+    "values": "A|B|C|R"
+   },
+   {
+    "name": "rejected",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Grade R.",
+    "values": null
+   },
+   {
+    "name": "remark_code",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Remark.",
+    "values": "WET_MATERIAL|REJECTED_CONTAMINATION"
+   }
+  ]
+ },
+ "operations/maintenance_work_orders": {
+  "package": "public",
+  "description": "Maintenance and configuration work orders (context for interpreting anomalies; not a PdM task).",
+  "primary_key": [
+   "work_order_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "work_order_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Work order id.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "work_order_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Type.",
+    "values": "PREVENTIVE|CORRECTIVE|SENSOR_RECALIBRATION|SENSOR_REPLACEMENT|CONFIG_CHANGE"
+   },
+   {
+    "name": "downtime_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": false,
+    "description": "Compactor unavailable hours.",
+    "values": null
+   },
+   {
+    "name": "description_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Code.",
+    "values": null
+   },
+   {
+    "name": "reported_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Reported.",
+    "values": null
+   },
+   {
+    "name": "started_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Started.",
+    "values": null
+   },
+   {
+    "name": "completed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Completed.",
+    "values": null
+   }
+  ]
+ },
+ "finance/invoices": {
+  "package": "public",
+  "description": "Monthly invoices sent by a fictional waste operator to the customer, per contract (issued before extraction). Customer-operator data that the customer hands over to the service; Europress is not a party. total_eur == sum(lines.amount_eur).",
+  "primary_key": [
+   "invoice_id"
+  ],
+  "foreign_keys": {
+   "contract_id": "reference/contracts.contract_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "invoice_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Invoice id.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator.",
+    "values": null
+   },
+   {
+    "name": "billing_period",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Service month.",
+    "values": null
+   },
+   {
+    "name": "currency",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "EUR.",
+    "values": null
+   },
+   {
+    "name": "vat_excluded",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true.",
+    "values": null
+   },
+   {
+    "name": "total_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Signed total (exact to the cent).",
+    "values": null
+   },
+   {
+    "name": "n_lines",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Line count.",
+    "values": null
+   },
+   {
+    "name": "dispute_status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer dispute status (a dispute is not proof of an error).",
+    "values": "NONE|OPEN|RESOLVED_CREDIT_NOTE|RESOLVED_NO_CHANGE|UNKNOWN_AS_OF"
+   },
+   {
+    "name": "issued_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Issue time.",
+    "values": null
+   },
+   {
+    "name": "record_note",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Always: SYNTHETIC invoice from a fictional operator to a fictional customer; not a real invoice.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   }
+  ]
+ },
+ "finance/invoice_lines": {
+  "package": "public",
+  "description": "Lines of the SYNTHETIC operator-to-customer invoices: customer-operator data that the customer hands over to the service; Europress is not a party. Charges > 0, credits < 0. Matching to collections only via operator_job_ref (which may contain typos) and service_date.",
+  "primary_key": [
+   "invoice_line_id"
+  ],
+  "foreign_keys": {
+   "invoice_id": "finance/invoices.invoice_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "invoice_line_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Line id.",
+    "values": null
+   },
+   {
+    "name": "invoice_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Invoice.",
+    "values": null
+   },
+   {
+    "name": "line_no",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Line number.",
+    "values": null
+   },
+   {
+    "name": "line_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Line type.",
+    "values": "LIFT_FEE|TRANSPORT|REMOTE_SURCHARGE|FUEL_SURCHARGE|HAUL_PER_TONNE|PROCESSING|REJECTION_REPROCESSING|MIN_CHARGE_TOPUP|MATERIAL_CREDIT|CONTAMINATION_PENALTY|SIDE_WASTE_FEE|EMERGENCY_SURCHARGE|CANCELLATION_FEE|WASTED_TRIP_FEE|RENTAL"
+   },
+   {
+    "name": "service_date",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "Service date (1st of month for rental).",
+    "values": null
+   },
+   {
+    "name": "operator_job_ref",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Job reference (NULL for rental).",
+    "values": null
+   },
+   {
+    "name": "quantity",
+    "type": "float64",
+    "unit": null,
+    "nullable": false,
+    "description": "Quantity in `unit` (t with 3 decimals; pct for fuel).",
+    "values": null
+   },
+   {
+    "name": "unit",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Unit.",
+    "values": "lift|km|t|pct_of_base|event|month"
+   },
+   {
+    "name": "unit_price_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Unit price (for FUEL_SURCHARGE: the base amount the pct applies to).",
+    "values": null
+   },
+   {
+    "name": "amount_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Signed amount, exact to the cent.",
+    "values": null
+   },
+   {
+    "name": "synthetic",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Always true: the record is invented.",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/anomaly_labels": {
+  "package": "public",
+  "description": "Ground-truth labels for train+validation periods (Task B). Includes explained/non-actionable labels (false-positive traps).",
+  "primary_key": [
+   "entity_type",
+   "entity_id",
+   "label_family"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "entity_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Entity labelled.",
+    "values": "collection|invoice_line|device_period|device"
+   },
+   {
+    "name": "entity_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "collection_id, invoice_line_id or device-period key.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "label_family",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Label family (see SCENARIO_CATALOG).",
+    "values": null
+   },
+   {
+    "name": "severity",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "borderline or clear.",
+    "values": "borderline|clear"
+   },
+   {
+    "name": "is_actionable",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Whether a customer/operator action is warranted (False = explained, e.g. hygiene rule).",
+    "values": null
+   },
+   {
+    "name": "explanation_code",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Cause / explanation.",
+    "values": null
+   },
+   {
+    "name": "value_at_stake_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "Illustrative value at stake (signed for billing deltas: + = overcharge).",
+    "values": null
+   },
+   {
+    "name": "scenario_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Scenario family id.",
+    "values": null
+   },
+   {
+    "name": "parameter",
+    "type": "float64",
+    "unit": null,
+    "nullable": true,
+    "description": "Episode parameter.",
+    "values": null
+   },
+   {
+    "name": "benchmark_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Contract benchmark (COST_PER_T_HIGH).",
+    "values": null
+   },
+   {
+    "name": "reference_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Reference collection cost per t (COST_PER_T_HIGH).",
+    "values": null
+   },
+   {
+    "name": "true_moisture_extra_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Extra water mass share (MOISTURE).",
+    "values": null
+   },
+   {
+    "name": "full_hours_before_collection",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "Hours container was full (DELAYED).",
+    "values": null
+   },
+   {
+    "name": "true_contamination_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "True contamination (quality labels).",
+    "values": null
+   },
+   {
+    "name": "device_minus_weighbridge_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Device estimate minus allocated net (WEIGHT_DISCREPANCY).",
+    "values": null
+   },
+   {
+    "name": "event_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Event time / period start.",
+    "values": null
+   },
+   {
+    "name": "end_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "Period end.",
+    "values": null
+   },
+   {
+    "name": "eval_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Evaluation time that defines the split: for collections max(event, issue of the invoice that bills it); otherwise event_at.",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/reference_economics": {
+  "package": "public",
+  "description": "Reference (correct) charges per collection event from contract terms and operator billing basis (Task A answers for dev periods).",
+  "primary_key": [
+   "collection_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "contract_version_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Applicable version (by local service date).",
+    "values": null
+   },
+   {
+    "name": "service_date",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "Service date.",
+    "values": null
+   },
+   {
+    "name": "status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event status.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Billing mass; NULL if not a lift.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_basis",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Basis.",
+    "values": "WEIGHBRIDGE_NET|CONTRACT_DEFAULT_WEIGHT"
+   },
+   {
+    "name": "grade_applied",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Grade applied (recyclables).",
+    "values": null
+   },
+   {
+    "name": "index_price_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Index price of the service month.",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Logistics cost category.",
+    "values": null
+   },
+   {
+    "name": "processing_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Processing category.",
+    "values": null
+   },
+   {
+    "name": "penalties_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Penalties category.",
+    "values": null
+   },
+   {
+    "name": "material_credit_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Credit (positive number).",
+    "values": null
+   },
+   {
+    "name": "net_material_contribution_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "credit - collection - processing - penalties.",
+    "values": null
+   },
+   {
+    "name": "total_customer_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "-net_material_contribution.",
+    "values": null
+   },
+   {
+    "name": "expected_invoice_amount_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Sum of expected lines (== total_customer_cost).",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "collection_cost / t; NULL if mass unknown or 0.",
+    "values": null
+   },
+   {
+    "name": "total_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "total_customer_cost / t; NULL if mass unknown or 0.",
+    "values": null
+   },
+   {
+    "name": "observable_mass_source",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Best mass source a customer could see at extraction (lifts only). NONE = a correct submission reports NULL EUR/t.",
+    "values": "WEIGHBRIDGE_PUBLISHED|INVOICE_TONNAGE|DEVICE_ESTIMATE_ONLY|NONE"
+   },
+   {
+    "name": "event_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Event time (actual or scheduled).",
+    "values": null
+   },
+   {
+    "name": "eval_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Evaluation time defining the split: max(event, issue of the billing invoice); extraction time if charged but not yet invoiced.",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/reference_economics_monthly": {
+  "package": "public",
+  "description": "Reference economics aggregated per device and month (events within this package's label periods). Site-, material-, customer- and contract-level figures are group-bys of this table. Rental is excluded (monthly contract line).",
+  "primary_key": [
+   "device_id",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "material_stream",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Local service month.",
+    "values": null
+   },
+   {
+    "name": "n_events",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "All events incl. cancellations.",
+    "values": null
+   },
+   {
+    "name": "n_lifts",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Completed + partial lifts.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Sum of billing mass.",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "processing_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "penalties_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "material_credit_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "net_material_contribution_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "NULL if no mass.",
+    "values": null
+   },
+   {
+    "name": "total_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "NULL if no mass.",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/reference_charge_lines": {
+  "package": "public",
+  "description": "Expected invoice lines per event (dev periods).",
+  "primary_key": [
+   "collection_id",
+   "line_no"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event.",
+    "values": null
+   },
+   {
+    "name": "line_no",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Line no.",
+    "values": null
+   },
+   {
+    "name": "line_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Line type.",
+    "values": null
+   },
+   {
+    "name": "quantity",
+    "type": "float64",
+    "unit": null,
+    "nullable": false,
+    "description": "Quantity.",
+    "values": null
+   },
+   {
+    "name": "unit",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Unit.",
+    "values": null
+   },
+   {
+    "name": "unit_price_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Unit price.",
+    "values": null
+   },
+   {
+    "name": "amount_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Signed amount.",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/decision_truth": {
+  "package": "public",
+  "description": "Per decision case: best permissible action by simulated counterfactual (Task C, dev periods).",
+  "primary_key": [
+   "case_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": null
+   },
+   {
+    "name": "best_action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Lowest adjusted simulated cost among permissible actions.",
+    "values": null
+   },
+   {
+    "name": "best_benefit_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Benefit of best vs NO_ACTION over the horizon.",
+    "values": null
+   },
+   {
+    "name": "acceptable_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Permissible actions within tolerance of best.",
+    "values": null
+   },
+   {
+    "name": "no_action_acceptable",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "NO_ACTION within tolerance.",
+    "values": null
+   },
+   {
+    "name": "near_threshold",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Best action's benefit is within tolerance (ambiguous).",
+    "values": null
+   },
+   {
+    "name": "constraint_conflict",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "The raw cheapest action is not permissible.",
+    "values": null
+   },
+   {
+    "name": "hidden_cost_trap_present",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Some action looks cheaper by lift count but costs more.",
+    "values": null
+   },
+   {
+    "name": "tolerance_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "max(EUR 25, 3 % of best); an action is also acceptable within 2 paired standard errors of the best.",
+    "values": null
+   },
+   {
+    "name": "truth_sensor_issue_active",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Hidden sensor issue active at decision time (VERIFY_WEIGHT_SENSOR is warranted).",
+    "values": null
+   },
+   {
+    "name": "truth_invoice_overcharge_90d_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Overbilling in the prior 90 days (REVIEW_INVOICES value).",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/decision_outcomes": {
+  "package": "public",
+  "description": "Simulated counterfactual outcome of every candidate action (NOT real-world causal evidence).",
+  "primary_key": [
+   "case_id",
+   "action"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Action.",
+    "values": null
+   },
+   {
+    "name": "sim_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Simulated customer cost over horizon incl. one-off action cost.",
+    "values": null
+   },
+   {
+    "name": "one_off_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Illustrative one-off cost of the action.",
+    "values": null
+   },
+   {
+    "name": "n_replications",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Paired operational replications averaged (replication 0 = realised random stream).",
+    "values": null
+   },
+   {
+    "name": "n_completed_lifts",
+    "type": "float64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Mean lifts in horizon.",
+    "values": null
+   },
+   {
+    "name": "collected_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Mean mass handled.",
+    "values": null
+   },
+   {
+    "name": "overflow_open_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": false,
+    "description": "Mean hours the container was full while the site was open.",
+    "values": null
+   },
+   {
+    "name": "max_interval_violations",
+    "type": "float64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Mean number of intervals exceeding max days + 1.",
+    "values": null
+   },
+   {
+    "name": "end_state_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Mass left in container + side stock at horizon end.",
+    "values": null
+   },
+   {
+    "name": "terminal_value_cents_per_kg",
+    "type": "float64",
+    "unit": "EUR cents/kg",
+    "nullable": false,
+    "description": "Contract-based marginal cost used to value end-state mass differences.",
+    "values": null
+   },
+   {
+    "name": "adjusted_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "sim_cost + (end_state_mass - NO_ACTION end_state_mass) x terminal_value_cents_per_kg.",
+    "values": null
+   },
+   {
+    "name": "permissible",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Satisfies max-interval and overflow constraints.",
+    "values": null
+   },
+   {
+    "name": "adjusted_cost_sd_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Std. dev. of adjusted cost across replications.",
+    "values": null
+   },
+   {
+    "name": "benefit_vs_no_action_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Mean paired NO_ACTION adjusted cost minus this.",
+    "values": null
+   },
+   {
+    "name": "benefit_se_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Standard error of the paired benefit.",
+    "values": null
+   },
+   {
+    "name": "diff_to_best_se_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Standard error of the paired difference to the best permissible action.",
+    "values": null
+   },
+   {
+    "name": "naive_lift_saving_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Saving estimated from lift count alone (naive).",
+    "values": null
+   },
+   {
+    "name": "hidden_cost_trap",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Naive saving > EUR 50 but real benefit < 0.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/decision_cases": {
+  "package": "public",
+  "description": "Decision cases (inputs only). Solutions may use only data observable before decision_at.",
+  "primary_key": [
+   "case_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case id.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "horizon_days",
+    "type": "int64",
+    "unit": "days",
+    "nullable": false,
+    "description": "Evaluation horizon.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": "train|validation|test|test_private"
+   },
+   {
+    "name": "candidate_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operational actions to choose from.",
+    "values": null
+   },
+   {
+    "name": "diagnostic_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Diagnostic actions that may be recommended in addition.",
+    "values": null
+   },
+   {
+    "name": "decision_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Decision time.",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/task_ab_test_collections": {
+  "package": "public",
+  "description": "Collection ids of the public test period to score (answers private).",
+  "primary_key": [
+   "collection_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Status.",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/task_b_test_invoice_lines": {
+  "package": "public",
+  "description": "Invoice lines of the public test period to score.",
+  "primary_key": [
+   "invoice_line_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "invoice_line_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Line.",
+    "values": null
+   },
+   {
+    "name": "invoice_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Invoice.",
+    "values": null
+   }
+  ]
+ },
+ "truth/truth_hourly_state": {
+  "package": "private",
+  "description": "PRIVATE simulator ground truth per device-hour. Never a model input.",
+  "primary_key": [
+   "device_id",
+   "hour_start_at"
+  ],
+  "foreign_keys": {},
+  "partitioned": true,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "true_container_mass_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Mass in container at hour end.",
+    "values": null
+   },
+   {
+    "name": "true_fill_pct",
+    "type": "float32",
+    "unit": "%",
+    "nullable": false,
+    "description": "True volumetric fill.",
+    "values": null
+   },
+   {
+    "name": "true_inflow_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Material generated in the hour.",
+    "values": null
+   },
+   {
+    "name": "true_side_stock_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Loose side waste waiting (overflow/downtime).",
+    "values": null
+   },
+   {
+    "name": "true_container_full",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Container at capacity.",
+    "values": null
+   },
+   {
+    "name": "true_compactor_down",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Downtime.",
+    "values": null
+   },
+   {
+    "name": "true_sensor_gain",
+    "type": "float32",
+    "unit": null,
+    "nullable": false,
+    "description": "Weight sensor gain.",
+    "values": null
+   },
+   {
+    "name": "true_sensor_offset_kg",
+    "type": "float32",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Sensor offset.",
+    "values": null
+   },
+   {
+    "name": "hour_start_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Hour start.",
+    "values": null
+   }
+  ]
+ },
+ "truth/truth_collections": {
+  "package": "private",
+  "description": "PRIVATE truth for completed/partial lifts.",
+  "primary_key": [
+   "collection_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_mass_before_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_fill_before_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_collected_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_residual_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Left in container (partial).",
+    "values": null
+   },
+   {
+    "name": "true_side_waste_collected_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_side_stock_before_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_contamination",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_moisture_extra",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "Water mass / dry mass.",
+    "values": null
+   },
+   {
+    "name": "hours_since_last",
+    "type": "int64",
+    "unit": "h",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "cycle_overflow_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "cycle_full_hours",
+    "type": "int64",
+    "unit": "h",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "delay_h",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "actual - scheduled.",
+    "values": null
+   }
+  ]
+ },
+ "truth/truth_sensor_episodes": {
+  "package": "private",
+  "description": "PRIVATE sensor episodes (drift, calibration, faults...).",
+  "primary_key": [
+   "device_id",
+   "episode_type",
+   "start_at"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "episode_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "parameter",
+    "type": "float64",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "start_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "end_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "",
+    "values": null
+   }
+  ]
+ },
+ "truth/truth_device": {
+  "package": "private",
+  "description": "PRIVATE device truth and mass-balance totals.",
+  "primary_key": [
+   "device_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_mean_density_kg_m3",
+    "type": "float64",
+    "unit": "kg/m3",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_daily_generation_kg",
+    "type": "float64",
+    "unit": "kg/day",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_capacity_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_contamination_base",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_misallocated_recyclable_share",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "public|holdout",
+    "values": null
+   },
+   {
+    "name": "n_messages_lost",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "n_duplicates",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_total_inflow_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_end_container_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_end_side_stock_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "episodes",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Scenario episodes (repr).",
+    "values": null
+   }
+  ]
+ },
+ "truth/weighbridge_all": {
+  "package": "private",
+  "description": "PRIVATE: all tickets incl. unshared/unpublished, with tare error and true net.",
+  "primary_key": [
+   "ticket_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "ticket_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "weighing_event_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "operator_job_ref",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "vehicle_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "facility_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "gross_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "tare_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "tare_method",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "net_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "allocated_net_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "allocation_method",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "loads_on_vehicle",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "material_declared",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "shared_with_customer",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "public",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Published before extraction.",
+    "values": null
+   },
+   {
+    "name": "true_net_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "tare_error_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "arrival_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "published_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "",
+    "values": null
+   }
+  ]
+ },
+ "truth/quality_all": {
+  "package": "private",
+  "description": "PRIVATE: all quality assessments.",
+  "primary_key": [
+   "quality_assessment_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "quality_assessment_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "ticket_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "public",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "material_declared",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "contamination_pct_est",
+    "type": "float64",
+    "unit": "%",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "grade",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "rejected",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "remark_code",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "assessed_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "published_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "",
+    "values": null
+   }
+  ]
+ },
+ "truth/invoice_line_labels": {
+  "package": "private",
+  "description": "PRIVATE: every injected billing discrepancy (line-level and missing/uninvoiced).",
+  "primary_key": [],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "invoice_line_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "NULL for missing lines / uninvoiced collections.",
+    "values": null
+   },
+   {
+    "name": "invoice_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "discrepancy_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "expected_amount_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": true,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "billed_amount_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "delta_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "billed - expected (+ = overcharge).",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/operator_scorecard": {
+  "package": "public",
+  "description": "Task B2 truth for train+validation months: operator performance scorecard per fictional operator x region x month, computed from simulator truth. Operators are fictional; part of every difference has causes other than the operator.",
+  "primary_key": [
+   "operator_id",
+   "region_code",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Fictional operator.",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region of the customer sites.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Local month (jobs: scheduled time; invoices: billing period).",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Label period of the month.",
+    "values": "train|validation|test"
+   },
+   {
+    "name": "n_operator_jobs",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Jobs the operator had to perform (completed, partial, missed, wasted trip).",
+    "values": null
+   },
+   {
+    "name": "n_completed_lifts",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Completed or partial lifts.",
+    "values": null
+   },
+   {
+    "name": "billed_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "Invoiced total for the billing month.",
+    "values": null
+   },
+   {
+    "name": "on_time_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Completed lifts within 2 h of the scheduled time.",
+    "values": null
+   },
+   {
+    "name": "missed_visit_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "MISSED_BY_OPERATOR / operator jobs.",
+    "values": null
+   },
+   {
+    "name": "weighbridge_shared_7d_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Completed lifts whose weighbridge ticket was shared with the customer within 7 days.",
+    "values": null
+   },
+   {
+    "name": "median_share_lag_days",
+    "type": "float64",
+    "unit": "days",
+    "nullable": true,
+    "description": "Median days from weighing to sharing (shared tickets).",
+    "values": null
+   },
+   {
+    "name": "billing_overcharge_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Overbilled amount as % of the contract-correct amount (billing discrepancies, not intent).",
+    "values": null
+   },
+   {
+    "name": "billing_undercharge_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Underbilled amount (missing lines, uninvoiced lifts) as % of the correct amount.",
+    "values": null
+   },
+   {
+    "name": "discrepant_line_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Invoice lines (incl. missing ones) with a billing discrepancy.",
+    "values": null
+   },
+   {
+    "name": "weight_bias_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "100 x (operator allocated net - true collected mass) / true mass, all tickets incl. unshared.",
+    "values": null
+   },
+   {
+    "name": "median_order_to_lift_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "Median hours from order to lift (ordered collections).",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/task_b2_scorecard_rows": {
+  "package": "public",
+  "description": "Task B2 test rows (operator x region x month) to predict. No answers.",
+  "primary_key": [
+   "operator_id",
+   "region_code",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operator.",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Month.",
+    "values": null
+   },
+   {
+    "name": "n_operator_jobs",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Jobs in the row.",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/operator_action_cases": {
+  "package": "public",
+  "description": "Task C2 cases: one per active public contract at the extraction time. Choose any subset of the candidate actions (empty = no action). split=dev cases have public values in labels_dev/operator_action_values.",
+  "primary_key": [
+   "case_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case id OC-nnnnn.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Current operator.",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "dev (values public) or test (values private).",
+    "values": "dev|test"
+   },
+   {
+    "name": "candidate_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Comma list of allowed actions (from DISPUTE_INVOICE, REQUEST_WEIGHBRIDGE_DATA, RENEGOTIATE_CONTRACT, TENDER_OR_SWITCH_OPERATOR).",
+    "values": null
+   },
+   {
+    "name": "notice_period_days",
+    "type": "int64",
+    "unit": "days",
+    "nullable": false,
+    "description": "Contract notice period.",
+    "values": null
+   },
+   {
+    "name": "as_of_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Case date (data extraction time).",
+    "values": null
+   }
+  ]
+ },
+ "labels_dev/operator_action_values": {
+  "package": "public",
+  "description": "Task C2 truth (dev cases): simulated value of each operator/contract action under the published rules in configs/assumptions.yaml -> operator_actions. Synthetic-world value, not evidence of real savings.",
+  "primary_key": [
+   "case_id",
+   "action"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "dev|test",
+    "values": null
+   },
+   {
+    "name": "action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Action.",
+    "values": "DISPUTE_INVOICE|REQUEST_WEIGHBRIDGE_DATA|RENEGOTIATE_CONTRACT|TENDER_OR_SWITCH_OPERATOR"
+   },
+   {
+    "name": "value_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Expected value of the action (positive = worth doing).",
+    "values": null
+   },
+   {
+    "name": "positive",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "value_eur > 0.",
+    "values": null
+   },
+   {
+    "name": "annual_contract_cost_eur",
+    "type": "float64",
+    "unit": "EUR/year",
+    "nullable": false,
+    "description": "Contract-correct annual cost at current terms (annualised).",
+    "values": null
+   },
+   {
+    "name": "recoverable_overbilling_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "DISPUTE_INVOICE: documented overbilling on undisputed invoices of the last 90 days.",
+    "values": null
+   },
+   {
+    "name": "renegotiated_annual_cost_eur",
+    "type": "float64",
+    "unit": "EUR/year",
+    "nullable": true,
+    "description": "RENEGOTIATE_CONTRACT: annual cost at peer-median terms.",
+    "values": null
+   },
+   {
+    "name": "peer_level",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Peer group used (L1 region+material+model+size ... L4 material+model).",
+    "values": null
+   },
+   {
+    "name": "best_alternative_operator",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "TENDER_OR_SWITCH_OPERATOR: alternative used.",
+    "values": null
+   },
+   {
+    "name": "best_set_value_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Value of the best action set for the case (renegotiate and tender are exclusive).",
+    "values": null
+   }
+  ]
+ },
+ "truth/vehicles": {
+  "package": "private",
+  "description": "PRIVATE vehicle tares.",
+  "primary_key": [
+   "vehicle_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "vehicle_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "true_tare_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "stored_tare_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/anomaly_labels": {
+  "package": "private",
+  "description": "Ground-truth labels for train+validation periods (Task B). Includes explained/non-actionable labels (false-positive traps).",
+  "primary_key": [
+   "entity_type",
+   "entity_id",
+   "label_family"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "entity_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Entity labelled.",
+    "values": "collection|invoice_line|device_period|device"
+   },
+   {
+    "name": "entity_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "collection_id, invoice_line_id or device-period key.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "label_family",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Label family (see SCENARIO_CATALOG).",
+    "values": null
+   },
+   {
+    "name": "severity",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "borderline or clear.",
+    "values": "borderline|clear"
+   },
+   {
+    "name": "is_actionable",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Whether a customer/operator action is warranted (False = explained, e.g. hygiene rule).",
+    "values": null
+   },
+   {
+    "name": "explanation_code",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Cause / explanation.",
+    "values": null
+   },
+   {
+    "name": "value_at_stake_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "Illustrative value at stake (signed for billing deltas: + = overcharge).",
+    "values": null
+   },
+   {
+    "name": "scenario_id",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Scenario family id.",
+    "values": null
+   },
+   {
+    "name": "parameter",
+    "type": "float64",
+    "unit": null,
+    "nullable": true,
+    "description": "Episode parameter.",
+    "values": null
+   },
+   {
+    "name": "benchmark_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Contract benchmark (COST_PER_T_HIGH).",
+    "values": null
+   },
+   {
+    "name": "reference_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Reference collection cost per t (COST_PER_T_HIGH).",
+    "values": null
+   },
+   {
+    "name": "true_moisture_extra_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Extra water mass share (MOISTURE).",
+    "values": null
+   },
+   {
+    "name": "full_hours_before_collection",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "Hours container was full (DELAYED).",
+    "values": null
+   },
+   {
+    "name": "true_contamination_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "True contamination (quality labels).",
+    "values": null
+   },
+   {
+    "name": "device_minus_weighbridge_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Device estimate minus allocated net (WEIGHT_DISCREPANCY).",
+    "values": null
+   },
+   {
+    "name": "event_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Event time / period start.",
+    "values": null
+   },
+   {
+    "name": "end_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": true,
+    "description": "Period end.",
+    "values": null
+   },
+   {
+    "name": "eval_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Evaluation time that defines the split: for collections max(event, issue of the invoice that bills it); otherwise event_at.",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/reference_economics": {
+  "package": "private",
+  "description": "Reference (correct) charges per collection event from contract terms and operator billing basis (Task A answers for dev periods).",
+  "primary_key": [
+   "collection_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "contract_version_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Applicable version (by local service date).",
+    "values": null
+   },
+   {
+    "name": "service_date",
+    "type": "date",
+    "unit": "local date",
+    "nullable": false,
+    "description": "Service date.",
+    "values": null
+   },
+   {
+    "name": "status",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event status.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Billing mass; NULL if not a lift.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_basis",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Basis.",
+    "values": "WEIGHBRIDGE_NET|CONTRACT_DEFAULT_WEIGHT"
+   },
+   {
+    "name": "grade_applied",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Grade applied (recyclables).",
+    "values": null
+   },
+   {
+    "name": "index_price_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "Index price of the service month.",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Logistics cost category.",
+    "values": null
+   },
+   {
+    "name": "processing_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Processing category.",
+    "values": null
+   },
+   {
+    "name": "penalties_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Penalties category.",
+    "values": null
+   },
+   {
+    "name": "material_credit_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Credit (positive number).",
+    "values": null
+   },
+   {
+    "name": "net_material_contribution_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "credit - collection - processing - penalties.",
+    "values": null
+   },
+   {
+    "name": "total_customer_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "-net_material_contribution.",
+    "values": null
+   },
+   {
+    "name": "expected_invoice_amount_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Sum of expected lines (== total_customer_cost).",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "collection_cost / t; NULL if mass unknown or 0.",
+    "values": null
+   },
+   {
+    "name": "total_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "total_customer_cost / t; NULL if mass unknown or 0.",
+    "values": null
+   },
+   {
+    "name": "observable_mass_source",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Best mass source a customer could see at extraction (lifts only). NONE = a correct submission reports NULL EUR/t.",
+    "values": "WEIGHBRIDGE_PUBLISHED|INVOICE_TONNAGE|DEVICE_ESTIMATE_ONLY|NONE"
+   },
+   {
+    "name": "event_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Event time (actual or scheduled).",
+    "values": null
+   },
+   {
+    "name": "eval_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Evaluation time defining the split: max(event, issue of the billing invoice); extraction time if charged but not yet invoiced.",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/reference_economics_monthly": {
+  "package": "private",
+  "description": "Reference economics aggregated per device and month (events within this package's label periods). Site-, material-, customer- and contract-level figures are group-bys of this table. Rental is excluded (monthly contract line).",
+  "primary_key": [
+   "device_id",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "site_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Site.",
+    "values": null
+   },
+   {
+    "name": "customer_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Customer.",
+    "values": null
+   },
+   {
+    "name": "material_stream",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Material.",
+    "values": null
+   },
+   {
+    "name": "contract_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Contract.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Local service month.",
+    "values": null
+   },
+   {
+    "name": "n_events",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "All events incl. cancellations.",
+    "values": null
+   },
+   {
+    "name": "n_lifts",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Completed + partial lifts.",
+    "values": null
+   },
+   {
+    "name": "billing_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": true,
+    "description": "Sum of billing mass.",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "processing_cost_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "penalties_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "material_credit_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "net_material_contribution_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "",
+    "values": null
+   },
+   {
+    "name": "collection_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "NULL if no mass.",
+    "values": null
+   },
+   {
+    "name": "total_cost_eur_per_t",
+    "type": "float64",
+    "unit": "EUR/t",
+    "nullable": true,
+    "description": "NULL if no mass.",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/reference_charge_lines": {
+  "package": "private",
+  "description": "Expected invoice lines per event (dev periods).",
+  "primary_key": [
+   "collection_id",
+   "line_no"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "collection_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Event.",
+    "values": null
+   },
+   {
+    "name": "line_no",
+    "type": "int64",
+    "unit": null,
+    "nullable": false,
+    "description": "Line no.",
+    "values": null
+   },
+   {
+    "name": "line_type",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Line type.",
+    "values": null
+   },
+   {
+    "name": "quantity",
+    "type": "float64",
+    "unit": null,
+    "nullable": false,
+    "description": "Quantity.",
+    "values": null
+   },
+   {
+    "name": "unit",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Unit.",
+    "values": null
+   },
+   {
+    "name": "unit_price_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Unit price.",
+    "values": null
+   },
+   {
+    "name": "amount_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Signed amount.",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/decision_truth": {
+  "package": "private",
+  "description": "Per decision case: best permissible action by simulated counterfactual (Task C, dev periods).",
+  "primary_key": [
+   "case_id"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": null
+   },
+   {
+    "name": "best_action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Lowest adjusted simulated cost among permissible actions.",
+    "values": null
+   },
+   {
+    "name": "best_benefit_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Benefit of best vs NO_ACTION over the horizon.",
+    "values": null
+   },
+   {
+    "name": "acceptable_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Permissible actions within tolerance of best.",
+    "values": null
+   },
+   {
+    "name": "no_action_acceptable",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "NO_ACTION within tolerance.",
+    "values": null
+   },
+   {
+    "name": "near_threshold",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Best action's benefit is within tolerance (ambiguous).",
+    "values": null
+   },
+   {
+    "name": "constraint_conflict",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "The raw cheapest action is not permissible.",
+    "values": null
+   },
+   {
+    "name": "hidden_cost_trap_present",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Some action looks cheaper by lift count but costs more.",
+    "values": null
+   },
+   {
+    "name": "tolerance_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "max(EUR 25, 3 % of best); an action is also acceptable within 2 paired standard errors of the best.",
+    "values": null
+   },
+   {
+    "name": "truth_sensor_issue_active",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Hidden sensor issue active at decision time (VERIFY_WEIGHT_SENSOR is warranted).",
+    "values": null
+   },
+   {
+    "name": "truth_invoice_overcharge_90d_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Overbilling in the prior 90 days (REVIEW_INVOICES value).",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/decision_outcomes": {
+  "package": "private",
+  "description": "Simulated counterfactual outcome of every candidate action (NOT real-world causal evidence).",
+  "primary_key": [
+   "case_id",
+   "action"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Action.",
+    "values": null
+   },
+   {
+    "name": "sim_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Simulated customer cost over horizon incl. one-off action cost.",
+    "values": null
+   },
+   {
+    "name": "one_off_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Illustrative one-off cost of the action.",
+    "values": null
+   },
+   {
+    "name": "n_replications",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Paired operational replications averaged (replication 0 = realised random stream).",
+    "values": null
+   },
+   {
+    "name": "n_completed_lifts",
+    "type": "float64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Mean lifts in horizon.",
+    "values": null
+   },
+   {
+    "name": "collected_kg",
+    "type": "int64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Mean mass handled.",
+    "values": null
+   },
+   {
+    "name": "overflow_open_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": false,
+    "description": "Mean hours the container was full while the site was open.",
+    "values": null
+   },
+   {
+    "name": "max_interval_violations",
+    "type": "float64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Mean number of intervals exceeding max days + 1.",
+    "values": null
+   },
+   {
+    "name": "end_state_mass_kg",
+    "type": "float64",
+    "unit": "kg",
+    "nullable": false,
+    "description": "Mass left in container + side stock at horizon end.",
+    "values": null
+   },
+   {
+    "name": "terminal_value_cents_per_kg",
+    "type": "float64",
+    "unit": "EUR cents/kg",
+    "nullable": false,
+    "description": "Contract-based marginal cost used to value end-state mass differences.",
+    "values": null
+   },
+   {
+    "name": "adjusted_cost_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "sim_cost + (end_state_mass - NO_ACTION end_state_mass) x terminal_value_cents_per_kg.",
+    "values": null
+   },
+   {
+    "name": "permissible",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Satisfies max-interval and overflow constraints.",
+    "values": null
+   },
+   {
+    "name": "adjusted_cost_sd_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Std. dev. of adjusted cost across replications.",
+    "values": null
+   },
+   {
+    "name": "benefit_vs_no_action_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Mean paired NO_ACTION adjusted cost minus this.",
+    "values": null
+   },
+   {
+    "name": "benefit_se_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Standard error of the paired benefit.",
+    "values": null
+   },
+   {
+    "name": "diff_to_best_se_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Standard error of the paired difference to the best permissible action.",
+    "values": null
+   },
+   {
+    "name": "naive_lift_saving_cents",
+    "type": "int64",
+    "unit": "EUR cents",
+    "nullable": false,
+    "description": "Saving estimated from lift count alone (naive).",
+    "values": null
+   },
+   {
+    "name": "hidden_cost_trap",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "Naive saving > EUR 50 but real benefit < 0.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/operator_scorecard": {
+  "package": "private",
+  "description": "Task B2 truth for train+validation months: operator performance scorecard per fictional operator x region x month, computed from simulator truth. Operators are fictional; part of every difference has causes other than the operator.",
+  "primary_key": [
+   "operator_id",
+   "region_code",
+   "month"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "operator_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Fictional operator.",
+    "values": null
+   },
+   {
+    "name": "region_code",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Region of the customer sites.",
+    "values": null
+   },
+   {
+    "name": "month",
+    "type": "str",
+    "unit": "YYYY-MM",
+    "nullable": false,
+    "description": "Local month (jobs: scheduled time; invoices: billing period).",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Label period of the month.",
+    "values": "train|validation|test"
+   },
+   {
+    "name": "n_operator_jobs",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Jobs the operator had to perform (completed, partial, missed, wasted trip).",
+    "values": null
+   },
+   {
+    "name": "n_completed_lifts",
+    "type": "int64",
+    "unit": "count",
+    "nullable": false,
+    "description": "Completed or partial lifts.",
+    "values": null
+   },
+   {
+    "name": "billed_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "Invoiced total for the billing month.",
+    "values": null
+   },
+   {
+    "name": "on_time_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Completed lifts within 2 h of the scheduled time.",
+    "values": null
+   },
+   {
+    "name": "missed_visit_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "MISSED_BY_OPERATOR / operator jobs.",
+    "values": null
+   },
+   {
+    "name": "weighbridge_shared_7d_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Completed lifts whose weighbridge ticket was shared with the customer within 7 days.",
+    "values": null
+   },
+   {
+    "name": "median_share_lag_days",
+    "type": "float64",
+    "unit": "days",
+    "nullable": true,
+    "description": "Median days from weighing to sharing (shared tickets).",
+    "values": null
+   },
+   {
+    "name": "billing_overcharge_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Overbilled amount as % of the contract-correct amount (billing discrepancies, not intent).",
+    "values": null
+   },
+   {
+    "name": "billing_undercharge_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "Underbilled amount (missing lines, uninvoiced lifts) as % of the correct amount.",
+    "values": null
+   },
+   {
+    "name": "discrepant_line_rate",
+    "type": "float64",
+    "unit": "fraction",
+    "nullable": true,
+    "description": "Invoice lines (incl. missing ones) with a billing discrepancy.",
+    "values": null
+   },
+   {
+    "name": "weight_bias_pct",
+    "type": "float64",
+    "unit": "%",
+    "nullable": true,
+    "description": "100 x (operator allocated net - true collected mass) / true mass, all tickets incl. unshared.",
+    "values": null
+   },
+   {
+    "name": "median_order_to_lift_hours",
+    "type": "float64",
+    "unit": "h",
+    "nullable": true,
+    "description": "Median hours from order to lift (ordered collections).",
+    "values": null
+   }
+  ]
+ },
+ "labels_test/operator_action_values": {
+  "package": "private",
+  "description": "Task C2 truth (dev cases): simulated value of each operator/contract action under the published rules in configs/assumptions.yaml -> operator_actions. Synthetic-world value, not evidence of real savings.",
+  "primary_key": [
+   "case_id",
+   "action"
+  ],
+  "foreign_keys": {},
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "dev|test",
+    "values": null
+   },
+   {
+    "name": "action",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Action.",
+    "values": "DISPUTE_INVOICE|REQUEST_WEIGHBRIDGE_DATA|RENEGOTIATE_CONTRACT|TENDER_OR_SWITCH_OPERATOR"
+   },
+   {
+    "name": "value_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Expected value of the action (positive = worth doing).",
+    "values": null
+   },
+   {
+    "name": "positive",
+    "type": "bool",
+    "unit": null,
+    "nullable": false,
+    "description": "value_eur > 0.",
+    "values": null
+   },
+   {
+    "name": "annual_contract_cost_eur",
+    "type": "float64",
+    "unit": "EUR/year",
+    "nullable": false,
+    "description": "Contract-correct annual cost at current terms (annualised).",
+    "values": null
+   },
+   {
+    "name": "recoverable_overbilling_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": true,
+    "description": "DISPUTE_INVOICE: documented overbilling on undisputed invoices of the last 90 days.",
+    "values": null
+   },
+   {
+    "name": "renegotiated_annual_cost_eur",
+    "type": "float64",
+    "unit": "EUR/year",
+    "nullable": true,
+    "description": "RENEGOTIATE_CONTRACT: annual cost at peer-median terms.",
+    "values": null
+   },
+   {
+    "name": "peer_level",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "Peer group used (L1 region+material+model+size ... L4 material+model).",
+    "values": null
+   },
+   {
+    "name": "best_alternative_operator",
+    "type": "str",
+    "unit": null,
+    "nullable": true,
+    "description": "TENDER_OR_SWITCH_OPERATOR: alternative used.",
+    "values": null
+   },
+   {
+    "name": "best_set_value_eur",
+    "type": "float64",
+    "unit": "EUR",
+    "nullable": false,
+    "description": "Value of the best action set for the case (renegotiate and tender are exclusive).",
+    "values": null
+   }
+  ]
+ },
+ "benchmark/decision_cases_private": {
+  "package": "private",
+  "description": "Decision cases (inputs only). Solutions may use only data observable before decision_at.",
+  "primary_key": [
+   "case_id"
+  ],
+  "foreign_keys": {
+   "device_id": "reference/devices.device_id"
+  },
+  "partitioned": false,
+  "columns": [
+   {
+    "name": "case_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Case id.",
+    "values": null
+   },
+   {
+    "name": "device_id",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Device.",
+    "values": null
+   },
+   {
+    "name": "horizon_days",
+    "type": "int64",
+    "unit": "days",
+    "nullable": false,
+    "description": "Evaluation horizon.",
+    "values": null
+   },
+   {
+    "name": "split",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Split.",
+    "values": "train|validation|test|test_private"
+   },
+   {
+    "name": "candidate_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Operational actions to choose from.",
+    "values": null
+   },
+   {
+    "name": "diagnostic_actions",
+    "type": "str",
+    "unit": null,
+    "nullable": false,
+    "description": "Diagnostic actions that may be recommended in addition.",
+    "values": null
+   },
+   {
+    "name": "decision_at",
+    "type": "ts",
+    "unit": "UTC",
+    "nullable": false,
+    "description": "Decision time.",
+    "values": null
+   }
+  ]
+ }
+}

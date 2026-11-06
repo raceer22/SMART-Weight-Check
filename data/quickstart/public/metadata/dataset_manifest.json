@@ -1,0 +1,500 @@
+{
+  "generator_version": "1.0.1",
+  "dataset_status": "SYNTHETIC \u2014 REVIEWED BY EUROPRESS (30 OCT AND 4 NOV 2026), ALL REQUESTED CHANGES IMPLEMENTED",
+  "profile": "quickstart",
+  "seed": "UNDISCLOSED (organiser-held; see seed_commitment_sha256)",
+  "seed_disclosed": false,
+  "seed_commitment_sha256": "64e93f96a4e29c86d8665d0cd68ad3f84b06db686b00d848cd814192a6cc74e4",
+  "config_hash": "71be8223651b1a2cae86f197af90a91f509db950d6755696403efd89f1f29800",
+  "start_date": "2026-07-01",
+  "n_days": 90,
+  "extraction_time_utc": "2026-10-13T09:00:00+00:00",
+  "label_periods": {
+    "train": [
+      "2026-07-01",
+      "2026-08-16"
+    ],
+    "validation": [
+      "2026-08-16",
+      "2026-09-06"
+    ],
+    "test": [
+      "2026-09-06",
+      "2026-09-29"
+    ]
+  },
+  "synthetic": true,
+  "contains_real_customer_data": false,
+  "generated_at_utc": "2026-11-04T15:04:50+00:00",
+  "runtime_seconds": 14.3,
+  "simulation_seconds": 8.8,
+  "n_customers_public": 4,
+  "n_devices_public": 50,
+  "n_devices_holdout": 0,
+  "row_counts": {
+    "public/operations/collection_events.parquet": 465,
+    "public/operations/maintenance_work_orders.parquet": 55,
+    "public/finance/invoices.parquet": 149,
+    "public/finance/invoice_lines.parquet": 1666,
+    "public/telemetry/telemetry_daily_summary.parquet": 4486,
+    "public/operations/weighbridge_tickets.parquet": 323,
+    "public/operations/quality_assessments.parquet": 230,
+    "public/labels_dev/anomaly_labels.parquet": 272,
+    "public/labels_dev/reference_economics.parquet": 214,
+    "public/labels_dev/reference_charge_lines.parquet": 661,
+    "public/labels_dev/reference_economics_monthly.parquet": 76,
+    "public/benchmark/decision_cases.parquet": 250,
+    "public/labels_dev/decision_truth.parquet": 200,
+    "public/labels_dev/decision_outcomes.parquet": 956,
+    "public/benchmark/task_ab_test_collections.parquet": 145,
+    "public/benchmark/task_b_test_invoice_lines.parquet": 313,
+    "public/reference/customers.parquet": 4,
+    "public/reference/sites.parquet": 16,
+    "public/reference/site_calendar.parquet": 1440,
+    "public/reference/devices.parquet": 50,
+    "public/reference/device_installations.parquet": 50,
+    "public/reference/contracts.parquet": 50,
+    "public/reference/contract_versions.parquet": 65,
+    "public/reference/operators.parquet": 5,
+    "public/reference/regions.parquet": 6,
+    "public/reference/price_index_monthly.parquet": 12,
+    "public/reference/material_classes.parquet": 6,
+    "public/reference/quality_grade_rules.parquet": 4,
+    "public/reference/sensor_registry.parquet": 50,
+    "public/labels_dev/operator_scorecard.parquet": 6,
+    "public/benchmark/task_b2_scorecard_rows.parquet": 12,
+    "public/benchmark/operator_action_cases.parquet": 50,
+    "public/labels_dev/operator_action_values.parquet": 13
+  },
+  "golden_cases": {
+    "public": 119
+  },
+  "package": "public",
+  "n_files": 71,
+  "total_bytes": 19062608,
+  "files": [
+    {
+      "path": "README_FIRST.txt",
+      "bytes": 812,
+      "sha256": "2a0c5c93c685dd1f0113f479ebcf26d1d6e02a8cbd447f4d4e1cb161c28dc501"
+    },
+    {
+      "path": "benchmark/decision_cases.parquet",
+      "bytes": 3785,
+      "sha256": "c2c6092d15da104c138a3f93d41eed7dd463972ed3d95665bcb25a75f09b047e",
+      "rows": 250
+    },
+    {
+      "path": "benchmark/golden_cases_public.json",
+      "bytes": 114545,
+      "sha256": "1d04d7dbc5140291dadd473b39860369fb14b44035f77c83dadc27b4b66a21cc"
+    },
+    {
+      "path": "benchmark/operator_action_cases.parquet",
+      "bytes": 3902,
+      "sha256": "c8bfd566270944db31272fe51dd3b8285015fadf6187667d895621af367392ef",
+      "rows": 50
+    },
+    {
+      "path": "benchmark/task_ab_test_collections.parquet",
+      "bytes": 1848,
+      "sha256": "413c28b01a22b2bbaf74dcc7b27f81e3280da4e063923d5c940228aa03f13b8d",
+      "rows": 145
+    },
+    {
+      "path": "benchmark/task_b2_scorecard_rows.parquet",
+      "bytes": 1429,
+      "sha256": "7d7108bb5a36afe0b4c8256586d5e926777985836a57ae4700fb41094e385db9",
+      "rows": 12
+    },
+    {
+      "path": "benchmark/task_b_test_invoice_lines.parquet",
+      "bytes": 1733,
+      "sha256": "805dfaaa2cef37c939834f782fda2fb870d96b0f36ef7c05a1aed480ac0894cc",
+      "rows": 313
+    },
+    {
+      "path": "csv/collection_events.csv",
+      "bytes": 116992,
+      "sha256": "06a0bb3bc97a69efdc8efedfe0e43181bd599bc4b212d97d34af198202b035a4",
+      "rows": 465
+    },
+    {
+      "path": "csv/contract_versions.csv",
+      "bytes": 9679,
+      "sha256": "9683de625b63477820a2fbc23b7e7e5a9935293423e7364f05174584b1d18345",
+      "rows": 65
+    },
+    {
+      "path": "csv/contracts.csv",
+      "bytes": 10456,
+      "sha256": "d6a299e3c85a7ed6c863cb98d4e36ad16b473395a3b8868c0365d809f309074d",
+      "rows": 50
+    },
+    {
+      "path": "csv/customers.csv",
+      "bytes": 333,
+      "sha256": "31feea4d2ba4a77dbc5a9b2815c3dede4d4412dca563941c9042d64f00efb9f3",
+      "rows": 4
+    },
+    {
+      "path": "csv/decision_cases.csv",
+      "bytes": 44546,
+      "sha256": "09000212fbd8df5fd80e3f27eeabd4acb88564a32adb5d7d035f2c69ecf46df4",
+      "rows": 250
+    },
+    {
+      "path": "csv/device_installations.csv",
+      "bytes": 2208,
+      "sha256": "9761a5f04ad3044e41b2b381e05ece215f87e5d2369e77baa20ba621615d3568",
+      "rows": 50
+    },
+    {
+      "path": "csv/devices.csv",
+      "bytes": 8753,
+      "sha256": "37e09a703ae186705e3f687a6381e865255e1b6f0e152372aa2bb6f0d00a53b3",
+      "rows": 50
+    },
+    {
+      "path": "csv/invoice_lines.csv",
+      "bytes": 177108,
+      "sha256": "42e75ec505a628b9af170d6b73639303ba572ed7e4069a67ef4b580cb72ee87d",
+      "rows": 1666
+    },
+    {
+      "path": "csv/invoices.csv",
+      "bytes": 29254,
+      "sha256": "dab9b1b940563e41a4068d3d2a909ea5b269d51ae9afa657a7fcceea511adce5",
+      "rows": 149
+    },
+    {
+      "path": "csv/labels_dev_anomaly_labels.csv",
+      "bytes": 44673,
+      "sha256": "492790d81d879c2e680d77ddd74a674ef8bc6b73e6eafa5bc5026b39e728f207",
+      "rows": 272
+    },
+    {
+      "path": "csv/labels_dev_decision_outcomes.csv",
+      "bytes": 110331,
+      "sha256": "39338fbfdfa423ebaa8d209d68919a70d3c0a08ff40cba4b9dac44b1a7786eef",
+      "rows": 956
+    },
+    {
+      "path": "csv/labels_dev_decision_truth.csv",
+      "bytes": 24264,
+      "sha256": "0df0686210b29e808ef8c6a30db8c2f8008beb210a5dc904ade9c7f2cf16a968",
+      "rows": 200
+    },
+    {
+      "path": "csv/labels_dev_reference_charge_lines.csv",
+      "bytes": 34058,
+      "sha256": "a264a59e600fcd0c66168712fb81d64d6315811cd3385ba8dfc32be47e982deb",
+      "rows": 661
+    },
+    {
+      "path": "csv/labels_dev_reference_economics.csv",
+      "bytes": 43959,
+      "sha256": "d55fc7bc9d587de1e5053ce93f7fb6a4d6a27b246272b18333b4112f90f982e9",
+      "rows": 214
+    },
+    {
+      "path": "csv/labels_dev_reference_economics_monthly.csv",
+      "bytes": 8843,
+      "sha256": "a15f62bc77bc31e401f63bb7bc45c2cd952f9cd7dece1e9e6ed663de48c77d76",
+      "rows": 76
+    },
+    {
+      "path": "csv/legacy_v0/daily_sensor_readings.csv",
+      "bytes": 256851,
+      "sha256": "a060a52dfca23e0fc4e0eba7fc70432f66697c5f0293897c05ebb80a6c3d3493",
+      "rows": 4486
+    },
+    {
+      "path": "csv/legacy_v0/devices.csv",
+      "bytes": 3545,
+      "sha256": "014436f622718734ea06c75d6b028c2e2969b44e3c93cdc7fa6d93944b307352",
+      "rows": 50
+    },
+    {
+      "path": "csv/legacy_v0/pickup_events.csv",
+      "bytes": 30180,
+      "sha256": "8e393955028689b10d038553458ebb6120321b316c400287d6d1e945259431e6",
+      "rows": 386
+    },
+    {
+      "path": "csv/maintenance_work_orders.csv",
+      "bytes": 7429,
+      "sha256": "d62df30b81bd6b418bf6d9e75b3cd306f7977e02aa0b6e0ea9ade30c450745f7",
+      "rows": 55
+    },
+    {
+      "path": "csv/material_classes.csv",
+      "bytes": 746,
+      "sha256": "6f54bbeb2da4f4801e06f57782c1369d447f8fa56c72080829737448a0cc58ed",
+      "rows": 6
+    },
+    {
+      "path": "csv/operators.csv",
+      "bytes": 414,
+      "sha256": "71e20c09201b142709c85e3af647f62664539671cfb403a71a3703e3dcd2631e",
+      "rows": 5
+    },
+    {
+      "path": "csv/price_index_monthly.csv",
+      "bytes": 967,
+      "sha256": "36f4e14b93563e82ea25f3f29b9d22eb9f0fca8770a0aada323498a0d64853e6",
+      "rows": 12
+    },
+    {
+      "path": "csv/quality_assessments.csv",
+      "bytes": 27123,
+      "sha256": "5c362974d67993081538a5c3c4b0d70c9d73946e0eb0e38a42f8884087ed7ffd",
+      "rows": 230
+    },
+    {
+      "path": "csv/quality_grade_rules.csv",
+      "bytes": 216,
+      "sha256": "fe35366193ac97c53e23e84bd627c1ff1bfedff2419ddb2869c1ef8b55ee9838",
+      "rows": 4
+    },
+    {
+      "path": "csv/regions.csv",
+      "bytes": 202,
+      "sha256": "adffbc33ed4ed8c67c3c9e4e7430955e98d9cb118a0c3713e78a09500d16d883",
+      "rows": 6
+    },
+    {
+      "path": "csv/sensor_registry.csv",
+      "bytes": 4757,
+      "sha256": "7c3abfed95feb17ece46c65a59a7a3e51b0430bc7d953676ce97aaed6490564d",
+      "rows": 50
+    },
+    {
+      "path": "csv/site_calendar.csv",
+      "bytes": 59007,
+      "sha256": "6777b6ff23665c7c972e1402315e8a899d401311f863d9bdc6addcf90ff10951",
+      "rows": 1440
+    },
+    {
+      "path": "csv/sites.csv",
+      "bytes": 2074,
+      "sha256": "d30a895e24aec99ec9f96e2f9cdb808bbe1d8adb6dcc9877b74781d445458872",
+      "rows": 16
+    },
+    {
+      "path": "csv/telemetry_daily_summary.csv",
+      "bytes": 320602,
+      "sha256": "5fd3ed8fd302fae9bd1af3e923a24d3aeda8874469f793c7c0d8e3dbb4ee01a0",
+      "rows": 4486
+    },
+    {
+      "path": "csv/telemetry_hourly.csv",
+      "bytes": 14728436,
+      "sha256": "5d3d63ab850b8850732522f71a3acab688fb5e71bdb080d11c818d7ac9832bb2",
+      "rows": 106751
+    },
+    {
+      "path": "csv/weighbridge_tickets.csv",
+      "bytes": 59517,
+      "sha256": "0c3e9e07eda74faa89110426fc690b67676e4810a482fd8fde49b021a9a51491",
+      "rows": 323
+    },
+    {
+      "path": "finance/invoice_lines.parquet",
+      "bytes": 24717,
+      "sha256": "b7ee2814108503a22fa6fb7e631dc5d2315cc483831bf1398b4cbb020976645f",
+      "rows": 1666
+    },
+    {
+      "path": "finance/invoices.parquet",
+      "bytes": 6589,
+      "sha256": "381bc521a6ce03d54ecf1bf4c1ca83b20ca78c7f922c84d7ac7078d5fc3be79b",
+      "rows": 149
+    },
+    {
+      "path": "labels_dev/anomaly_labels.parquet",
+      "bytes": 13435,
+      "sha256": "84eccd9aae0614b7f8edf20d282fd484cf878c57c9dbf149c1e0eafa3ed04a3b",
+      "rows": 272
+    },
+    {
+      "path": "labels_dev/decision_outcomes.parquet",
+      "bytes": 31538,
+      "sha256": "4fc5ae0c866b24ba18658ef8c88b9391eb36cd6840880eb9436dbf11c80902b5",
+      "rows": 956
+    },
+    {
+      "path": "labels_dev/decision_truth.parquet",
+      "bytes": 5886,
+      "sha256": "d7cf53887f15ad17841e12e37834366208122fb6edfb0b269056414c153b2169",
+      "rows": 200
+    },
+    {
+      "path": "labels_dev/operator_action_values.parquet",
+      "bytes": 3675,
+      "sha256": "e6594b9389fa07db3ec56a658bcf5de6f0e74169743f3d3c4d6cf875041376dc",
+      "rows": 13
+    },
+    {
+      "path": "labels_dev/operator_scorecard.parquet",
+      "bytes": 5814,
+      "sha256": "e716c17729fafd2874f957aa9ed2e2f886406e7ebd01a9fba3eff96731b5bdb3",
+      "rows": 6
+    },
+    {
+      "path": "labels_dev/reference_charge_lines.parquet",
+      "bytes": 8553,
+      "sha256": "d75b8688f0421369eb8af381cc5764b67d5b05f7ee428aa2c6c1c95b2e277a8a",
+      "rows": 661
+    },
+    {
+      "path": "labels_dev/reference_economics.parquet",
+      "bytes": 18018,
+      "sha256": "17abb40f3e9fa149d769f7e1ea168bef964a1024ffefa1bee52a0d7ef1e5f813",
+      "rows": 214
+    },
+    {
+      "path": "labels_dev/reference_economics_monthly.parquet",
+      "bytes": 8858,
+      "sha256": "f4b931e07aa991beb77f38144eb27a00d4497cbf9c7767ce3126523a2e954b38",
+      "rows": 76
+    },
+    {
+      "path": "metadata/data_dictionary.json",
+      "bytes": 127448,
+      "sha256": "810b14007a3f88a638427c317e4a7e393d06da95f7189ee51154bdb0e2fb7b9b"
+    },
+    {
+      "path": "metadata/scenario_catalog.csv",
+      "bytes": 7081,
+      "sha256": "915aa96d26076e109cd8fbaaa3d5dd713f7c3b03401e27b3e9702ed53447502d",
+      "rows": 40
+    },
+    {
+      "path": "operations/collection_events.parquet",
+      "bytes": 23671,
+      "sha256": "3ed7c14f2968a2f3c41770e0cfa07270c24ff22ae98705a6a7f3bfbacd727a9a",
+      "rows": 465
+    },
+    {
+      "path": "operations/maintenance_work_orders.parquet",
+      "bytes": 4487,
+      "sha256": "ce5592637893c0b3e43ee20861ad989869acca968f1fefbe4cae44505236cc6e",
+      "rows": 55
+    },
+    {
+      "path": "operations/quality_assessments.parquet",
+      "bytes": 8421,
+      "sha256": "878f33677154cec3b3943a273b99074bad404158a88bf3c67a726d4ea779e04d",
+      "rows": 230
+    },
+    {
+      "path": "operations/weighbridge_tickets.parquet",
+      "bytes": 17249,
+      "sha256": "15d8ec6f907ee7ed269886d54fa27fe0903e3a348ab6512889155e1d8f25e6e4",
+      "rows": 323
+    },
+    {
+      "path": "reference/contract_versions.parquet",
+      "bytes": 13193,
+      "sha256": "604e7f49eaeaa4e6b2ea8aa6d2a2cac7c2060f9179af9412c4c6b88b800d57be",
+      "rows": 65
+    },
+    {
+      "path": "reference/contracts.parquet",
+      "bytes": 4967,
+      "sha256": "7249d81ed9f260d00ca2304b6331402728781ca61bc597203157f2882084d5d8",
+      "rows": 50
+    },
+    {
+      "path": "reference/customers.parquet",
+      "bytes": 1841,
+      "sha256": "bb867e6ce5c6b71a38b49eea59cb4850d84c4961b9a35d454e1fb37b8d317135",
+      "rows": 4
+    },
+    {
+      "path": "reference/device_installations.parquet",
+      "bytes": 2156,
+      "sha256": "998f274879820f17567b20fa8bf12f36a7bce5bb5ad0d26a7c968799c47c90f3",
+      "rows": 50
+    },
+    {
+      "path": "reference/devices.parquet",
+      "bytes": 7508,
+      "sha256": "9b9f0fd852dd2fff57f8583e57835cbd33bdc8f527119fca6b7b9f3109abd62a",
+      "rows": 50
+    },
+    {
+      "path": "reference/material_classes.parquet",
+      "bytes": 2799,
+      "sha256": "958c04eb4acad52d04365f921ef0db28663233e48dd10902dc0f4a72a464d579",
+      "rows": 6
+    },
+    {
+      "path": "reference/operators.parquet",
+      "bytes": 1963,
+      "sha256": "4f641d5db364a1829fecc0474c6c8e83f3c0e618c20303c209fe98ac35c7eab4",
+      "rows": 5
+    },
+    {
+      "path": "reference/price_index_monthly.parquet",
+      "bytes": 2209,
+      "sha256": "7cbcfe2dc774aba355e3dc627f899d2caf82845b4b1d9b6f1ef96e6fe392b089",
+      "rows": 12
+    },
+    {
+      "path": "reference/quality_grade_rules.parquet",
+      "bytes": 1697,
+      "sha256": "87e3fca522b508bd133c62d1c93954e21185c0159d33c49f98baf81d73be73e8",
+      "rows": 4
+    },
+    {
+      "path": "reference/regions.parquet",
+      "bytes": 1606,
+      "sha256": "da967ea999da1e1b1f3549298aa2871e090e4abcb668c5c7f5628afa7218127d",
+      "rows": 6
+    },
+    {
+      "path": "reference/sensor_registry.parquet",
+      "bytes": 3264,
+      "sha256": "2446941ecf14d32645cb43ff77b98d00cf919d12ba4ae6d7b0a409627e5c98df",
+      "rows": 50
+    },
+    {
+      "path": "reference/site_calendar.parquet",
+      "bytes": 3385,
+      "sha256": "904a3cf1f3b570644f361008ea684bce36340beb84cfe160cc47a7150173afb6",
+      "rows": 1440
+    },
+    {
+      "path": "reference/sites.parquet",
+      "bytes": 4251,
+      "sha256": "c3d7407d75ae7ed09186734142549403535962a8190cf95b18fec6cae8ae5f81",
+      "rows": 16
+    },
+    {
+      "path": "telemetry/telemetry_daily_summary.parquet",
+      "bytes": 58393,
+      "sha256": "5c70e23ec8630d51eb74a485bea826990e202bc791474db6ffbf94b5c4d1e1a6",
+      "rows": 4486
+    },
+    {
+      "path": "telemetry/telemetry_hourly/month=2026-07/part-00000.parquet",
+      "bytes": 786752,
+      "sha256": "ac4c8843afbeab3e1d37f5ffd33160e5882d433d606eadf7219ec40614263eaf",
+      "rows": 36621
+    },
+    {
+      "path": "telemetry/telemetry_hourly/month=2026-08/part-00000.parquet",
+      "bytes": 796527,
+      "sha256": "f74a01b9fc75810756313fe0dacf1927b990128c2d4103bbba9efaf397109cfc",
+      "rows": 36836
+    },
+    {
+      "path": "telemetry/telemetry_hourly/month=2026-09/part-00000.parquet",
+      "bytes": 759080,
+      "sha256": "7a1049731b5e727486559ff02d0f43335c051af542344049a400fbccb4f32129",
+      "rows": 33294
+    }
+  ]
+}

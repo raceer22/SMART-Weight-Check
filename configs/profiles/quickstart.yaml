@@ -1,0 +1,19 @@
+profile: quickstart
+description: "50 fictional compactors, 90 days, hourly telemetry + daily summary, CSV-first. Laptop friendly."
+target_devices: 50
+start_date: "2026-07-01"
+n_days: 90
+hourly_telemetry: true
+write_csv: true
+write_parquet: true
+holdout_org_fraction: 0.0        # quickstart is fully public (no private hold-out customers)
+label_periods:                    # [start, end) local dates
+  train: ["2026-07-01", "2026-08-16"]
+  validation: ["2026-08-16", "2026-09-06"]
+  test: ["2026-09-06", "2026-09-29"]
+decision_case_every_days: 14
+decision_replications: 8
+decision_horizon_days: 18
+private_decision_cutoff: null
+scenario_intensity: 1.6           # quickstart over-samples scenarios so 50 devices show variety
+chunk_devices: 50

@@ -1,0 +1,17 @@
+site_id,customer_id,site_name,sector,region_code,municipality,billable_round_trip_km,outdoor_material_staging,opening_days_mon_sun,opening_hours_local,timezone,synthetic
+SITE-00001,ORG-0001,Ylivieska site 1 (ORG-0001),manufacturing,FI-17,Ylivieska,50,False,1111100,06-22,Europe/Helsinki,True
+SITE-00002,ORG-0001,Oulu site 2 (ORG-0001),manufacturing,FI-17,Oulu,38,False,1111100,06-22,Europe/Helsinki,True
+SITE-00003,ORG-0001,Oulu site 3 (ORG-0001),manufacturing,FI-17,Oulu,23,False,1111100,06-22,Europe/Helsinki,True
+SITE-00004,ORG-0002,Helsinki site 1 (ORG-0002),manufacturing,FI-01,Helsinki,28,False,1111100,06-22,Europe/Helsinki,True
+SITE-00005,ORG-0002,Porvoo site 2 (ORG-0002),manufacturing,FI-01,Porvoo,32,False,1111100,06-22,Europe/Helsinki,True
+SITE-00006,ORG-0003,Tampere site 1 (ORG-0003),logistics_warehouse,FI-11,Tampere,24,False,1111110,06-22,Europe/Helsinki,True
+SITE-00007,ORG-0003,Ylöjärvi site 2 (ORG-0003),logistics_warehouse,FI-11,Ylöjärvi,16,False,1111110,06-22,Europe/Helsinki,True
+SITE-00008,ORG-0003,Valkeakoski site 3 (ORG-0003),logistics_warehouse,FI-11,Valkeakoski,34,True,1111110,06-22,Europe/Helsinki,True
+SITE-00009,ORG-0004,Kangasala site 1 (ORG-0004),manufacturing,FI-11,Kangasala,54,False,1111100,06-22,Europe/Helsinki,True
+SITE-00010,ORG-0004,Kempele site 2 (ORG-0004),manufacturing,FI-17,Kempele,30,True,1111100,06-22,Europe/Helsinki,True
+SITE-00011,ORG-0004,Hyvinkää site 3 (ORG-0004),manufacturing,FI-01,Hyvinkää,19,True,1111100,06-22,Europe/Helsinki,True
+SITE-00012,ORG-0004,Raahe site 4 (ORG-0004),manufacturing,FI-17,Raahe,46,False,1111100,06-22,Europe/Helsinki,True
+SITE-00013,ORG-0004,Kuusamo site 5 (ORG-0004),manufacturing,FI-17,Kuusamo,48,False,1111100,06-22,Europe/Helsinki,True
+SITE-00014,ORG-0004,Porvoo site 6 (ORG-0004),manufacturing,FI-01,Porvoo,22,True,1111100,06-22,Europe/Helsinki,True
+SITE-00015,ORG-0004,Lohja site 7 (ORG-0004),manufacturing,FI-01,Lohja,47,False,1111100,06-22,Europe/Helsinki,True
+SITE-00016,ORG-0004,Raahe site 8 (ORG-0004),manufacturing,FI-17,Raahe,17,False,1111100,06-22,Europe/Helsinki,True

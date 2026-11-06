@@ -1,0 +1,7 @@
+region_code,region_name,median_billable_km,remote_surcharge_eur
+FI-02,Varsinais-Suomi,22,0
+FI-01,Uusimaa,26,0
+FI-11,Pirkanmaa,24,0
+FI-08,Keski-Suomi,38,0
+FI-17,Pohjois-Pohjanmaa,42,15
+FI-19,Lappi,85,35

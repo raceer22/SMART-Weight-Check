@@ -1,0 +1,22 @@
+profile: enterprise
+description: "Stress test: ~5,000 fictional compactors, 730 days, hourly telemetry, streamed in device chunks."
+target_devices: 5000
+start_date: "2024-10-01"
+n_days: 730
+hourly_telemetry: true
+write_csv: false
+write_parquet: true
+csv_sample_devices: 0
+holdout_org_fraction: 0.10
+label_periods:
+  train: ["2024-10-01", "2026-04-01"]
+  validation: ["2026-04-01", "2026-07-01"]
+  test: ["2026-07-01", "2026-10-01"]
+decision_case_every_days: 112
+decision_replications: 2
+decision_horizon_days: 56
+private_decision_cutoff: "2026-07-01"
+scenario_intensity: 1.0
+chunk_devices: 60
+market_regimes: true              # adds a second-year market regime shift in price indices
+skip_truth_hourly: false

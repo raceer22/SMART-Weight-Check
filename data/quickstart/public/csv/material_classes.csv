@@ -1,0 +1,7 @@
+material_stream,credit_eligible,customer_economics,typical_compacted_density_kg_m3,max_days_between_collections,price_index_id,assumption_note
+cardboard,True,CREDIT_ELIGIBLE,190,28,IDX-OCC,"ILLUSTRATIVE assumption, not a measured or product value"
+paper,False,CHARGEABLE,330,28,,"ILLUSTRATIVE assumption, not a measured or product value"
+plastic_film,True,CREDIT_ELIGIBLE,140,28,IDX-FILM,"ILLUSTRATIVE assumption, not a measured or product value"
+mixed_plastic,True,CREDIT_ELIGIBLE,115,28,IDX-MIXPL,"ILLUSTRATIVE assumption, not a measured or product value"
+mixed_waste,False,CHARGEABLE,380,21,,"ILLUSTRATIVE assumption, not a measured or product value"
+biowaste,False,CHARGEABLE,620,7,,"ILLUSTRATIVE assumption, not a measured or product value"

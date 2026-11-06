@@ -1,0 +1,6 @@
+operator_id,operator_name,regions_served,weighbridge_data_shared,api_feed,synthetic
+OP-A,Hauler Alpha (fictional),"FI-02,FI-01,FI-11",True,True,True
+OP-B,Hauler Beta (fictional),"FI-01,FI-08,FI-11",True,False,True
+OP-C,Hauler Gamma (fictional),"FI-17,FI-19,FI-08",True,False,True
+OP-D,Hauler Delta (fictional),"FI-02,FI-11",False,False,True
+OP-E,Hauler Epsilon (fictional),"FI-01,FI-02,FI-17,FI-19",True,True,True

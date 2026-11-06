@@ -1,0 +1,4337 @@
+{
+ "profile": "quickstart",
+ "n_cases": 119,
+ "cases": [
+  {
+   "case_id": "G-FIN-U001",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "276.71"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "276.71",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-426.04",
+    "total_customer_cost_eur": "426.04",
+    "collection_cost_eur_per_t": "63.82"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U002",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-149.33",
+    "total_customer_cost_eur": "149.33",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U003",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-149.33",
+    "total_customer_cost_eur": "149.33",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U004",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "14.78"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "14.78",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-164.11",
+    "total_customer_cost_eur": "164.11",
+    "collection_cost_eur_per_t": "1194.64"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U005",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "210.49"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "334.33",
+    "processing_cost_eur": "210.49",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-544.82",
+    "total_customer_cost_eur": "544.82",
+    "collection_cost_eur_per_t": "187.83"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U006",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U007",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U008",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U009",
+   "category": "financial_unit",
+   "variant": "hybrid_mixed_waste",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U010",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "312.75"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "16.07"
+     ]
+    ],
+    "collection_cost_eur": "373.22",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-373.22",
+    "total_customer_cost_eur": "373.22",
+    "collection_cost_eur_per_t": "159.50"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U011",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "312.75"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "16.07"
+     ]
+    ],
+    "collection_cost_eur": "373.22",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-373.22",
+    "total_customer_cost_eur": "373.22",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U012",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "312.75"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "16.07"
+     ]
+    ],
+    "collection_cost_eur": "373.22",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-373.22",
+    "total_customer_cost_eur": "373.22",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U013",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "312.75"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "16.07"
+     ]
+    ],
+    "collection_cost_eur": "373.22",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-373.22",
+    "total_customer_cost_eur": "373.22",
+    "collection_cost_eur_per_t": "2985.76"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U014",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "312.75"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "16.07"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "558.22",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-558.22",
+    "total_customer_cost_eur": "558.22",
+    "collection_cost_eur_per_t": "313.61"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U015",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U016",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U017",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U018",
+   "category": "financial_unit",
+   "variant": "fixed_per_lift_all_inclusive",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "FIXED_PER_LIFT",
+     "lift_fee_cents": 31275,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 0,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U019",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "2.00"
+     ],
+     [
+      "HAUL_PER_TONNE",
+      "157.72"
+     ],
+     [
+      "PROCESSING",
+      "276.71"
+     ]
+    ],
+    "collection_cost_eur": "204.12",
+    "processing_cost_eur": "276.71",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-480.83",
+    "total_customer_cost_eur": "480.83",
+    "collection_cost_eur_per_t": "87.23"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U020",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "2.00"
+     ],
+     [
+      "MIN_CHARGE_TOPUP",
+      "163.60"
+     ]
+    ],
+    "collection_cost_eur": "210.00",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-210.00",
+    "total_customer_cost_eur": "210.00",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U021",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "2.00"
+     ]
+    ],
+    "collection_cost_eur": "46.40",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-46.40",
+    "total_customer_cost_eur": "46.40",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U022",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "2.00"
+     ],
+     [
+      "HAUL_PER_TONNE",
+      "8.43"
+     ],
+     [
+      "PROCESSING",
+      "14.78"
+     ],
+     [
+      "MIN_CHARGE_TOPUP",
+      "140.39"
+     ]
+    ],
+    "collection_cost_eur": "195.22",
+    "processing_cost_eur": "14.78",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-210.00",
+    "total_customer_cost_eur": "210.00",
+    "collection_cost_eur_per_t": "1561.76"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U023",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "2.00"
+     ],
+     [
+      "HAUL_PER_TONNE",
+      "119.97"
+     ],
+     [
+      "PROCESSING",
+      "210.49"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "351.37",
+    "processing_cost_eur": "210.49",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-561.86",
+    "total_customer_cost_eur": "561.86",
+    "collection_cost_eur_per_t": "197.40"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U024",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U025",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U026",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U027",
+   "category": "financial_unit",
+   "variant": "per_tonne_with_minimum",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "PER_TONNE",
+     "lift_fee_cents": 0,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 6740,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 21000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U028",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "276.71"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "276.71",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-426.04",
+    "total_customer_cost_eur": "426.04",
+    "collection_cost_eur_per_t": "63.82"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U029",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "MIN_CHARGE_TOPUP",
+      "110.67"
+     ]
+    ],
+    "collection_cost_eur": "260.00",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-260.00",
+    "total_customer_cost_eur": "260.00",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U030",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ]
+    ],
+    "collection_cost_eur": "149.33",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-149.33",
+    "total_customer_cost_eur": "149.33",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U031",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "14.78"
+     ],
+     [
+      "MIN_CHARGE_TOPUP",
+      "95.89"
+     ]
+    ],
+    "collection_cost_eur": "245.22",
+    "processing_cost_eur": "14.78",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-260.00",
+    "total_customer_cost_eur": "260.00",
+    "collection_cost_eur_per_t": "1961.76"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U032",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "44.40"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "6.43"
+     ],
+     [
+      "PROCESSING",
+      "210.49"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "334.33",
+    "processing_cost_eur": "210.49",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-544.82",
+    "total_customer_cost_eur": "544.82",
+    "collection_cost_eur_per_t": "187.83"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U033",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U034",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U035",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U036",
+   "category": "financial_unit",
+   "variant": "hybrid_min_binding",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID_MIN",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 10,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 26000,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U037",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "259.00"
+     ],
+     [
+      "REMOTE_SURCHARGE",
+      "35"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "17.66"
+     ],
+     [
+      "PROCESSING",
+      "276.71"
+     ]
+    ],
+    "collection_cost_eur": "410.16",
+    "processing_cost_eur": "276.71",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-686.87",
+    "total_customer_cost_eur": "686.87",
+    "collection_cost_eur_per_t": "175.28"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U038",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "259.00"
+     ],
+     [
+      "REMOTE_SURCHARGE",
+      "35"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "17.66"
+     ]
+    ],
+    "collection_cost_eur": "410.16",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-410.16",
+    "total_customer_cost_eur": "410.16",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U039",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "259.00"
+     ],
+     [
+      "REMOTE_SURCHARGE",
+      "35"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "17.66"
+     ]
+    ],
+    "collection_cost_eur": "410.16",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-410.16",
+    "total_customer_cost_eur": "410.16",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U040",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "259.00"
+     ],
+     [
+      "REMOTE_SURCHARGE",
+      "35"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "17.66"
+     ],
+     [
+      "PROCESSING",
+      "14.78"
+     ]
+    ],
+    "collection_cost_eur": "410.16",
+    "processing_cost_eur": "14.78",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-424.94",
+    "total_customer_cost_eur": "424.94",
+    "collection_cost_eur_per_t": "3281.28"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U041",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "TRANSPORT",
+      "259.00"
+     ],
+     [
+      "REMOTE_SURCHARGE",
+      "35"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "17.66"
+     ],
+     [
+      "PROCESSING",
+      "210.49"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "595.16",
+    "processing_cost_eur": "210.49",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-805.65",
+    "total_customer_cost_eur": "805.65",
+    "collection_cost_eur_per_t": "334.36"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U042",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U043",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U044",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U045",
+   "category": "financial_unit",
+   "variant": "remote_region",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 30,
+     "contract_km": 170,
+     "remote_surcharge_cents": 3500,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U046",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 2340,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "4.43"
+     ],
+     [
+      "PROCESSING",
+      "276.71"
+     ]
+    ],
+    "collection_cost_eur": "102.93",
+    "processing_cost_eur": "276.71",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-379.64",
+    "total_customer_cost_eur": "379.64",
+    "collection_cost_eur_per_t": "43.99"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U047",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 0,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "4.43"
+     ]
+    ],
+    "collection_cost_eur": "102.93",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-102.93",
+    "total_customer_cost_eur": "102.93",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U048",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "4.43"
+     ]
+    ],
+    "collection_cost_eur": "102.93",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-102.93",
+    "total_customer_cost_eur": "102.93",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U049",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "COMPLETED",
+    "billing_mass_kg": 125,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "4.43"
+     ],
+     [
+      "PROCESSING",
+      "14.78"
+     ]
+    ],
+    "collection_cost_eur": "102.93",
+    "processing_cost_eur": "14.78",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-117.71",
+    "total_customer_cost_eur": "117.71",
+    "collection_cost_eur_per_t": "823.44"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U050",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "PARTIAL",
+    "billing_mass_kg": 1780,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": true,
+    "side_waste": true,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "LIFT_FEE",
+      "98.5"
+     ],
+     [
+      "FUEL_SURCHARGE",
+      "4.43"
+     ],
+     [
+      "PROCESSING",
+      "210.49"
+     ],
+     [
+      "SIDE_WASTE_FEE",
+      "75"
+     ],
+     [
+      "EMERGENCY_SURCHARGE",
+      "110"
+     ]
+    ],
+    "collection_cost_eur": "287.93",
+    "processing_cost_eur": "210.49",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-498.42",
+    "total_customer_cost_eur": "498.42",
+    "collection_cost_eur_per_t": "161.76"
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U051",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 23.9,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "CANCELLATION_FEE",
+      "45"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "45",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-45",
+    "total_customer_cost_eur": "45",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U052",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "CANCELLED_BY_CUSTOMER",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 24.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U053",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "WASTED_TRIP",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": null,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [
+     [
+      "WASTED_TRIP_FEE",
+      "89"
+     ]
+    ],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "89",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "-89",
+    "total_customer_cost_eur": "89",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-U054",
+   "category": "financial_unit",
+   "variant": "free_km_exceeds_route",
+   "inputs": {
+    "version": {
+     "contract_version_id": "GOLDEN-V1",
+     "pricing_model": "HYBRID",
+     "lift_fee_cents": 9850,
+     "per_km_cents": 185,
+     "free_km": 40,
+     "contract_km": 34,
+     "remote_surcharge_cents": 0,
+     "fuel_surcharge_bp": 450,
+     "haul_fee_cents_per_t": 0,
+     "processing_fee_cents_per_t": 11825,
+     "min_charge_cents": 0,
+     "credit_share_bp": 7500,
+     "credit_floor_cents_per_t": 0,
+     "contamination_penalty_cents": 6500,
+     "rejection_fee_cents_per_t": 14500,
+     "cancellation_fee_cents": 4500,
+     "wasted_trip_fee_cents": 8900,
+     "side_waste_fee_cents": 7500,
+     "emergency_surcharge_cents": 11000,
+     "rental_cents_per_month": 0,
+     "default_weight_kg": 2000,
+     "target_collection_cost_cents_per_t": 6000
+    },
+    "status": "SKIPPED_LOW_FILL",
+    "billing_mass_kg": null,
+    "grade": null,
+    "index_eur_per_t": null,
+    "emergency": false,
+    "side_waste": false,
+    "notice_hours": 26.0,
+    "credit_eligible": false
+   },
+   "expected": {
+    "lines": [],
+    "collection_cost_eur": "0",
+    "processing_cost_eur": "0",
+    "penalties_eur": "0",
+    "material_credit_eur": "0",
+    "net_material_contribution_eur": "0",
+    "total_customer_cost_eur": "0",
+    "collection_cost_eur_per_t": null
+   },
+   "computed_by": "reference_decimal (independent Decimal implementation)"
+  },
+  {
+   "case_id": "G-FIN-D-001",
+   "category": "financial_dataset",
+   "collection_id": "COL-00001-0005",
+   "inputs": {
+    "contract_version_id": "CTR-00001-V2",
+    "billing_mass_kg": 2140.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 228.8,
+    "processing_cost_eur": 283.87,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -512.67,
+    "collection_cost_eur_per_t": 106.92
+   }
+  },
+  {
+   "case_id": "G-FIN-D-002",
+   "category": "financial_dataset",
+   "collection_id": "COL-00031-0002",
+   "inputs": {
+    "contract_version_id": "CTR-00031-V1",
+    "billing_mass_kg": 1680.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 90.68
+   },
+   "expected": {
+    "collection_cost_eur": 110.74,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 95.98,
+    "net_material_contribution_eur": -14.76,
+    "collection_cost_eur_per_t": 65.92
+   }
+  },
+  {
+   "case_id": "G-FIN-D-003",
+   "category": "financial_dataset",
+   "collection_id": "COL-00035-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00035-V1",
+    "billing_mass_kg": 220.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 209.17,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 11.92,
+    "net_material_contribution_eur": -197.25,
+    "collection_cost_eur_per_t": 950.77
+   }
+  },
+  {
+   "case_id": "G-FIN-D-004",
+   "category": "financial_dataset",
+   "collection_id": "COL-00024-0013",
+   "inputs": {
+    "contract_version_id": "CTR-00024-V1",
+    "billing_mass_kg": 1620.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 203.09,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 87.25,
+    "net_material_contribution_eur": -115.84,
+    "collection_cost_eur_per_t": 125.36
+   }
+  },
+  {
+   "case_id": "G-FIN-D-005",
+   "category": "financial_dataset",
+   "collection_id": "COL-00020-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00020-V1",
+    "billing_mass_kg": 480.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 181.11,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 27.1,
+    "net_material_contribution_eur": -154.01,
+    "collection_cost_eur_per_t": 377.31
+   }
+  },
+  {
+   "case_id": "G-FIN-D-006",
+   "category": "financial_dataset",
+   "collection_id": "COL-00020-0003",
+   "inputs": {
+    "contract_version_id": "CTR-00020-V1",
+    "billing_mass_kg": 2020.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 181.11,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 114.05,
+    "net_material_contribution_eur": -67.06,
+    "collection_cost_eur_per_t": 89.66
+   }
+  },
+  {
+   "case_id": "G-FIN-D-007",
+   "category": "financial_dataset",
+   "collection_id": "COL-00042-0002",
+   "inputs": {
+    "contract_version_id": "CTR-00042-V1",
+    "billing_mass_kg": 2140.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 116.1,
+    "processing_cost_eur": 271.07,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -387.17,
+    "collection_cost_eur_per_t": 54.25
+   }
+  },
+  {
+   "case_id": "G-FIN-D-008",
+   "category": "financial_dataset",
+   "collection_id": "COL-00011-0004",
+   "inputs": {
+    "contract_version_id": "CTR-00011-V1",
+    "billing_mass_kg": 3660.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 173.88,
+    "processing_cost_eur": 441.07,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -614.95,
+    "collection_cost_eur_per_t": 47.51
+   }
+  },
+  {
+   "case_id": "G-FIN-D-009",
+   "category": "financial_dataset",
+   "collection_id": "COL-00046-0005",
+   "inputs": {
+    "contract_version_id": "CTR-00046-V1",
+    "billing_mass_kg": 1520.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 90.68
+   },
+   "expected": {
+    "collection_cost_eur": 278.56,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -278.56,
+    "collection_cost_eur_per_t": 183.26
+   }
+  },
+  {
+   "case_id": "G-FIN-D-010",
+   "category": "financial_dataset",
+   "collection_id": "COL-00008-0004",
+   "inputs": {
+    "contract_version_id": "CTR-00008-V2",
+    "billing_mass_kg": 1120.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 90.68
+   },
+   "expected": {
+    "collection_cost_eur": 216.65,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 67.33,
+    "net_material_contribution_eur": -149.32,
+    "collection_cost_eur_per_t": 193.44
+   }
+  },
+  {
+   "case_id": "G-FIN-D-011",
+   "category": "financial_dataset",
+   "collection_id": "COL-00002-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00002-V1",
+    "billing_mass_kg": 1100.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 184.43,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 62.11,
+    "net_material_contribution_eur": -122.32,
+    "collection_cost_eur_per_t": 167.66
+   }
+  },
+  {
+   "case_id": "G-FIN-D-012",
+   "category": "financial_dataset",
+   "collection_id": "COL-00009-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00009-V1",
+    "billing_mass_kg": 280.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 29.3
+   },
+   "expected": {
+    "collection_cost_eur": 223.09,
+    "processing_cost_eur": 9.18,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 5.74,
+    "net_material_contribution_eur": -226.53,
+    "collection_cost_eur_per_t": 796.75
+   }
+  },
+  {
+   "case_id": "G-FIN-D-013",
+   "category": "financial_dataset",
+   "collection_id": "COL-00031-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00031-V1",
+    "billing_mass_kg": 1380.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 110.74,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 78.04,
+    "net_material_contribution_eur": -32.7,
+    "collection_cost_eur_per_t": 80.25
+   }
+  },
+  {
+   "case_id": "G-FIN-D-014",
+   "category": "financial_dataset",
+   "collection_id": "COL-00030-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00030-V1",
+    "billing_mass_kg": 1640.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 196.49,
+    "processing_cost_eur": 182.88,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -379.37,
+    "collection_cost_eur_per_t": 119.81
+   }
+  },
+  {
+   "case_id": "G-FIN-D-015",
+   "category": "financial_dataset",
+   "collection_id": "COL-00048-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00048-V1",
+    "billing_mass_kg": 2100.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 138.45,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 144.19,
+    "net_material_contribution_eur": 5.74,
+    "collection_cost_eur_per_t": 65.93
+   }
+  },
+  {
+   "case_id": "G-FIN-D-016",
+   "category": "financial_dataset",
+   "collection_id": "COL-00016-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00016-V1",
+    "billing_mass_kg": 140.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "C",
+    "index_eur_per_t": 29.3
+   },
+   "expected": {
+    "collection_cost_eur": 164.66,
+    "processing_cost_eur": 4.4,
+    "penalties_eur": 92.61,
+    "material_credit_eur": 2.09,
+    "net_material_contribution_eur": -259.58,
+    "collection_cost_eur_per_t": 1176.14
+   }
+  },
+  {
+   "case_id": "G-FIN-D-017",
+   "category": "financial_dataset",
+   "collection_id": "COL-00013-0002",
+   "inputs": {
+    "contract_version_id": "CTR-00013-V1",
+    "billing_mass_kg": 680.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 105.34
+   },
+   "expected": {
+    "collection_cost_eur": 296.86,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 63.04,
+    "net_material_contribution_eur": -233.82,
+    "collection_cost_eur_per_t": 436.56
+   }
+  },
+  {
+   "case_id": "G-FIN-D-018",
+   "category": "financial_dataset",
+   "collection_id": "COL-00006-0008",
+   "inputs": {
+    "contract_version_id": "CTR-00006-V1",
+    "billing_mass_kg": 540.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 186.99,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 39.26,
+    "net_material_contribution_eur": -147.73,
+    "collection_cost_eur_per_t": 346.28
+   }
+  },
+  {
+   "case_id": "G-FIN-D-019",
+   "category": "financial_dataset",
+   "collection_id": "COL-00001-0006",
+   "inputs": {
+    "contract_version_id": "CTR-00001-V2",
+    "billing_mass_kg": 2040.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 228.8,
+    "processing_cost_eur": 270.61,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -499.41,
+    "collection_cost_eur_per_t": 112.16
+   }
+  },
+  {
+   "case_id": "G-FIN-D-020",
+   "category": "financial_dataset",
+   "collection_id": "COL-00047-0003",
+   "inputs": {
+    "contract_version_id": "CTR-00047-V1",
+    "billing_mass_kg": 720.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 241.21,
+    "processing_cost_eur": 85.93,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -327.14,
+    "collection_cost_eur_per_t": 335.01
+   }
+  },
+  {
+   "case_id": "G-FIN-D-021",
+   "category": "financial_dataset",
+   "collection_id": "COL-00003-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00003-V1",
+    "billing_mass_kg": 980.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 29.3
+   },
+   "expected": {
+    "collection_cost_eur": 241.02,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -241.02,
+    "collection_cost_eur_per_t": 245.94
+   }
+  },
+  {
+   "case_id": "G-FIN-D-022",
+   "category": "financial_dataset",
+   "collection_id": "COL-00043-0005",
+   "inputs": {
+    "contract_version_id": "CTR-00043-V2",
+    "billing_mass_kg": 240.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 90.68
+   },
+   "expected": {
+    "collection_cost_eur": 161.25,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 15.35,
+    "net_material_contribution_eur": -145.9,
+    "collection_cost_eur_per_t": 671.88
+   }
+  },
+  {
+   "case_id": "G-FIN-D-023",
+   "category": "financial_dataset",
+   "collection_id": "COL-00026-0006",
+   "inputs": {
+    "contract_version_id": "CTR-00026-V2",
+    "billing_mass_kg": 220.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 243.51,
+    "processing_cost_eur": 28.42,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -271.93,
+    "collection_cost_eur_per_t": 1106.86
+   }
+  },
+  {
+   "case_id": "G-FIN-D-024",
+   "category": "financial_dataset",
+   "collection_id": "COL-00001-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00001-V1",
+    "billing_mass_kg": 520.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 228.8,
+    "processing_cost_eur": 61.4,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -290.2,
+    "collection_cost_eur_per_t": 440.0
+   }
+  },
+  {
+   "case_id": "G-FIN-D-025",
+   "category": "financial_dataset",
+   "collection_id": "COL-00033-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00033-V1",
+    "billing_mass_kg": 420.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 105.34
+   },
+   "expected": {
+    "collection_cost_eur": 232.65,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 28.32,
+    "net_material_contribution_eur": -204.33,
+    "collection_cost_eur_per_t": 553.93
+   }
+  },
+  {
+   "case_id": "G-FIN-D-026",
+   "category": "financial_dataset",
+   "collection_id": "COL-00026-0003",
+   "inputs": {
+    "contract_version_id": "CTR-00026-V2",
+    "billing_mass_kg": 2260.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 166.17,
+    "processing_cost_eur": 291.97,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -458.14,
+    "collection_cost_eur_per_t": 73.53
+   }
+  },
+  {
+   "case_id": "G-FIN-D-027",
+   "category": "financial_dataset",
+   "collection_id": "COL-00014-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00014-V1",
+    "billing_mass_kg": 500.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 490.89,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -490.89,
+    "collection_cost_eur_per_t": 981.78
+   }
+  },
+  {
+   "case_id": "G-FIN-D-028",
+   "category": "financial_dataset",
+   "collection_id": "COL-00025-0003",
+   "inputs": {
+    "contract_version_id": "CTR-00025-V1",
+    "billing_mass_kg": 1260.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "A",
+    "index_eur_per_t": 105.34
+   },
+   "expected": {
+    "collection_cost_eur": 233.21,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 107.52,
+    "net_material_contribution_eur": -125.69,
+    "collection_cost_eur_per_t": 185.09
+   }
+  },
+  {
+   "case_id": "G-FIN-D-029",
+   "category": "financial_dataset",
+   "collection_id": "COL-00034-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00034-V1",
+    "billing_mass_kg": 1580.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": NaN,
+    "index_eur_per_t": NaN
+   },
+   "expected": {
+    "collection_cost_eur": 85.55,
+    "processing_cost_eur": 182.25,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 0.0,
+    "net_material_contribution_eur": -267.8,
+    "collection_cost_eur_per_t": 54.15
+   }
+  },
+  {
+   "case_id": "G-FIN-D-030",
+   "category": "financial_dataset",
+   "collection_id": "COL-00008-0001",
+   "inputs": {
+    "contract_version_id": "CTR-00008-V1",
+    "billing_mass_kg": 640.0,
+    "billing_mass_basis": "WEIGHBRIDGE_NET",
+    "grade": "B",
+    "index_eur_per_t": 89.76
+   },
+   "expected": {
+    "collection_cost_eur": 186.41,
+    "processing_cost_eur": 0.0,
+    "penalties_eur": 0.0,
+    "material_credit_eur": 38.09,
+    "net_material_contribution_eur": -148.32,
+    "collection_cost_eur_per_t": 291.27
+   }
+  },
+  {
+   "case_id": "G-DQ-061",
+   "category": "data_quality",
+   "description": "Duplicated telemetry delivery: same message_id twice with identical payload; count once after dedup",
+   "inputs": {
+    "message_id": "1000301",
+    "n": "2"
+   },
+   "expected": {
+    "deliveries": 2,
+    "unique_measurements": 1
+   }
+  },
+  {
+   "case_id": "G-DQ-062",
+   "category": "data_quality",
+   "description": "Duplicated telemetry delivery: same message_id twice with identical payload; count once after dedup",
+   "inputs": {
+    "message_id": "1000682",
+    "n": "2"
+   },
+   "expected": {
+    "deliveries": 2,
+    "unique_measurements": 1
+   }
+  },
+  {
+   "case_id": "G-DQ-063",
+   "category": "data_quality",
+   "description": "Duplicated telemetry delivery: same message_id twice with identical payload; count once after dedup",
+   "inputs": {
+    "message_id": "1000733",
+    "n": "2"
+   },
+   "expected": {
+    "deliveries": 2,
+    "unique_measurements": 1
+   }
+  },
+  {
+   "case_id": "G-DQ-064",
+   "category": "data_quality",
+   "description": "Buffered delivery arrives after a newer message (out-of-order); order by measured_at, not received_at",
+   "inputs": {
+    "message_id": "1000725",
+    "device_id": "CMP-00001",
+    "measured_at": "2026-07-31 02:58:31.755000+00:00",
+    "received_at": "2026-07-31 03:05:19.154000+00:00"
+   },
+   "expected": {
+    "delivery_mode": "BUFFERED",
+    "received_after_measured": true
+   }
+  },
+  {
+   "case_id": "G-DQ-065",
+   "category": "data_quality",
+   "description": "Buffered delivery arrives after a newer message (out-of-order); order by measured_at, not received_at",
+   "inputs": {
+    "message_id": "1001661",
+    "device_id": "CMP-00001",
+    "measured_at": "2026-09-08 02:58:38.653000+00:00",
+    "received_at": "2026-09-08 11:07:33.285000+00:00"
+   },
+   "expected": {
+    "delivery_mode": "BUFFERED",
+    "received_after_measured": true
+   }
+  },
+  {
+   "case_id": "G-DQ-066",
+   "category": "data_quality",
+   "description": "Buffered delivery arrives after a newer message (out-of-order); order by measured_at, not received_at",
+   "inputs": {
+    "message_id": "1001662",
+    "device_id": "CMP-00001",
+    "measured_at": "2026-09-08 03:56:03.872000+00:00",
+    "received_at": "2026-09-08 11:23:23.313000+00:00"
+   },
+   "expected": {
+    "delivery_mode": "BUFFERED",
+    "received_after_measured": true
+   }
+  },
+  {
+   "case_id": "G-DQ-067",
+   "category": "data_quality",
+   "description": "Weight sensor fault: mass_kg is NULL and must not be imputed",
+   "inputs": {
+    "message_id": "6000780",
+    "quality_flag": "SENSOR_FAULT"
+   },
+   "expected": {
+    "mass_kg": null
+   }
+  },
+  {
+   "case_id": "G-DQ-068",
+   "category": "data_quality",
+   "description": "Weight sensor fault: mass_kg is NULL and must not be imputed",
+   "inputs": {
+    "message_id": "6000781",
+    "quality_flag": "SENSOR_FAULT"
+   },
+   "expected": {
+    "mass_kg": null
+   }
+  },
+  {
+   "case_id": "G-DQ-069",
+   "category": "data_quality",
+   "description": "Weight sensor fault: mass_kg is NULL and must not be imputed",
+   "inputs": {
+    "message_id": "6000782",
+    "quality_flag": "SENSOR_FAULT"
+   },
+   "expected": {
+    "mass_kg": null
+   }
+  },
+  {
+   "case_id": "G-DQ-070",
+   "category": "data_quality",
+   "description": "Device without weight measurement: all mass_kg NULL; use weighbridge or invoice tonnage instead",
+   "inputs": {
+    "device_id": "CMP-00012"
+   },
+   "expected": {
+    "telemetry_mass_non_null_rows": 0
+   }
+  },
+  {
+   "case_id": "G-DQ-071",
+   "category": "data_quality",
+   "description": "Device without weight measurement: all mass_kg NULL; use weighbridge or invoice tonnage instead",
+   "inputs": {
+    "device_id": "CMP-00028"
+   },
+   "expected": {
+    "telemetry_mass_non_null_rows": 0
+   }
+  },
+  {
+   "case_id": "G-DQ-072",
+   "category": "data_quality",
+   "description": "Device without weight measurement: all mass_kg NULL; use weighbridge or invoice tonnage instead",
+   "inputs": {
+    "device_id": "CMP-00043"
+   },
+   "expected": {
+    "telemetry_mass_non_null_rows": 0
+   }
+  },
+  {
+   "case_id": "G-DQ-073",
+   "category": "data_quality",
+   "description": "Lift with missing after-reading: device estimate is NULL (never filled)",
+   "inputs": {
+    "collection_id": "COL-00023-0003"
+   },
+   "expected": {
+    "device_estimated_collected_kg": null
+   }
+  },
+  {
+   "case_id": "G-DQ-074",
+   "category": "data_quality",
+   "description": "Lift with missing after-reading: device estimate is NULL (never filled)",
+   "inputs": {
+    "collection_id": "COL-00030-0001"
+   },
+   "expected": {
+    "device_estimated_collected_kg": null
+   }
+  },
+  {
+   "case_id": "G-DQ-075",
+   "category": "data_quality",
+   "description": "Combined load: allocated nets of one weighing event sum to the event net",
+   "inputs": {
+    "weighing_event_id": "WB-OP-A-00018-0005",
+    "net": "3220",
+    "s": "3220.0"
+   },
+   "expected": {
+    "sum_allocated_equals_net": true,
+    "net_kg": 3220
+   }
+  },
+  {
+   "case_id": "G-DQ-076",
+   "category": "data_quality",
+   "description": "Combined load: allocated nets of one weighing event sum to the event net",
+   "inputs": {
+    "weighing_event_id": "WB-OP-A-00020-0003",
+    "net": "4040",
+    "s": "4040.0"
+   },
+   "expected": {
+    "sum_allocated_equals_net": true,
+    "net_kg": 4040
+   }
+  },
+  {
+   "case_id": "G-DQ-077",
+   "category": "data_quality",
+   "description": "Combined load: allocated nets of one weighing event sum to the event net",
+   "inputs": {
+    "weighing_event_id": "WB-OP-A-00020-0006",
+    "net": "3740",
+    "s": "3740.0"
+   },
+   "expected": {
+    "sum_allocated_equals_net": true,
+    "net_kg": 3740
+   }
+  },
+  {
+   "case_id": "G-DQ-078",
+   "category": "data_quality",
+   "description": "Skipped hybrid lift: no charge expected",
+   "inputs": {
+    "collection_id": "COL-00006-0006"
+   },
+   "expected": {
+    "expected_invoice_amount_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DQ-079",
+   "category": "data_quality",
+   "description": "Skipped hybrid lift: no charge expected",
+   "inputs": {
+    "collection_id": "COL-00006-0007"
+   },
+   "expected": {
+    "expected_invoice_amount_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DQ-080",
+   "category": "data_quality",
+   "description": "Skipped hybrid lift: no charge expected",
+   "inputs": {
+    "collection_id": "COL-00006-0009"
+   },
+   "expected": {
+    "expected_invoice_amount_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DQ-081",
+   "category": "data_quality",
+   "description": "Contract amendment: an event on the effective date uses the new version",
+   "inputs": {
+    "contract_version_id": "CTR-00001-V2",
+    "contract_id": "CTR-00001",
+    "effective_from": "2026-08-04 00:00:00"
+   },
+   "expected": {
+    "version_applies_from_local_date": "2026-08-04"
+   }
+  },
+  {
+   "case_id": "G-DQ-082",
+   "category": "data_quality",
+   "description": "Contract amendment: an event on the effective date uses the new version",
+   "inputs": {
+    "contract_version_id": "CTR-00003-V2",
+    "contract_id": "CTR-00003",
+    "effective_from": "2026-09-05 00:00:00"
+   },
+   "expected": {
+    "version_applies_from_local_date": "2026-09-05"
+   }
+  },
+  {
+   "case_id": "G-DQ-083",
+   "category": "data_quality",
+   "description": "Contract amendment: an event on the effective date uses the new version",
+   "inputs": {
+    "contract_version_id": "CTR-00005-V2",
+    "contract_id": "CTR-00005",
+    "effective_from": "2026-09-04 00:00:00"
+   },
+   "expected": {
+    "version_applies_from_local_date": "2026-09-04"
+   }
+  },
+  {
+   "case_id": "G-DEC-D-054",
+   "category": "decision",
+   "decision_case_id": "DC-00029-00678",
+   "condition": "best_action = 'NO_ACTION'",
+   "expected": {
+    "best_action": "NO_ACTION",
+    "acceptable_actions": [
+     "LOWER_THRESHOLD",
+     "MASS_TARGET_TRIGGER",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DEC-D-055",
+   "category": "decision",
+   "decision_case_id": "DC-00050-01350",
+   "condition": "best_action = 'NO_ACTION'",
+   "expected": {
+    "best_action": "NO_ACTION",
+    "acceptable_actions": [
+     "INCREASE_FREQUENCY",
+     "MASS_TARGET_TRIGGER",
+     "NO_ACTION",
+     "REDUCE_FREQUENCY",
+     "SWITCH_TO_ON_CALL"
+    ],
+    "best_benefit_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DEC-D-056",
+   "category": "decision",
+   "decision_case_id": "DC-00040-00678",
+   "condition": "best_action = 'NO_ACTION'",
+   "expected": {
+    "best_action": "NO_ACTION",
+    "acceptable_actions": [
+     "LOWER_THRESHOLD",
+     "MASS_TARGET_TRIGGER",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DEC-D-057",
+   "category": "decision",
+   "decision_case_id": "DC-00009-01014",
+   "condition": "best_action <> 'NO_ACTION' AND NOT near_threshold",
+   "expected": {
+    "best_action": "MASS_TARGET_TRIGGER",
+    "acceptable_actions": [
+     "MASS_TARGET_TRIGGER",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 43.0
+   }
+  },
+  {
+   "case_id": "G-DEC-D-058",
+   "category": "decision",
+   "decision_case_id": "DC-00021-01014",
+   "condition": "best_action <> 'NO_ACTION' AND NOT near_threshold",
+   "expected": {
+    "best_action": "MASS_TARGET_TRIGGER",
+    "acceptable_actions": [
+     "MASS_TARGET_TRIGGER"
+    ],
+    "best_benefit_eur": 135.29
+   }
+  },
+  {
+   "case_id": "G-DEC-D-059",
+   "category": "decision",
+   "decision_case_id": "DC-00030-01014",
+   "condition": "best_action <> 'NO_ACTION' AND NOT near_threshold",
+   "expected": {
+    "best_action": "MASS_TARGET_TRIGGER",
+    "acceptable_actions": [
+     "MASS_TARGET_TRIGGER",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 48.88
+   }
+  },
+  {
+   "case_id": "G-DEC-D-060",
+   "category": "decision",
+   "decision_case_id": "DC-00048-00342",
+   "condition": "constraint_conflict",
+   "expected": {
+    "best_action": "RAISE_THRESHOLD",
+    "acceptable_actions": [
+     "LOWER_THRESHOLD",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 1.58
+   }
+  },
+  {
+   "case_id": "G-DEC-D-061",
+   "category": "decision",
+   "decision_case_id": "DC-00047-00342",
+   "condition": "constraint_conflict",
+   "expected": {
+    "best_action": "RAISE_THRESHOLD",
+    "acceptable_actions": [
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 137.77
+   }
+  },
+  {
+   "case_id": "G-DEC-D-062",
+   "category": "decision",
+   "decision_case_id": "DC-00024-01350",
+   "condition": "constraint_conflict",
+   "expected": {
+    "best_action": "MASS_TARGET_TRIGGER",
+    "acceptable_actions": [
+     "MASS_TARGET_TRIGGER"
+    ],
+    "best_benefit_eur": 1674.5
+   }
+  },
+  {
+   "case_id": "G-DEC-D-063",
+   "category": "decision",
+   "decision_case_id": "DC-00003-01014",
+   "condition": "hidden_cost_trap_present",
+   "expected": {
+    "best_action": "NO_ACTION",
+    "acceptable_actions": [
+     "MASS_TARGET_TRIGGER",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 0.0
+   }
+  },
+  {
+   "case_id": "G-DEC-D-064",
+   "category": "decision",
+   "decision_case_id": "DC-00005-01014",
+   "condition": "hidden_cost_trap_present",
+   "expected": {
+    "best_action": "RAISE_THRESHOLD",
+    "acceptable_actions": [
+     "LOWER_THRESHOLD",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 8.78
+   }
+  },
+  {
+   "case_id": "G-DEC-D-065",
+   "category": "decision",
+   "decision_case_id": "DC-00011-01350",
+   "condition": "hidden_cost_trap_present",
+   "expected": {
+    "best_action": "LOWER_THRESHOLD",
+    "acceptable_actions": [
+     "LOWER_THRESHOLD",
+     "NO_ACTION",
+     "RAISE_THRESHOLD"
+    ],
+    "best_benefit_eur": 0.17
+   }
+  }
+ ]
+}

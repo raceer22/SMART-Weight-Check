@@ -1,0 +1,5 @@
+grade,max_contamination_pct,credit_quality_factor,consequence
+A,4.0,1.0,full credit
+B,9.0,0.85,credit x 0.85
+C,18.0,0.6,credit x 0.60 + contamination penalty
+R,100.0,0.0,"rejected: no credit, reprocessing fee per t"

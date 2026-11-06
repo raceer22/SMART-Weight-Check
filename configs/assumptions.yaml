@@ -1,0 +1,228 @@
+# ---------------------------------------------------------------------------
+# Europress SMART Material Value Engine — synthetic world assumptions
+# ALL VALUES ARE ILLUSTRATIVE, ORDER-OF-MAGNITUDE ASSUMPTIONS CHOSEN BY SINCE AI.
+# They are NOT Europress product specifications, NOT measured customer data and
+# NOT market prices. They are configurable so teams can run sensitivity analyses.
+#
+# Europress is currently not a party to waste transport or treatment. Tariffs, processing fees and
+# material credits are agreed between the customer and the waste operator. All prices in this dataset
+# are hypothetical.
+#
+# Equipment classes COMBI (compactor and container permanently joined, emptied as one unit) and DUO
+# (stationary compactor, detachable container is emptied) are Europress machine-type categories. No
+# model-specific technical data is represented.
+# Maximum container size per class (Europress, 4 Nov 2026): COMBI 22 m3, DUO 30 m3. A unit whose container
+# exceeds the COMBI limit is a DUO unit (blocking validator check MAT:equipment_volume_limit).
+# Money: EUR excl. VAT. Mass: kg. Volume: m3. Distance: km (billable round trip).
+# ---------------------------------------------------------------------------
+assumptions_version: "1.0.0"
+timezone: "Europe/Helsinki"
+equipment_max_volume_m3: {COMBI: 22, DUO: 30}
+
+regions:
+  # code: [name, weight, median_billable_km, km_sigma, remote_surcharge_eur_per_lift]
+  FI-02: {name: "Varsinais-Suomi", weight: 0.26, median_km: 22, km_sigma: 0.45, remote_surcharge: 0}
+  FI-01: {name: "Uusimaa", weight: 0.30, median_km: 26, km_sigma: 0.40, remote_surcharge: 0}
+  FI-11: {name: "Pirkanmaa", weight: 0.16, median_km: 24, km_sigma: 0.45, remote_surcharge: 0}
+  FI-08: {name: "Keski-Suomi", weight: 0.10, median_km: 38, km_sigma: 0.50, remote_surcharge: 0}
+  FI-17: {name: "Pohjois-Pohjanmaa", weight: 0.12, median_km: 42, km_sigma: 0.55, remote_surcharge: 15}
+  FI-19: {name: "Lappi", weight: 0.06, median_km: 85, km_sigma: 0.50, remote_surcharge: 35}
+
+operators:
+  # Fictional haulers / treatment operators. Data-sharing behaviour models the
+  # real-world problem that operator weighbridge data is not always accessible.
+  # on_time_factor scales the on-time share of the delay mix; missed_factor scales the missed-visit probability.
+  # Quality differences between the fictional operators are synthetic and needed for the scorecard task.
+  OP-A: {name: "Hauler Alpha (fictional)", regions: [FI-02, FI-01, FI-11], weighbridge_share_prob: 0.97, share_lag_days: [0.5, 3], invoice_error_rate: 0.010, api_feed: true, on_time_factor: 1.2, missed_factor: 0.6}
+  OP-B: {name: "Hauler Beta (fictional)", regions: [FI-01, FI-08, FI-11], weighbridge_share_prob: 0.88, share_lag_days: [2, 12], invoice_error_rate: 0.020, api_feed: false, on_time_factor: 0.95, missed_factor: 1.0}
+  OP-C: {name: "Hauler Gamma (fictional)", regions: [FI-17, FI-19, FI-08], weighbridge_share_prob: 0.55, share_lag_days: [10, 45], invoice_error_rate: 0.035, api_feed: false, on_time_factor: 0.8, missed_factor: 1.8}
+  OP-D: {name: "Hauler Delta (fictional)", regions: [FI-02, FI-11], weighbridge_share_prob: 0.0, share_lag_days: [0, 0], invoice_error_rate: 0.025, api_feed: false, on_time_factor: 1.0, missed_factor: 1.4}
+  OP-E: {name: "Hauler Epsilon (fictional)", regions: [FI-01, FI-02, FI-17, FI-19], weighbridge_share_prob: 0.95, share_lag_days: [0.02, 0.5], invoice_error_rate: 0.012, api_feed: true, on_time_factor: 1.1, missed_factor: 0.8}
+
+materials:
+  # compacted_density: container density after compaction (kg/m3), mean and device-level CV
+  # compressibility: extra densification as the container fills (dimensionless)
+  # input_event_kg: median mass of one loading/compaction cycle
+  # max_days_between: hygiene / fire-safety / contractual maximum collection interval
+  # index: illustrative reference price (EUR/t) start value; credit basis (credit-eligible streams only)
+  # credit_eligible: only cardboard and plastics can earn a material credit; all other streams (incl. paper)
+  #   are chargeable to the customer (processing fee per tonne).
+  cardboard:     {credit_eligible: true,  compacted_density: 190, density_cv: 0.15, daily_density_cv: 0.07, compressibility: 0.25, moisture_sensitive: true,  base_moisture_pct: 8,  contamination_alpha: 1.6, contamination_beta: 45, input_event_kg: 18, max_days_between: 28, index_start: 95,  index_monthly_vol: 0.06, processing_fee: [0, 0],    equipment: [DUO, COMBI], volumes: [10, 12, 16, 20, 24, 30]}
+  paper:         {credit_eligible: false, compacted_density: 330, density_cv: 0.12, daily_density_cv: 0.05, compressibility: 0.15, moisture_sensitive: true,  base_moisture_pct: 6,  contamination_alpha: 1.2, contamination_beta: 55, input_event_kg: 22, max_days_between: 28, index_start: 0,   index_monthly_vol: 0.0,  processing_fee: [20, 45],  equipment: [DUO, COMBI], volumes: [6, 8, 10, 12, 16, 20]}
+  plastic_film:  {credit_eligible: true,  compacted_density: 140, density_cv: 0.18, daily_density_cv: 0.09, compressibility: 0.35, moisture_sensitive: false, base_moisture_pct: 2,  contamination_alpha: 2.0, contamination_beta: 28, input_event_kg: 9,  max_days_between: 28, index_start: 120, index_monthly_vol: 0.10, processing_fee: [0, 0],    equipment: [DUO, COMBI], volumes: [10, 12, 16, 20, 24]}
+  mixed_plastic: {credit_eligible: true,  compacted_density: 115, density_cv: 0.18, daily_density_cv: 0.10, compressibility: 0.30, moisture_sensitive: false, base_moisture_pct: 3,  contamination_alpha: 2.5, contamination_beta: 20, input_event_kg: 8,  max_days_between: 28, index_start: 12,  index_monthly_vol: 0.25, processing_fee: [25, 45],  equipment: [DUO], volumes: [10, 16, 20]}
+  mixed_waste:   {credit_eligible: false, compacted_density: 380, density_cv: 0.15, daily_density_cv: 0.08, compressibility: 0.20, moisture_sensitive: false, base_moisture_pct: 20, contamination_alpha: 0,   contamination_beta: 0,  input_event_kg: 25, max_days_between: 21, index_start: 0,   index_monthly_vol: 0.0,  processing_fee: [105, 135], equipment: [DUO, COMBI], volumes: [8, 10, 12, 16, 20, 24, 30]}
+  biowaste:      {credit_eligible: false, compacted_density: 620, density_cv: 0.10, daily_density_cv: 0.06, compressibility: 0.08, moisture_sensitive: false, base_moisture_pct: 70, contamination_alpha: 0,   contamination_beta: 0,  input_event_kg: 30, max_days_between: 7,  index_start: 0,   index_monthly_vol: 0.0,  processing_fee: [62, 88],  equipment: [COMBI], volumes: [3, 4, 6, 8, 10]}
+
+quality_grades:
+  # Quality is determined ONLY by the waste operator at its processing facility, using its own assessment.
+  # Europress has no technology to determine material quality before the facility; devices do not measure it.
+  # contamination share thresholds (operator assessment) -> credit quality factor (basis points)
+  A: {max_contamination: 0.04, quality_bp: 10000}
+  B: {max_contamination: 0.09, quality_bp: 8500}
+  C: {max_contamination: 0.18, quality_bp: 6000}
+  R: {max_contamination: 1.00, quality_bp: 0}       # rejected -> reprocessed as mixed waste
+
+sectors:
+  # streams: material -> [probability the site has the stream, median kg/day, log-sigma]
+  # open: weekday opening mask Mon..Sun, hours local [open, close)
+  # season: monthly multipliers Jan..Dec ; weekday: Mon..Sun multipliers
+  grocery_retail:
+    weight: 0.20
+    open_days: [1,1,1,1,1,1,1]
+    hours: [7, 22]
+    holiday_mode: reduced
+    streams: {cardboard: [1.0, 420, 0.45], plastic_film: [0.55, 70, 0.5], biowaste: [0.65, 180, 0.45], mixed_waste: [0.85, 260, 0.45]}
+    season: [0.92, 0.90, 0.95, 0.98, 1.00, 1.03, 1.05, 1.02, 0.98, 1.00, 1.05, 1.22]
+    weekday: [1.05, 0.95, 0.95, 1.05, 1.15, 1.10, 0.75]
+  nonfood_retail:
+    weight: 0.14
+    open_days: [1,1,1,1,1,1,1]
+    hours: [10, 20]
+    holiday_mode: closed
+    streams: {cardboard: [1.0, 230, 0.55], plastic_film: [0.5, 40, 0.55], mixed_waste: [0.75, 90, 0.5], paper: [0.15, 40, 0.5]}
+    season: [0.78, 0.82, 0.92, 0.98, 1.00, 0.95, 0.92, 0.98, 1.00, 1.05, 1.32, 1.55]
+    weekday: [1.10, 1.00, 0.95, 1.00, 1.05, 1.15, 0.55]
+  shopping_center:
+    weight: 0.08
+    open_days: [1,1,1,1,1,1,1]
+    hours: [9, 21]
+    holiday_mode: reduced
+    streams: {cardboard: [1.0, 900, 0.40], mixed_waste: [1.0, 700, 0.40], biowaste: [0.7, 300, 0.45], plastic_film: [0.6, 110, 0.5]}
+    season: [0.85, 0.85, 0.92, 0.95, 1.00, 1.00, 1.02, 1.00, 0.97, 1.00, 1.18, 1.45]
+    weekday: [0.95, 0.95, 0.95, 1.00, 1.10, 1.25, 0.80]
+  logistics_warehouse:
+    weight: 0.14
+    open_days: [1,1,1,1,1,1,0]
+    hours: [6, 22]
+    holiday_mode: closed
+    streams: {cardboard: [1.0, 650, 0.55], plastic_film: [0.9, 180, 0.55], mixed_waste: [0.8, 220, 0.5], mixed_plastic: [0.25, 60, 0.6]}
+    season: [0.88, 0.90, 0.95, 0.97, 0.98, 0.95, 0.85, 0.95, 1.00, 1.05, 1.30, 1.32]
+    weekday: [1.15, 1.05, 1.00, 1.00, 1.05, 0.45, 0.0]
+  manufacturing:
+    weight: 0.14
+    open_days: [1,1,1,1,1,0,0]
+    hours: [6, 22]
+    holiday_mode: closed
+    summer_shutdown_weeks: [27, 30]
+    streams: {mixed_waste: [1.0, 520, 0.55], cardboard: [0.85, 280, 0.6], mixed_plastic: [0.45, 90, 0.6], plastic_film: [0.5, 85, 0.6], paper: [0.2, 50, 0.5]}
+    season: [0.98, 1.00, 1.02, 1.02, 1.00, 0.98, 0.35, 0.92, 1.02, 1.03, 1.02, 0.85]
+    weekday: [1.05, 1.02, 1.00, 1.00, 0.93, 0.0, 0.0]
+  hospitality_hotel:
+    weight: 0.10
+    open_days: [1,1,1,1,1,1,1]
+    hours: [0, 24]
+    holiday_mode: peak
+    streams: {biowaste: [1.0, 160, 0.45], mixed_waste: [1.0, 210, 0.45], cardboard: [0.8, 90, 0.5], paper: [0.2, 25, 0.5]}
+    season: [0.85, 0.88, 0.92, 0.95, 1.00, 1.20, 1.35, 1.25, 1.00, 0.92, 0.90, 1.05]
+    weekday: [0.85, 0.90, 0.95, 1.00, 1.15, 1.25, 0.95]
+  food_processing:
+    weight: 0.10
+    open_days: [1,1,1,1,1,1,0]
+    hours: [5, 23]
+    holiday_mode: closed
+    streams: {biowaste: [1.0, 1100, 0.55], plastic_film: [0.8, 140, 0.5], cardboard: [0.85, 260, 0.5], mixed_waste: [0.9, 300, 0.5]}
+    season: [0.95, 0.95, 0.97, 1.00, 1.00, 1.00, 0.88, 0.97, 1.02, 1.03, 1.05, 1.15]
+    weekday: [1.05, 1.05, 1.00, 1.00, 1.00, 0.55, 0.0]
+  office_services:
+    weight: 0.10
+    open_days: [1,1,1,1,1,0,0]
+    hours: [7, 18]
+    holiday_mode: closed
+    streams: {paper: [1.0, 120, 0.55], cardboard: [0.6, 60, 0.55], mixed_waste: [0.85, 110, 0.5], biowaste: [0.5, 45, 0.5]}
+    season: [0.98, 1.00, 1.00, 0.98, 0.95, 0.85, 0.55, 0.80, 1.02, 1.03, 1.02, 0.85]
+    weekday: [1.05, 1.05, 1.02, 1.00, 0.88, 0.0, 0.0]
+
+organisations:
+  # heavy-tailed fleet sizes: share of orgs by number of sites
+  sites_per_org: {1: 0.46, 2: 0.18, 3: 0.12, 5: 0.10, 8: 0.07, 12: 0.05, 20: 0.02}
+  single_sector_prob: 0.85
+
+policies:
+  # share of devices by collection policy
+  # Europress review 30.10.2026: in practice most devices are emptied ON_CALL (fill-triggered); only a small
+  # share runs on a fixed schedule.
+  mix: {ON_CALL: 0.78, FIXED_SCHEDULE: 0.12, HYBRID: 0.10}
+  sizing_error_sigma: 0.32          # customer's misestimate of required frequency (lognormal)
+  on_call_threshold_pct: [60, 85]
+  hybrid_skip_below_pct: [30, 45]
+  lead_business_days_mean: 0.6
+  adhoc_after_full_hours: [6, 30]   # customer calls an extra collection once full this long
+
+operations:
+  operator_hours: [6, 18]
+  delay_mix:            # [probability, min_h, max_h]
+    on_time: [0.66, -2, 2]
+    late_hours: [0.22, 2, 8]
+    next_day: [0.08, 16, 30]
+    multi_day: [0.025, 40, 80]
+  missed_prob: 0.012
+  wasted_trip_prob: 0.007
+  random_cancel_prob: 0.015
+  partial_prob_default: 0.006
+  partial_prob_biowaste_winter: 0.05
+  partial_residual: [0.10, 0.40]
+  combined_load_prob: 0.05
+  stored_tare_prob: 0.45
+  weighbridge_resolution_kg: 20
+  weighbridge_sigma_kg: 12
+
+telemetry:
+  mass_resolution_kg: 5
+  # Simulated integrated weighing, NORMAL state: reading noise sigma = max(15 kg, 1.4 % of container mass) plus a
+  # small installation calibration error (gain sd 0.4 %, offset sd 6 kg): about 1.5 % total. This meets the
+  # challenge target "at most ~100 kg error on a 3 t cardboard load" for about 95 % of normal-state readings.
+  # It is a SIMULATION TARGET for this challenge, NOT a specification of any Europress weighing solution.
+  # Injected fault scenarios (drift, calibration error, fault states) deliberately exceed it.
+  mass_sigma_abs_kg: 15
+  mass_sigma_rel: 0.014
+  fill_sigma_pp: 3.5
+  fill_bias_sd_pp: 4.0
+  fill_gain_sd: 0.07
+  outage_rate_per_30d: 1.6
+  outage_median_h: 5
+  outage_sigma: 1.3
+  buffered_delivery_prob: 0.75
+  isolated_drop_prob: 0.006
+  duplicate_prob: 0.003
+  latency_median_s: 40
+  spike_prob: 0.0015
+
+contracts:
+  # Customer-operator tariffs (HYPOTHETICAL). Europress is currently not a party to waste transport or treatment.
+  # Tariffs, processing fees and material credits are agreed between the customer and the waste operator.
+  # All prices in this dataset are hypothetical. In the data they appear as information the customer has
+  # handed to the service (contracts, invoices) or that the operator shares (weighbridge, quality).
+  pricing_model_mix: {FIXED_PER_LIFT: 0.30, PER_TONNE: 0.15, HYBRID: 0.35, HYBRID_MIN: 0.20}
+  lift_fee_eur: [65, 140]
+  per_km_eur: [1.2, 2.4]
+  free_km: [0, 30]
+  fuel_surcharge_bp: [0, 900]
+  rental_eur_month: [0, 180]
+  min_charge_eur: [140, 260]
+  credit_share_bp: [6000, 9000]
+  contamination_penalty_eur: [40, 120]
+  cancellation_fee_eur: [30, 70]
+  wasted_trip_fee_eur: [60, 120]
+  side_waste_fee_eur: [45, 110]
+  emergency_surcharge_eur: [60, 150]
+  annual_escalation_pct: [1.5, 5.5]
+  midyear_amendment_prob: 0.18
+  benchmark_eur_per_t_multiplier: [0.9, 1.25]
+
+operator_actions:
+  # Task C2 valuation rules (operator and contract actions). HYPOTHETICAL, published so that teams can reason
+  # about them; teams may argue for other values in their business case. Values are in EUR, per contract.
+  # Europress is currently not a party to waste transport or treatment; all prices are hypothetical.
+  valuation_horizon_months: 12          # forward value of contract-level actions
+  dispute_lookback_days: 90             # invoices issued in the last 90 days before the case date can be disputed
+  dispute_recovery_rate: 0.9            # share of documented overbilling recovered by a credit note
+  dispute_admin_cost_eur: 60            # customer effort per dispute
+  request_weighbridge_comply_prob: 0.6  # chance the operator starts sharing weighbridge tickets on request
+  request_admin_cost_eur: 20
+  renegotiation_success_prob: 0.5       # chance the operator accepts peer-median terms ...
+  renegotiation_min_gap_pct: 10         # ... which it considers only if the contract costs >= 10 % more than peer terms
+  renegotiation_effort_eur: 150
+  tender_success_prob: 0.8              # chance a tender produces a contract at the alternative's typical terms
+  tender_min_gap_pct: 10                # the alternative must be at least 10 % cheaper, otherwise you stay
+  tender_switch_cost_eur: 500           # tendering + switching effort; benefit starts after the notice period
