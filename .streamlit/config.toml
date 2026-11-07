@@ -1,0 +1,25 @@
+# SMART Weight Check look: Europress brand cyan (#03b4e0) and Poppins, with a light, modern finish.
+# Text and buttons use a darker cyan (#0077a6, 5:1 on white) so they stay readable.
+[theme]
+base = "light"
+primaryColor = "#0077a6"
+backgroundColor = "#f3f9fc"
+secondaryBackgroundColor = "#e4f3f9"
+textColor = "#303133"
+linkColor = "#0077a6"
+borderColor = "#d3e6ee"
+blueColor = "#0077a6"
+font = "Poppins:https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+headingFont = "Poppins:https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+headingFontWeights = [700, 600, 600, 600, 600, 600]
+baseRadius = "14px"
+buttonRadius = "999px"
+showWidgetBorder = true
+dataframeHeaderBackgroundColor = "#e4f3f9"
+chartCategoricalColors = ["#0099c7", "#e09b00", "#303133", "#7a8691"]
+
+[client]
+toolbarMode = "minimal"
+
+[browser]
+gatherUsageStats = false
