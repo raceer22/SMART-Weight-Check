@@ -1,0 +1,8 @@
+# SMART Weight Check demo: `docker compose up -d --build`, then open http://<server>:8501
+services:
+  smart-weight-check:
+    build: .
+    image: smart-weight-check
+    ports:
+      - "8501:8501"
+    restart: unless-stopped

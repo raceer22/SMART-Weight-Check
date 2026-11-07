@@ -1,0 +1,10 @@
+# Send only what the Dockerfile copies (keeps the 115 MB competition data, the video and .venv out of the build).
+*
+!app/
+!src/
+!baselines/
+!configs/
+!.streamlit/
+!data/quickstart/public/
+**/__pycache__
+.streamlit/secrets.toml
