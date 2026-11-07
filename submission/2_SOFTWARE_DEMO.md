@@ -1,4 +1,4 @@
-# 2 · Software demo: SMART Weight View, with traceable economics and a SMART integration pathway
+# 2 · Software demo: SMART Weight Check, with traceable economics and a SMART integration pathway
 
 *Brief deliverable 2: a working software demo using synthetic weight data, with code and setup notes, traceable economics and a proposed SMART integration. All data is synthetic, not Europress data.*
 
@@ -10,35 +10,46 @@ Python 3.11 or newer, from the repository root:
 python -m venv .venv
 source .venv/bin/activate            # Windows: .venv\Scripts\activate
 pip install -e ".[dev,app]"
-python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv   # contract cost of every event (Task A)
-python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv         # rule-based flags (Task B)
 streamlit run app/app.py
 ```
 
-The browser opens on compactor **CMP-00046**, the story device. To open another device directly, add `?device=` to the URL, for example `http://localhost:8501/?device=CMP-00042`. If the two CSV files are missing, the app says which command to run.
+The app runs the contract calculator (Task A) and the rule-based flags (Task B) itself, in about two seconds on first load. The browser opens on the **decision inbox** of one fictional customer, ORG-0004: 25 compactors at 8 sites, July–September 2026. To show one compactor only, add `?device=` to the URL, for example `http://localhost:8501/?device=CMP-00042`.
 
 ## What the customer sees, top to bottom
 
-| section | what it shows | evidence |
+| part | what it shows | evidence |
 |---|---|---|
-| Device picker | material, size, collection policy, operator, site | observed |
-| How full it was and what it weighed | daily fill % and container weight, each on its own axis; lifts as grey lines, trips without a lift dashed | simulated (device) |
-| What it cost, and where the weight came from | € per tonne, ratio to the contract benchmark, tonnes, fees for trips without a lift; one row per lift with its **weight source** (weighbridge ticket, invoice tonnage or device estimate). Unknown weight shows "unknown" and is never filled in | estimated (contract calculation, hypothetical tariffs) |
-| **Weight check** | for every lift with per-tonne invoice lines: invoiced kg vs device kg vs the operator's ticket, € at stake, a result and a plain reason | observed / simulated / estimated |
-| Proposals | every flag as a card with what was seen, why, and what to check before acting. **Approve / Reject / Undo**; nothing executes | estimated |
+| Header | how many decisions are waiting, **€ in question** on open decisions, **€ sent for review** (it rises with every approval), lifts weighed and checked | estimated / simulated |
+| **Start here · the 5 biggest** | one card per decision, ranked by € at stake: what was seen, on which compactor and site, the € and what it is, the findings with an evidence dot after every number, and what **Approve** sends. **Approve / Reject / Undo**; nothing executes | dot per number |
+| **Why?** on a card | the evidence for that compactor: daily fill % and container weight with the decision's lifts in amber; cost per tonne, ratio to the contract benchmark, lifts and tonnes, wasted-trip fees; for weight questions, invoiced kg vs device kg vs the operator's ticket; every lift with its **weight source** (weighbridge ticket, invoice tonnage or device estimate). Unknown weight shows "unknown" and is never filled in | observed / simulated / estimated |
+| More decisions · notes | the rest of the ranked decisions, then notes without € at stake (delays, sorting, scale checks) | estimated |
 
-| ![story device](../notes/screenshots/01_story_device_fill_and_weight.png) | ![weight check](../notes/screenshots/03_weight_check_CMP-00042_combined_load.png) |
+| ![decision inbox](../notes/screenshots/00_inbox_top.png) | ![why on CMP-00046](../notes/screenshots/02_why_CMP-00046_wasted_trips.png) |
 |---|---|
-| CMP-00046: fill reading stuck at 88 % in July while the scale reads ~0 kg (four wasted trips) | CMP-00042: weight check; one combined load split equally, re-split by device weight |
+| The inbox: 40 decisions, €6,210 in question; the biggest is CMP-00042, two shared trucks split equally | **Why?** on CMP-00046: the fill reading stuck at 88 % in July while the scale read 20–35 kg; four trucks came for nothing (€346) |
 
-More screenshots: `notes/screenshots/` (full page, cost table, proposals with one approved, CMP-00047).
+More screenshots: `notes/screenshots/` (full page, the CMP-00042 evidence, one decision approved, CMP-00047). They are made by `scripts/app_screenshots.py`.
+
+### How decisions are built and ranked (`app/inbox.py`)
+
+Findings of one kind on one compactor become one decision. The € is what the decision is *about*, never a promised saving: approving only sends a question.
+
+| decision | from | € at stake |
+|---|---|---|
+| trucks came for nothing | wasted trips; "fill sensor may be stuck" when the reading said ≥ 70 % and the scale ≤ 100 kg on the order day | wasted-trip fees (contract calculation) |
+| shared truck split equally | weight check: combined load, the site was charged for more than its container held | per-tonne charges on the wrong site; the customer's total is right |
+| invoiced tonnage needs a look | weight check: invoice vs ticket, or no ticket and a difference beyond tolerance | difference × the invoice's own € per kg |
+| invoice lines to check | Task B: duplicate line, surcharge, old tariff, unmatched line | amount of the lines in question |
+| lifts at low fill | Task B early lifts plus the weight rules | only the empty part of each lift: lift cost × (1 − fill ÷ the on-call threshold), or × (1 − share of a typical full load) when the fill reading lied |
+| cost per tonne above the benchmark | Task B, minus lifts already counted as early lifts, so no € is counted twice | cost above the benchmark × tonnes |
+| notes | delays, contamination, device vs weighbridge, scale check | none |
 
 ## Demo path (≈ 75 seconds)
 
-1. **CMP-00046** (opens by default): the fill line jumps to 88 % in mid-July and stays there while the weight line stays flat. The four dashed lines are wasted trips, €346 *(observed)*. € per tonne is 2.3× the contract benchmark *(estimated)*.
-2. **CMP-00042**: in the weight check, lift COL-00042-0009 was invoiced 2,940 kg; the device weighed 580 kg. The ticket shows two jobs on one truck, net split equally. The other job is CMP-00034 at another site of the same customer, invoiced 2,960 kg for 5,315 kg. The customer total is right; each site's € per tonne is not. Proposal: re-split by device weight.
-3. **CMP-00047**: two lifts have no shared ticket and the invoice differs from the device weight (COL-00047-0009: +425 kg, €51 at stake). Proposal: ask the operator for the ticket.
-4. Click **Approve** on a card, then **Undo**.
+1. **The inbox opens**: 40 decisions are waiting, €6,210 in question *(estimated)*. The biggest is **CMP-00042**: lift COL-00042-0009 was invoiced 2.94 t *(observed)*; the container held 580 kg *(simulated)*. Two jobs shared a truck and the net was split equally. The other job is CMP-00034 at another site of the same customer, invoiced 2,960 kg for 5,315 kg. The customer total is right; each site's € per tonne is not. Approve sends: re-split shared loads by container weight.
+2. **Why?** on **CMP-00046**, "4 trucks came for nothing": the fill line jumps to 88 % in mid-July and stays there while the weight line stays flat. The amber dashed lines are the wasted trips, €346 *(observed fees)*. € per tonne is 2.3× the contract benchmark *(estimated)*.
+3. Click **Approve**: €346 moves to "€ sent for review" and the card turns into "Sent to your account manager". Click **Undo**.
+4. **CMP-00047** (`?device=CMP-00047`): two lifts have no shared ticket and the invoice differs from the device weight (COL-00047-0009: +425 kg, €51 at stake). Approve sends: ask the operator for the ticket.
 
 ## How every euro is traceable
 
@@ -107,10 +118,11 @@ flowchart LR
 - **Contracts and invoices** come from the customer (upload, or an e-invoice feed with their consent).
 - **Tickets** come from the operator, when shared. The C2 action `REQUEST_WEIGHBRIDGE_DATA` asks for them.
 
-**4 · Engine.** Three steps, one module each, all in Python today:
+**4 · Engine.** Four steps, one module each, all in Python today:
 - contract cost: `baselines/b1_economic_calculator.py`;
 - weight check and early-lift rules: `app/weight_rules.py`;
-- anomaly rules: `baselines/b2_rules_anomaly.py`.
+- anomaly rules: `baselines/b2_rules_anomaly.py`;
+- decisions per compactor, ranked by € at stake: `app/inbox.py`.
 
 All run nightly per customer. The only state they keep is the customer's approve/reject history.
 
@@ -134,7 +146,7 @@ All run nightly per customer. The only state they keep is the customer's approve
 }
 ```
 
-**6 · Portal.** The Streamlit app is the prototype of a "Weight" tab in the SMART customer portal. Approve sends the proposal to the account manager. Every decision is logged and can be undone.
+**6 · Portal.** The Streamlit app is the prototype of a "Weight" tab in the SMART customer portal: one inbox per customer, ranked by € at stake (`app/inbox.py`). Approve sends the proposal to the account manager. Every decision is logged and can be undone.
 
 **Rollout.**
 1. Pilot customers on the existing SMART portal, with the weight check computed nightly in the cloud.

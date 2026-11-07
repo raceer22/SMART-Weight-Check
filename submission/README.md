@@ -21,7 +21,7 @@
 | 25 % | Weighing concept | load-cell weigh frame. σ 1.5 % target, ~1.0 % accuracy budget; €1,200 factory / €3,400 retrofit. Auto-zero on every lift plus a weighbridge-referenced span check. Three-phase validation plan. Software-only alternatives tested: 7 % at best (concept doc) |
 | 25 % | Customer and business value | €332 k/year realisable on €5.19 M spend (6.4 %, estimated). CMP-00046 story: 2.3× benchmark €/t and €346 of wasted trips (business case) |
 | 20 % | Data-driven value and analytical reasoning | accuracy-vs-value curve; no-scale experiments; value per lever with grounded realisation shares; price sweep and sensitivity; weight-based early-lift rule raises F1 from 0.72 to 0.86 (`notes/FINDINGS.md`) |
-| 15 % | Software workflow and SMART integration | Streamlit demo with weight check and human-approved proposals; device → SMART → engine → proposal API pathway with the dataset schema as the contract (software doc) |
+| 15 % | Software workflow and SMART integration | Streamlit decision inbox: every finding ranked by € at stake, approved or rejected by a human, with the evidence one click away; device → SMART → engine → proposal API pathway with the dataset schema as the contract (software doc) |
 | 10 % | Commercial productisation | free value scan → hardware where it pays → €15 per device-month subscription; per-tonne service as a labelled hypothesis (business case) |
 | 5 % | Clarity, uncertainty and limits | "what we have not proven" lists in every document; evidence tags on every number |
 
@@ -30,9 +30,9 @@
 ```bash
 python -m venv .venv && source .venv/bin/activate     # Windows: .venv\Scripts\activate
 pip install -e ".[dev,app]"
-python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv
-python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
-streamlit run app/app.py
+streamlit run app/app.py                                # the decision inbox; it runs Task A and B itself
+python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv   # optional: Task A file
+python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv         # optional: Task B file
 ```
 
 ## Working notes behind the numbers

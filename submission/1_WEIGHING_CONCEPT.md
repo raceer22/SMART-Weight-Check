@@ -31,7 +31,7 @@ Can software replace the scale? We tested it (`notes/weight_without_scale.py`, `
 
 **Conclusion:** ~7 % is fine for a € per tonne trend (we use it as the free "value scan"), but invoice checks need σ ≤ ~2.5 %. Only a real scale gets there.
 
-## Options compared (U11 research, sources in `notes/FINDINGS.md`)
+## Options compared
 
 | option | cost per container | expected accuracy | independent of the operator? | verdict |
 |---|---|---|---|---|

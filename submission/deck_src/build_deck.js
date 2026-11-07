@@ -14,11 +14,13 @@ const IMG = (p) => path.join(ROOT, p);
 const OUT = path.join(ROOT, "submission", "pitch_deck.pptx");
 
 const THEME = {
-  name: "Weigh at Source", headFontFace: "Arial", bodyFontFace: "Calibri",
+  // Same look as the app (.streamlit/config.toml): Europress brand cyan 03B4E0, a deep cyan for dark slides and
+  // big numbers (white on it 6.8:1), Poppins headings. Body text stays Calibri so the frozen layout still fits.
+  name: "Weigh at Source", headFontFace: "Poppins", bodyFontFace: "Calibri",
   colors: {
-    dk1: "1D2B27", lt1: "FFFFFF", dk2: "1F6F5A", lt2: "EEF3F1",
-    accent1: "1F6F5A", accent2: "F2A541", accent3: "6B7570", accent4: "2A78D6", accent5: "B4493B", accent6: "9AA39F",
-    hlink: "1F6F5A", folHlink: "6B7570",
+    dk1: "141618", lt1: "FFFFFF", dk2: "00618A", lt2: "E4F3F9",
+    accent1: "03B4E0", accent2: "F2A541", accent3: "5B6670", accent4: "0077A6", accent5: "B4493B", accent6: "9AA7B0",
+    hlink: "0077A6", folHlink: "5B6670",
   },
 };
 const HEX = THEME.colors;
@@ -136,7 +138,7 @@ async function icon(Comp, color = "#FFFFFF") {
   // ---------------------------------------------------------------- 4 demo
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Pitch" });
   s.addText("Live demo: every lift checked", { placeholder: "title" });
-  s.addImage({ path: IMG("submission/img/demo_weight_check.png"), x: 0.6, y: 1.45, w: 8.2, h: 8.2 * 880 / 1440, objectName: "weight check screenshot", altText: "App weight check for CMP-00042" });
+  s.addImage({ path: IMG("submission/img/demo_inbox.png"), x: 0.6, y: 1.45, w: 8.2, h: 8.2 * 880 / 1440, objectName: "weight check screenshot", altText: "App decision inbox: 40 decisions, 6,210 euros in question; the top card is CMP-00042, two shared trucks split equally" });
   s.addShape(pres.shapes.RECTANGLE, { x: 0.6, y: 1.45, w: 8.2, h: 8.2 * 880 / 1440, fill: { type: "none" }, line: { color: C.accent6, width: 1 }, objectName: "screenshot frame" });
   text(s, "Demo path", { x: 9.2, y: 1.45, w: 3.5, h: 0.45, fontSize: 20, bold: true, fontFace: THEME.headFontFace, objectName: "demo path heading" });
   const path4 = [
@@ -289,7 +291,7 @@ async function icon(Comp, color = "#FFFFFF") {
   pres.addSection({ title: "Appendix" });
   const backup = [
     ["Backup: proposals, a human decides", "submission/img/backup_proposals.png", 820, "CMP-00046: proposals with a reason and a check; one approved, with Undo. Weight rules add the early lifts on 4 and 11 September."],
-    ["Backup: a lift without a ticket", "notes/screenshots/05_weight_check_CMP-00047_no_ticket.png", 826, "CMP-00047: two lifts invoiced without a shared ticket differ from the device weight, so the proposal is to ask for the ticket. The scale-check note points at the device, not the operator."],
+    ["Backup: a lift without a ticket", "notes/screenshots/05_CMP-00047_no_ticket_and_scale_check.png", 826, "CMP-00047: two lifts invoiced without a shared ticket differ from the device weight, so the proposal is to ask for the ticket. The scale-check note points at the device, not the operator."],
   ];
   for (const [title, img, hpx, cap] of backup) {
     s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });

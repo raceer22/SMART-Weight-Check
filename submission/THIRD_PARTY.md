@@ -8,7 +8,7 @@ The brief asks us to identify every third-party library, model, dataset or servi
 |---|---|---|
 | Europress × Since AI Hackathon 2026 synthetic dataset and generator, v1.0.1 (`data/`, `src/europress_data/`, `baselines/`, `docs/`, `examples/`, `tests/`) | no separate licence file; the README says use of the data and of team results follows the **Since AI Hackathon 2026 rules** | entirely synthetic, no personal data; prices are hypothetical. Check the event rules before any use outside the hackathon |
 
-Our own work on top of it: `app/`, `notes/`, `configs/our_params.yaml`, `our_business_case/`, `submission/`.
+Our own work on top of it: `app/`, `.streamlit/`, `notes/`, `configs/our_params.yaml`, `our_business_case/`, `scripts/app_screenshots.py`, `tests/test_inbox.py`, `submission/`.
 
 ## Python libraries (runtime and analysis)
 
@@ -30,6 +30,13 @@ Our own work on top of it: `app/`, `notes/`, `configs/our_params.yaml`, `our_bus
 
 All of these are permissive licences that allow commercial use. Apache-2.0 asks you to keep its NOTICE and licence text when redistributing; BSD and MIT ask you to keep the copyright notice.
 
+## Font and look
+
+| item | licence / terms | used for |
+|---|---|---|
+| Poppins (Indian Type Foundry), loaded from Google Fonts | SIL Open Font License 1.1: free for commercial use | app and deck typeface |
+| Brand colour `#03b4e0` | read from the public stylesheet of europressgroup.com | the app's accent colour, so the concept looks at home next to Europress SMART. No Europress logo, image or other trademark is used, and the app says "A concept for Europress SMART compactors" |
+
 ## Tools used only to produce submission files (not needed to run the demo)
 
 | tool | licence | used for |
@@ -37,7 +44,7 @@ All of these are permissive licences that allow commercial use. Apache-2.0 asks 
 | PptxGenJS 3.12.0 (Node.js) | MIT | building `submission/pitch_deck.pptx` (`submission/deck_src/build_deck.js`) |
 | react-icons 5.4.0 · React / ReactDOM 18.3.1 · sharp 0.33.5 | MIT (icons: Font Awesome Free icons, CC BY 4.0) · MIT · Apache-2.0 | the three icons on slide 3 |
 | LibreOffice | MPL-2.0 | exporting the deck to PDF |
-| Playwright 1.64.1 (Python) with Chromium headless shell | Apache-2.0 / BSD-3-Clause | taking the app screenshots in `notes/screenshots/` |
+| Playwright 1.64.1 (Python) with Chromium headless shell | Apache-2.0 / BSD-3-Clause | taking the app screenshots in `notes/screenshots/` (`scripts/app_screenshots.py`) |
 | Mozilla Firefox (headless) | MPL-2.0 | rendering the concept illustration (SVG → PNG) |
 | ImageMagick 7.1.2 | ImageMagick licence (Apache-2.0-style) | cropping images |
 

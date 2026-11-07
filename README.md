@@ -24,12 +24,17 @@ cd Since-AI
 python -m venv .venv
 source .venv/bin/activate                 # Windows: .venv\Scripts\activate
 pip install -e ".[dev,app]"               # project + streamlit + matplotlib
-python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv
-python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
 streamlit run app/app.py
 ```
 
-A browser tab opens on compactor CMP-00046. The page shows how full it was and what it weighed, what each lift cost and where its weight came from, and a **weight check** of every per-tonne invoice line against the device weight and the operator's ticket. Every difference becomes a proposal with a reason, which a human approves, rejects or undoes. To open another device directly, use `http://localhost:8501/?device=CMP-00042`.
+A browser tab opens on the **decision inbox** of one fictional customer: 25 compactors at 8 sites. Every finding of the quarter is a decision, ranked by the euros it is about: trucks that came for nothing, shared trucks split equally, invoiced tonnage without a ticket, lifts at low fill. **Approve** sends a question to the account manager, **Reject** dismisses it, and both can be undone. **Why?** opens the evidence: the compactor's fill and weight, its cost per tonne, and the lifts the decision is about. To show one compactor only, use `http://localhost:8501/?device=CMP-00042`.
+
+The Task A and Task B output files used by the scripts below:
+
+```bash
+python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv
+python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
+```
 
 ### Reproduce the analysis
 
