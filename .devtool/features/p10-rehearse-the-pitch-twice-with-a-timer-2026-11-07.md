@@ -24,3 +24,8 @@ order: "b0t"
 
 ## Done when
 - [ ] Two full runs finished within the time limit.
+
+## Ready for you
+- Script with timings: `notes/PITCH.md` (5 minutes; for a 3-minute slot, cut slides 5 and 7 and keep demo steps 1–2). The speaker notes in `submission/pitch_deck.pptx` carry the same text.
+- Log both runs in the rehearsal table at the bottom of `notes/PITCH.md`.
+- Before each run: `streamlit run app/app.py`, reload once, keep `?device=CMP-00042` and `?device=CMP-00047` open in tabs.
