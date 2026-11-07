@@ -11,6 +11,7 @@ dependencies = ["numpy>=1.26", "pandas>=2.1", "pyarrow>=14", "duckdb>=1.0", "pyy
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "scikit-learn>=1.4", "markdown>=3.4"]
+app = ["streamlit>=1.40"]  # demo app: streamlit run app/app.py
 
 [tool.setuptools.packages.find]
 where = ["src"]

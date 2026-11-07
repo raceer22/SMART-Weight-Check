@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1080" viewBox="0 0 900 1080" font-family="Comic Sans MS, Chalkboard, 'Segoe Print', sans-serif" font-size="15" fill="#222">
+  <rect width="900" height="1080" fill="#fbfaf5"/>
+  <g fill="none" stroke="#333" stroke-width="2" stroke-linejoin="round">
+    <rect x="30" y="20" width="840" height="1040" rx="10"/>
+  </g>
+  <text x="50" y="58" font-size="24" font-weight="bold">SMART Weight View (synthetic data)</text>
+  <text x="50" y="82" fill="#666">Customer screen · sketch for C08 · one page, top to bottom</text>
+
+  <!-- 1 device picker -->
+  <text x="50" y="122" font-weight="bold">① Device</text>
+  <rect x="140" y="104" width="220" height="28" rx="4" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="150" y="124">CMP-00046</text><text x="338" y="124">▾</text>
+  <text x="380" y="124" fill="#555">cardboard · on call at 76 % · OP-A · Lohja site 7</text>
+  <text x="380" y="142" font-size="12" fill="#888">observed</text>
+
+  <!-- 2 charts -->
+  <text x="50" y="178" font-weight="bold">② Fill % and weight over time  (two charts, same dates, one axis each)</text>
+  <rect x="50" y="188" width="800" height="110" rx="4" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <polyline points="60,280 120,276 160,214 220,214 240,280 400,276 470,238 500,282 640,270 700,250 760,236 780,282 840,278" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+  <text x="60" y="206" font-size="12" fill="#555">fill %</text>
+  <g stroke="#aaa" stroke-dasharray="3 4"><line x1="170" y1="192" x2="170" y2="296"/><line x1="200" y1="192" x2="200" y2="296"/><line x1="500" y1="192" x2="500" y2="296"/><line x1="780" y1="192" x2="780" y2="296"/></g>
+  <rect x="50" y="306" width="800" height="110" rx="4" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <polyline points="60,404 160,402 220,402 240,404 400,350 470,330 500,404 640,380 700,366 760,350 780,404 840,402" fill="none" stroke="#2a78d6" stroke-width="2.5"/>
+  <text x="60" y="324" font-size="12" fill="#555">weight kg</text>
+  <text x="150" y="438" font-size="13" fill="#b4441c">↑ fill says 88 % but weight is ~0 → 4 wasted trips</text>
+  <text x="50" y="458" font-size="12" fill="#888">simulated – SMART device telemetry · grey lines = lifts (hover: id, status)</text>
+
+  <!-- 3 metrics -->
+  <text x="50" y="496" font-weight="bold">③ What it costs, and where the weight came from</text>
+  <g stroke="#333" stroke-width="1.5" fill="#fff">
+    <rect x="50" y="508" width="250" height="92" rx="6"/><rect x="320" y="508" width="250" height="92" rx="6"/><rect x="590" y="508" width="260" height="92" rx="6"/>
+  </g>
+  <text x="64" y="530" font-size="13" fill="#555">Collection cost per tonne</text>
+  <text x="64" y="566" font-size="28" font-weight="bold">€258 /t</text>
+  <text x="64" y="590" font-size="12" fill="#888">estimated – hypothetical tariffs</text>
+  <text x="334" y="530" font-size="13" fill="#555">vs contract benchmark</text>
+  <text x="334" y="566" font-size="28" font-weight="bold">2.3×  (€110 /t)</text>
+  <text x="334" y="590" font-size="12" fill="#888">estimated</text>
+  <text x="604" y="530" font-size="13" fill="#555">Weight source of the lifts</text>
+  <text x="604" y="558" font-size="14">weighbridge 4 · device 1 · unknown 0</text>
+  <text x="604" y="590" font-size="12" fill="#888">observed (ticket) / simulated (device)</text>
+  <text x="50" y="622" font-size="13" fill="#b4441c">Unknown weight → €/t shown as “unknown”. Never filled in.</text>
+
+  <!-- 4 lift table -->
+  <text x="50" y="656" font-weight="bold">④ Every lift</text>
+  <rect x="50" y="666" width="800" height="96" rx="4" fill="#fff" stroke="#333" stroke-width="1.5"/>
+  <text x="62" y="688" font-size="13" fill="#555">date   ·  why   ·  status   ·  fill before   ·  kg   ·  weight source   ·  € cost   ·  €/t</text>
+  <line x1="58" y1="696" x2="842" y2="696" stroke="#ccc"/>
+  <text x="62" y="718" font-size="13">01 Sep · customer request · completed · 6 % · 85 kg · device · €194 · €2,279</text>
+  <text x="62" y="742" font-size="13">04 Sep · customer request · completed · 8 % · 360 kg · weighbridge · €194 · €538</text>
+
+  <!-- 5 proposals -->
+  <text x="50" y="798" font-weight="bold">⑤ Proposals. A human must approve each one.</text>
+  <g stroke="#333" stroke-width="1.5" fill="#fff"><rect x="50" y="810" width="800" height="70" rx="6"/><rect x="50" y="890" width="800" height="70" rx="6"/></g>
+  <text x="64" y="834" font-size="14" font-weight="bold">Weight differs from the weighbridge · COL-00046-0006</text>
+  <text x="64" y="856" font-size="13" fill="#555">Why: device 1,205 kg vs ticket 1,620 kg. Ask: check the ticket tare before disputing.</text>
+  <text x="64" y="872" font-size="12" fill="#888">rule-based flag – a question, not a verdict</text>
+  <g font-size="14"><rect x="640" y="824" width="90" height="30" rx="5" fill="#e9f2fc" stroke="#2a78d6"/><text x="660" y="844">Approve</text>
+  <rect x="740" y="824" width="90" height="30" rx="5" fill="#fff" stroke="#999"/><text x="764" y="844">Reject</text></g>
+  <text x="64" y="914" font-size="14" font-weight="bold">Lift was delayed · COL-00046-0007</text>
+  <text x="64" y="936" font-size="13" fill="#555">Why: ordered Sun 30 Aug, lifted Tue 1 Sep.</text>
+  <g font-size="14"><rect x="640" y="904" width="90" height="30" rx="5" fill="#e9f2fc" stroke="#2a78d6"/><text x="660" y="924">Approve</text>
+  <rect x="740" y="904" width="90" height="30" rx="5" fill="#fff" stroke="#999"/><text x="764" y="924">Reject</text></g>
+  <text x="50" y="984" font-size="13" fill="#555">Approve = “send to the account manager” (demo only). Any decision can be undone.</text>
+
+  <!-- footer -->
+  <line x1="50" y1="1010" x2="850" y2="1010" stroke="#ccc"/>
+  <text x="50" y="1036" font-size="13" fill="#555">All data is synthetic. Not Europress data.  ·  Every number carries a tag: observed / estimated / simulated / hypothetical.</text>
+</svg>

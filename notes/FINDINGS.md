@@ -193,9 +193,118 @@ Sources: [US11162834B2 – Weight-measurement retrofitting for waste compactors]
 
 ## Customer value
 
+Evidence tags used from here on (rubric in docs/BENCHMARK.md):
+- **observed**: read straight from a record (collection event, weighbridge ticket, invoice line, site calendar).
+- **simulated**: comes from the SMART device (fill %, container mass, device-estimated kg). Device weighing is a simulated future scenario.
+- **estimated**: our calculation from records, e.g. € per tonne or a median.
+- **hypothetical**: an assumption. All tariffs in the dataset are hypothetical customer–operator prices.
+- All data is synthetic. Not Europress data.
+
+### C01 · Cost calculator (Task A) — `baselines/b1_economic_calculator.py` → `my_task_a.csv`, quickstart, validation split
+| metric | score |
+|---|---|
+| events scored / coverage | 74 / 1.0 |
+| collection_cost_eur exact to the cent | 1.0 |
+| processing_cost_eur exact to the cent | 1.0 |
+| penalties_eur exact to the cent | 1.0 |
+| material_credit_eur exact to the cent | 1.0 |
+| net_material_contribution_eur exact to the cent | 1.0 |
+| €/t within 5 % (weighbridge / invoice tonnage) | 1.0 / 1.0 |
+| €/t made up where the reference is NULL | 0 |
+- The baseline is exact on quickstart, so the demo app reuses `my_task_a.csv` for € per tonne. — `python -m europress_data.evaluate --task A ...`
+- Mass basis of all 465 events: 323 weighbridge, 52 invoice quantity, 11 device estimate, 79 not a lift. — b1 output
+
+### C02 · 10 most expensive devices per tonne — `examples/first_analysis.py data/quickstart/public`
+🔻 = median fill before lift below 50 %. All € figures **estimated** (contract calculation with hypothetical tariffs). Lifts and mass basis **observed**, fill **simulated**.
+
+| device | stream | policy | lifts | t | €/t | benchmark €/t | vs benchmark | median fill before | mass basis |
+|---|---|---|---|---|---|---|---|---|---|
+| CMP-00016 | mixed_plastic | ON_CALL | 7 | 1.82 | 618.8 | 98.4 | 6.29× | 56.8 % | WB 6, invoice 1 |
+| CMP-00037 🔻 | plastic_film | ON_CALL | 5 | 2.08 | 436.5 | 106.7 | 4.09× | 39.4 % | WB 3, invoice 2 |
+| CMP-00029 🔻 | plastic_film | ON_CALL | 3 | 1.02 | 531.4 | 143.1 | 3.71× | 39.2 % | WB 3 |
+| CMP-00004 | plastic_film | ON_CALL | 9 | 5.24 | 377.3 | 105.6 | 3.57× | 56.5 % | WB 7, device 2 |
+| CMP-00049 🔻 | mixed_plastic | ON_CALL | 6 | 1.90 | 471.9 | 145.4 | 3.25× | 34.7 % | WB 5, invoice 1 |
+| CMP-00010 | plastic_film | ON_CALL | 4 | 3.94 | 185.9 | 60.5 | 3.08× | 66.8 % | WB 3, invoice 1 |
+| CMP-00046 🔻 | cardboard | ON_CALL | 5 | 4.08 | 257.9 | 110.0 | 2.34× | 25.1 % | WB 4, device 1 |
+| CMP-00017 🔻 | plastic_film | ON_CALL | 3 | 1.18 | 433.7 | 189.0 | 2.29× | 41.6 % | WB 3 |
+| CMP-00050 🔻 | paper | HYBRID | 2 | 1.56 | 126.7 | 58.9 | 2.15× | 38.1 % | WB 1, invoice 1 |
+| CMP-00040 | mixed_plastic | ON_CALL | 4 | 1.62 | 790.3 | 386.4 | 2.05× | 52.4 % | WB 2, invoice 2 |
+- 6 of the top 10 lift at a median fill below 50 %. — first_analysis.py
+- **No biowaste in the quickstart data** (streams are cardboard, mixed waste, plastic film, mixed plastic, paper), so none of these are explained by the 7-day hygiene rule. Other legitimate reasons still have to be checked per lift (max-interval rule, pre-closure, wasted trips). — `devices`
+- Most devices have only 2–9 lifts in the quarter, so one cheap or expensive lift moves €/t a lot. CMP-00024 (cardboard, 5×/week fixed schedule) sits just outside the top 10 at 1.83× with 55 lifts at a median 28 % fill. It is the most robust over-servicing case. — first_analysis.py top 15
+
+### C03 · The story of CMP-00046 (demo storyline)
+CMP-00046 is a 10 m³ cardboard compactor at Lohja site 7 (customer ORG-0004), emptied on call at 76 % fill by operator OP-A *(observed: `devices`)*. On 13–15 July its fill reading stayed at 88 % for three days while the container scale never showed more than 35 kg *(simulated: `telemetry_daily_summary`)*, and the four on-call orders that followed all ended as wasted trips with “nothing to collect”, invoiced at €86.55 each, €346 in total *(observed: `collection_events`, `invoice_lines`)*. Between 1 and 11 September the customer then requested three lifts at only 6 %, 8 % and 25 % full *(simulated)*, which moved 85 kg *(simulated: device estimate, no ticket)*, 360 kg and 500 kg *(observed: weighbridge)*. Each of those lifts was invoiced €193.71 for the lift fee and 47 km of transport *(observed)*, which works out at €2,279, €538 and €387 per tonne against a contract benchmark of €110 per tonne *(estimated, hypothetical tariffs)*. Over its five lifts the device moved 4.08 t for €1,053 of collection cost, €258 per tonne or 2.3× the benchmark, before the €346 of wasted-trip fees *(estimated)*. A weight view would have shown the customer that the container was nearly empty each time, but we cannot prove the September orders were unnecessary: the customer may have had reasons we cannot see, and labels for that period are hidden *(hypothetical)*.
+- Neutral reading: the July wasted trips are **device-caused** (a fill reading that stayed falsely high), not operator-caused. The operator did what was ordered.
+
+### C04 · Anomaly baseline (Task B) — `baselines/b2_rules_anomaly.py` → `my_task_b.csv`, quickstart, validation split
+| family | cases | flagged | correct | precision | recall | F1 |
+|---|---|---|---|---|---|---|
+| **PREMATURE_UNJUSTIFIED** ⚠ weakest | 7 | 1 | 1 | 1.00 | 0.14 | **0.25** |
+| UNMATCHED_LINE | 4 | 2 | 2 | 1.00 | 0.50 | 0.67 |
+| CONTAMINATION_VALUE_LOSS | 6 | 5 | 5 | 1.00 | 0.83 | 0.91 |
+| COST_PER_T_HIGH | 8 | 7 | 7 | 1.00 | 0.88 | 0.93 |
+| WEIGHT_DISCREPANCY | 9 | 8 | 8 | 1.00 | 0.89 | 0.94 |
+| DELAYED_COLLECTION, WRONG_SURCHARGE, MISSING_LINE, UNINVOICED_COLLECTION | 1–3 each | all | all | 1.00 | 1.00 | 1.00 |
+| REJECTED_LOAD, OUTDATED_TARIFF, WEIGHT_BASIS_MISMATCH | 0 | 0 | — | — | — | not scored |
+| DUPLICATE_LINE | 0 | 2 | 0 | — | — | not scored (2 false alarms) |
+- **macro F1 0.856** (detection only 0.849). Macro F1 averages only families that have cases in the split. — `python -m europress_data.evaluate --task B ...`
+- **Weakest family: PREMATURE_UNJUSTIFIED** (unnecessary early lifts). The baseline finds only 1 of 7. On the competition data it is also weak: F1 0.72, recall 0.59.
+- Validation has only 1–9 cases per family, so one case moves F1 a lot.
+
+### C05 · Why premature lifts are missed — `anomaly_labels.parquet` ⨝ `collection_events`
+The baseline rule only flags **scheduled** lifts below 40 % fill. The 41 dev labels come from three mechanisms: 22 schedule-driven (S01), 9 precautionary customer orders (S39), 10 false-high fill readings (S40). The baseline catches 21 of the 22 schedule-driven and none of the other 19.
+
+1. **COL-00001-0001 · precautionary order (S39, clear, €175 at stake).** CMP-00001 is mixed waste on call. The customer ordered a lift on Friday 3 July and it happened on Saturday morning, when the site was closed for the weekend *(observed: `collection_events`, `site_calendar`)*. The container was only 15 % full and gave 530 kg *(simulated)* / 520 kg on the weighbridge *(observed)*, against a typical full load of about 2,140 kg for this device *(estimated)*. It is published as CUSTOMER_REQUEST, so a rule that only looks at SCHEDULED lifts can't see it.
+2. **COL-00026-0006 · fill sensor reads falsely high (S40, clear, €219 at stake).** CMP-00026 (mixed waste, on call) showed 94.7 % fill without change from 26 August for about 2.5 days, while the mass stayed at 400–750 kg *(simulated)*. When it was really full on 24 August it weighed about 2,300 kg. Two on-call lifts followed, 23 hours apart: COL-00026-0005 took 720 kg and COL-00026-0006 only 220 kg *(observed: weighbridge)*. The fill reading says “94.7 % full” before both lifts, so any fill-based rule thinks they were justified. Only the weight shows the truth.
+3. **COL-00006-0008 · schedule just above the cut-off (S01, borderline, €123 at stake).** CMP-00006 is cardboard on a hybrid schedule of 2 lifts a week. This scheduled lift ran at 41.1 % fill *(simulated)* with 540 kg on the weighbridge *(observed)*, just above the baseline's 40 % threshold, so it is missed.
+- **Trap:** low fill alone is not enough. 23 early lifts are labelled EARLY_JUSTIFIED, i.e. not an anomaly (max-interval rule, minimum frequency, some customer requests), e.g. COL-00035-0001 at 7 % fill on the day before an 8-day summer shutdown. — `anomaly_labels`, `site_calendar`
+
+**Idea for a better rule** (`notes/premature_rule.py`, adds to the baseline, does not replace it):
+- *Precautionary:* on-call device, CUSTOMER_REQUEST, fill before < 45 %, and the lift is on a Fri/Sat/Sun or the site is closed the next day.
+- *False-high fill:* ON_CALL_ORDER where the collected weight is < 40 % of the device's own typical full load (median kg on its lifts that started ≥ 70 % full). This is the weight data doing what fill cannot.
+
+| PREMATURE_UNJUSTIFIED, validation | precision | recall | F1 | justified lifts wrongly flagged |
+|---|---|---|---|---|
+| quickstart baseline | 1.00 | 0.14 | 0.25 | 0 |
+| quickstart + idea | 1.00 | 1.00 | 1.00 | 0 |
+| competition baseline | 0.90 | 0.59 | 0.72 | 0 |
+| competition + idea | 0.86 | 0.87 | **0.86** | 9 |
+- Quickstart has only 7 validation cases, so trust the competition row. Macro F1 on competition validation goes from 0.731 to 0.742.
+- Excluding lifts before closures of 3+ days made no difference, so the rule stays simple.
+
+### C06 · Operator scorecard (Task B2) — `notes/scorecard.py` → `my_scorecard.csv`, split all
+- 18 rows (operator × region × month). The evaluator scores only rows with ≥ 10 jobs and a label row, which leaves 5. **Score 78.3 / 100.** — `python -m europress_data.evaluate --task B2 ...`
+- Exact on on-time rate, missed visits, ticket sharing and order-to-lift time. Weakest metrics: weight bias (score 0.26, MAE 3.0 points), discrepant line rate (0.32) and billing overcharge (0.49, MAE 0.84 points).
+
+### C07 · Punctuality per operator — `notes/punctuality.py` → `notes/punctuality.png`
+On time = the lift happened within ±2 h of the scheduled time. Mean of the monthly rates per region, Jul–Sep 2026 *(estimated from observed lift times)*.
+
+| operator | on time | region-months |
+|---|---|---|
+| OP-E | 71 % | 3 |
+| OP-A | 69 % | 6 |
+| OP-B | 55 % | 6 |
+| OP-C | 39 % | 3 |
+- Monthly values swing widely: OP-B ranged from 33 % to 77 %, so a quarter is a short window. OP-D has no rows in quickstart. — `my_scorecard.csv`
+- Neutral wording for the pitch: “OP-C was on time in 39 % of visits”, not a judgement of the operator. Lateness can come from orders placed late or access problems at the site.
+
+### C08–C14 · Customer screen and demo app — `notes/customer_screen_sketch.png`, `app/app.py`
+- **Sketch (C08):** one page, top to bottom: device picker → fill % chart and weight chart (two charts, one axis each) → € per tonne, benchmark ratio, lifts and tonnes, fees for trips without a lift → every lift with its weight source → proposals with Approve / Reject. ⚠ Still needs the team's agreement.
+- **Run the app:** `pip install -e ".[app]"`, create `my_task_a.csv` (C01) and `my_task_b.csv` (C04), then `streamlit run app/app.py`. It opens on CMP-00046, the C03 story device.
+- **Weight never made up:** € per tonne = lift cost ÷ tonnes, using only lifts with a weight source. A lift without one shows “unknown”. Quickstart has no such lift, but CMP-00049's first lift has a 0 kg ticket and shows “unknown”.
+- **Proposals:** rule-based flags from the Task B baseline, each with what was seen, why and what to check before acting. Approve / Reject only records a demo decision, and Undo reverses it.
+- **Evidence tags (C14):** every number has an observed / simulated / estimated / hypothetical caption or column tag. The footer says “All data is synthetic. Not Europress data.”
+- The chart caption says **simulated**, not “observed” as the C11 task text suggests. Device weighing is a simulated future scenario (U02), so “observed” would over-claim.
+- The chart uses the highest valid reading of the day for both fill and weight. The C11 hint used `mass_kg_last_valid`, which drops on lift days while fill does not (U06).
+- The app shows the baseline flags only. The better premature rule from C05 is not in the app, so CMP-00046's low-fill September lifts appear in the lift table but not as proposals.
+
 ## Business model
 
 ## Open questions
 - U12 concept and σ target were proposed during the Epic 1 analysis and still need a team decision.
 - U11 accuracy figures are vendor/patent claims; none are independent tests on a compactor.
 - Should combined-load tickets be excluded from any reconciliation, or re-split using device weights?
+- C08: the team still has to look at the customer screen sketch and agree on it.
+- C05: should the better premature rule go into our Task B submission and the app? It adds 9 wrongly flagged justified lifts on competition validation for 111 more correct ones.
+- C03: are CMP-00046's September low-fill lifts really unnecessary? Their labels are in the hidden test period.

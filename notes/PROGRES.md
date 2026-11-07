@@ -1,3 +1,95 @@
+# Progress — Epic 2 · Customer weight view
+
+*Updated 2026-11-07*
+
+**Status:** 12 of 14 tasks are done.
+- C08 (sketch) needs the team's agreement.
+- C09 (empty Streamlit page) works but is not committed and pushed yet.
+
+- **Results:** [FINDINGS.md](FINDINGS.md) → `## Customer value`
+- **Run the demo:**
+  ```
+  pip install -e ".[app]"
+  python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv
+  python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
+  streamlit run app/app.py
+  ```
+- **Reproduce the rest:** `python notes/scorecard.py`, `python notes/punctuality.py`, `python notes/premature_rule.py data/quickstart/public my_task_b.csv`.
+
+## Before starting
+- Streamlit was installed into `.venv`. It is now listed as the `app` extra in `pyproject.toml`.
+- The `my_*.csv` files are gitignored, so each laptop has to create them with the commands above. The app tells you which command to run if one is missing.
+
+## Task by task
+
+### C01 · Cost calculator (Task A)
+- The baseline is exact to the cent on every cost category in the validation split (74 events).
+- It never reports € per tonne where the weight is unknown.
+
+### C02 · Top 10 € per tonne
+- Six of the ten lift at a median fill below 50 %.
+- Quickstart has no biowaste, so the 7-day hygiene rule explains none of them.
+- Most devices have only 2–9 lifts, so the ranking is noisy.
+
+### C03 · Story device: CMP-00046 (cardboard, on call, OP-A)
+- **July:** the fill reading stuck at 88 % while the scale showed about 0 kg. This led to 4 wasted trips costing €346.
+- **September:** three customer-requested lifts ran at 6–25 % full, at €387–2,279 per tonne against a €110 benchmark.
+- Every number in the story is tagged.
+- The operator is not blamed. The wasted trips came from the device.
+
+### C04 · Anomaly baseline (Task B)
+- Macro F1 is 0.856.
+- The weakest family is **PREMATURE_UNJUSTIFIED** (F1 0.25, 1 of 7 found).
+
+### C05 · Premature lifts
+- The baseline only looks at scheduled lifts.
+- It misses precautionary customer orders before weekends and orders triggered by a falsely high fill reading. In the second case only the weight shows the truth.
+- Three examples are written up.
+- The rule idea in `notes/premature_rule.py` raises F1 from 0.72 to 0.86 on competition validation. It does not change the baseline.
+
+### C06 · Operator scorecard (Task B2)
+- `notes/scorecard.py` writes `my_scorecard.csv`.
+- It scores 78.3 / 100. The weakest metric is weight bias.
+
+### C07 · Punctuality chart
+- `notes/punctuality.png`: OP-E 71 %, OP-A 69 %, OP-B 55 %, OP-C 39 % on time.
+- On time means within ±2 h of the scheduled time.
+- The wording is neutral.
+
+### C08 · Sketch (**not done: needs the team**)
+- `notes/customer_screen_sketch.png` is a wireframe drawn from an SVG, not a paper photo.
+- It has every element the task asks for, plus the lift table.
+- Two teammates still have to look at it and agree.
+
+### C09 · Empty Streamlit page (**not done: commit and push**)
+- `app/app.py` opens in the browser. I checked it with Streamlit's test runner and a headless Firefox screenshot.
+- Nothing is committed, as in Epic 1.
+
+### C10–C14 · Demo app
+- **Device picker:** opens on CMP-00046.
+- **Charts:** fill and weight, each with its own axis, plus lift markers and a hover tooltip.
+- **Cost:** € per tonne, benchmark ratio, and the weight source of every lift. Unknown weight shows as “unknown”.
+- **Proposals:** baseline flags with Approve, Reject and Undo.
+- **Tags:** an evidence tag on every number.
+- **Footer:** “All data is synthetic. Not Europress data.”
+- **Tested:** all 50 devices load without errors. The 3 devices without a weight sensor fall back to tickets and invoices.
+
+### Changes from the task text
+- **C11 caption:** says “simulated”, not “observed”. Device weighing is a simulated future scenario.
+- **C11 weight line:** uses the daily maximum instead of the last reading, so fill and weight line up on lift days.
+
+## Task board
+- C01–C07 and C10–C14 are marked done, with their boxes ticked, and moved into `.devtool/features/done/`.
+- C08 and C09 stay in backlog. C09's "page opens" box is ticked.
+- The epic's user story stays in backlog until C08 and C09 are closed.
+
+## Next steps
+1. Team looks at the sketch and agrees on it (C08).
+2. Commit and push the Epic 1 and Epic 2 work (C09).
+3. Decide whether the C05 rule goes into our Task B submission and the app.
+
+---
+
 # Progress — Epic 1 · Understand the weight data
 
 *Updated 2026-11-07*
