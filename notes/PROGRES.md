@@ -1,10 +1,65 @@
+# Progress — Epic 4 · Demo & pitch
+
+*Updated 2026-11-07*
+
+**Status:** 9 of 11 tasks are done. **P10 (rehearse twice with a timer) and P11 (submit) need a person.** Everything they need is ready.
+
+- **Deck:** `submission/pitch_deck.pptx` and `.pdf`, 9 slides + 2 backup slides, with speaker notes. Rebuild: `submission/deck_src/build_deck.js`.
+- **Script and outline:** `notes/PITCH.md`, with a 5-minute script and a 3-minute cut.
+- **Jury entry point:** `submission/README.md`. It maps the brief's three deliverables and every evaluation criterion to a file.
+
+## Task by task
+- **P01 · pitch sentence:** at the top of FINDINGS.md.
+- **P02 · outline:** `notes/PITCH.md`. The kanban's 6 slides plus a title slide, an integration slide (15 % of the score) and an accuracy-vs-value slide (20 %).
+- **P03–P05 · slides:** made as a PowerPoint file in the repo instead of a Google Slides link, so the jury gets it with the code.
+- **P06 · screenshots:** 7 in `notes/screenshots/`, taken headless with Playwright. The app now accepts `?device=CMP-00042` so screenshots and demo links open the right device.
+- **P07 · README:** an "Our solution" section at the top of `README.md` with exact commands, plus how to reproduce the analysis. Pushed.
+- **P08 · fresh-laptop test:** fresh clone into an empty folder, new virtual environment, only the README commands. Result in the card. Still worth one more check on a teammate's laptop (Windows, if anyone has one).
+- **P09 · tone check:** no blaming words, no savings claims; "synthetic" on the app and on every slide.
+- **P10 · rehearse (not done):** needs a person and a timer. Ask the organisers for the time limit first.
+- **P11 · submit (not done):** needs the team's Since AI account. The checklist is in the card.
+
+## Also delivered for the brief (not on the board)
+- `submission/1_WEIGHING_CONCEPT.md`: illustrated concept with a BOM, installation, calibration, accuracy budget, error sources and a validation plan.
+- `submission/2_SOFTWARE_DEMO.md`: walkthrough, traceable economics and the SMART integration pathway.
+- `submission/3_BUSINESS_CASE.md`: service, benefit, commercial model, productisation, assumptions, what is untested.
+- `submission/THIRD_PARTY.md`: every library, dataset, tool and AI service, with licences (the brief requires this).
+
+---
+
+# Progress — Epic 3 · Europress business model
+
+*Updated 2026-11-07*
+
+**Status:** 9 of 9 tasks and the epic card are done.
+
+- **Results:** FINDINGS.md → `## Business model`.
+- **Reproduce:**
+  ```
+  python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case
+  python notes/business_case_sensitivity.py
+  ```
+
+## Task by task
+- **B01:** the 7 rubric criteria as a checklist, each with where we meet it.
+- **B02:** five ideas scored (no team vote possible). Chosen: **SMART Weight Check**.
+- **B03–B06:** `configs/our_params.yaml`. Every number has its reason next to it. Prices come from the value per device-month. Realisation shares come from the dataset's published rules; over-servicing 0.35 comes from the simulated counterfactuals in `decision_outcomes`.
+- **B07:** €332 k/year realisable value on €5.19 M spend (estimated). Base case €15 and 25 %: payback 2.0 years, +€5.4 k/year after that (hypothetical).
+- **B08:** price × adoption table, price sweep, one-at-a-time sensitivity (price matters most), segment view (serve fleets of 6+ devices), hardware payback (factory 2.9 years, retrofit 8.2 years at the median device), future hypotheses.
+- **B09:** seven "not proven" bullets.
+
+## Changes made on the way
+- **The app gained a weight check** (`app/weight_rules.py`). It compares invoiced tonnes with device weight and the ticket, and explains combined loads and side waste. Billing questions are raised only where they hold; repeated device-vs-ticket gaps become one "check the scale" proposal.
+- **The C05 rule is now in the app.** It shares its code with `notes/premature_rule.py`, which reproduces the same scores.
+- **matplotlib** is now in the `app` extra of `pyproject.toml`.
+
+---
+
 # Progress — Epic 2 · Customer weight view
 
 *Updated 2026-11-07*
 
-**Status:** 12 of 14 tasks are done.
-- C08 (sketch) needs the team's agreement.
-- C09 (empty Streamlit page) works but is not committed and pushed yet.
+**Status:** 14 of 14 tasks are done (C08 and C09 closed with Epic 4: the app follows the sketch, and everything is committed and pushed).
 
 - **Results:** [FINDINGS.md](FINDINGS.md) → `## Customer value`
 - **Run the demo:**
@@ -94,7 +149,7 @@
 
 *Updated 2026-11-07*
 
-**Status:** 12 of 13 tasks are done. U12 (accuracy target) is written up as a proposal and needs a team decision.
+**Status:** 13 of 13 tasks are done. U12 was decided with Epic 3: load-cell weigh frame, σ 1.5 %.
 
 - **Results:** [FINDINGS.md](FINDINGS.md)
 - **Reproduce:** `python notes/explore.py` reruns every query and chart. U10 is `python examples/weighing_accuracy_value.py data/competition/public`.

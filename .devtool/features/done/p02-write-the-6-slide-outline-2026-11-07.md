@@ -1,13 +1,13 @@
 ---
 id: "p02-write-the-6-slide-outline-2026-11-07"
-status: "backlog"
+status: "done"
 priority: "high"
 assignee: null
 epic: "4 · Demo & pitch"
 dueDate: null
 created: "2026-11-07T09:00:00.000Z"
-modified: "2026-11-07T09:00:00.000Z"
-completedAt: null
+modified: "2026-11-07T12:40:00.000Z"
+completedAt: "2026-11-07T12:40:00.000Z"
 labels: ["pitch"]
 order: "b0l"
 ---
@@ -22,4 +22,7 @@ order: "b0l"
 2. Under each slide write 3 bullet points and which FINDINGS.md section feeds it.
 
 ## Done when
-- [ ] The outline is in `notes/PITCH.md`.
+- [x] The outline is in `notes/PITCH.md`.
+
+## Result
+- `notes/PITCH.md`: 9 slides + 2 appendix, 3 points each and the FINDINGS section that feeds them, plus a 5-minute speaker script.

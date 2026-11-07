@@ -1,3 +1,55 @@
+# SMART Weight Check: our solution to the Europress challenge
+
+**Weigh at source. Check every tonne.** For businesses that pay for waste by the lift and by the tonne but only ever see the weight their operator reports, SMART Weight Check uses an independent scale in the Europress compactor to check every lift and every per-tonne invoice line against the contract, and turns each difference into a proposal a human approves.
+
+## Our solution
+
+**Jury: start at [`submission/README.md`](submission/README.md).** It maps the brief's three deliverables and every evaluation criterion to a file.
+
+| | |
+|---|---|
+| Weighing concept (part 1) | [`submission/1_WEIGHING_CONCEPT.md`](submission/1_WEIGHING_CONCEPT.md): load-cell weigh frame, σ 1.5 % target, €1,200 factory / €3,400 retrofit, calibration, validation plan |
+| Software demo (part 2) | [`submission/2_SOFTWARE_DEMO.md`](submission/2_SOFTWARE_DEMO.md): `app/app.py`, traceable economics, SMART integration pathway |
+| Business case | [`submission/3_BUSINESS_CASE.md`](submission/3_BUSINESS_CASE.md): €15 per device-month priced from value, sensitivity, what is not proven |
+| Pitch | [`submission/pitch_deck.pptx`](submission/pitch_deck.pptx) / [`.pdf`](submission/pitch_deck.pdf), script in [`notes/PITCH.md`](notes/PITCH.md) |
+| Licences | [`submission/THIRD_PARTY.md`](submission/THIRD_PARTY.md) |
+
+### Run the demo
+
+You need Python 3.11 or newer and git. From a terminal:
+
+```bash
+git clone https://github.com/raceer22/Since-AI.git
+cd Since-AI
+python -m venv .venv
+source .venv/bin/activate                 # Windows: .venv\Scripts\activate
+pip install -e ".[dev,app]"               # project + streamlit + matplotlib
+python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv
+python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
+streamlit run app/app.py
+```
+
+A browser tab opens on compactor CMP-00046. The page shows how full it was and what it weighed, what each lift cost and where its weight came from, and a **weight check** of every per-tonne invoice line against the device weight and the operator's ticket. Every difference becomes a proposal with a reason, which a human approves, rejects or undoes. To open another device directly, use `http://localhost:8501/?device=CMP-00042`.
+
+### Reproduce the analysis
+
+```bash
+python notes/explore.py                                                   # Epic 1 tables and charts (quickstart)
+python examples/weighing_accuracy_value.py data/competition/public        # what each scale accuracy is worth
+python notes/weight_without_scale.py data/competition/public              # can software replace the scale? (~2 min)
+python notes/premature_rule.py data/quickstart/public my_task_b.csv       # weight-based early-lift rule vs baseline
+python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case   # ~1 min
+python notes/business_case_sensitivity.py                                 # price x adoption, payback, hypotheses
+```
+
+All findings, with the table or script each comes from, are in [`notes/FINDINGS.md`](notes/FINDINGS.md).
+
+*All data is synthetic. Not Europress data. Built with help from Claude (Anthropic) via Claude Code; see `submission/THIRD_PARTY.md`.*
+
+---
+
+*Everything below is the organisers' documentation of the dataset.*
+
 # Europress × Since AI Hackathon 2026: SMART Material Value Engine synthetic data
 
 > **SYNTHETIC DATA. Reviewed by Europress Group Oy on 30 Oct and 4 Nov 2026; all requested changes are implemented in v1.0.1.**

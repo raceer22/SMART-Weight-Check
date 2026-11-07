@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#1d2b27">
+  <title>SMART weigh frame: load cells under the container, read by the SMART controller</title>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f6f5a"/>
+    </marker>
+    <marker id="arrg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#6b7570"/>
+    </marker>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#b9c0bc" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="700" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="40" y="44" font-size="24" font-weight="bold">SMART weigh frame (retrofit kit or factory option)</text>
+  <text x="40" y="70" font-size="15" fill="#4a5652">Side view of a DUO compactor. Four load cells carry the container; the existing SMART controller reads them. Not to scale.</text>
+
+  <!-- ground / slab -->
+  <rect x="40" y="430" width="1120" height="26" fill="url(#hatch)"/>
+  <line x1="40" y1="430" x2="1160" y2="430" stroke="#6b7570" stroke-width="2"/>
+  <text x="1150" y="474" text-anchor="end" font-size="13" fill="#6b7570">existing concrete slab</text>
+
+  <!-- shim plate under compactor -->
+  <rect x="80" y="414" width="250" height="16" fill="#9aa39f" stroke="#4a5652"/>
+  <!-- stationary compactor -->
+  <rect x="80" y="250" width="250" height="164" rx="4" fill="#dfe4e1" stroke="#4a5652" stroke-width="2"/>
+  <rect x="100" y="200" width="150" height="50" fill="#eef1ef" stroke="#4a5652" stroke-width="2"/>
+  <text x="175" y="231" text-anchor="middle" font-size="13" fill="#4a5652">feed hopper</text>
+  <rect x="250" y="300" width="80" height="70" fill="#c9d0cc" stroke="#4a5652"/>
+  <text x="290" y="340" text-anchor="middle" font-size="13" fill="#4a5652">ram</text>
+  <text x="165" y="292" text-anchor="middle" font-size="15" font-weight="bold">stationary</text>
+  <text x="165" y="311" text-anchor="middle" font-size="15" font-weight="bold">compactor</text>
+  <!-- SMART cabinet -->
+  <rect x="104" y="330" width="122" height="66" rx="4" fill="#1f6f5a"/>
+  <text x="165" y="352" text-anchor="middle" font-size="13" fill="#ffffff" font-weight="bold">SMART controller</text>
+  <text x="165" y="369" text-anchor="middle" font-size="12" fill="#ffffff">+ 4-ch 24-bit ADC</text>
+  <text x="165" y="385" text-anchor="middle" font-size="12" fill="#ffffff">+ temperature</text>
+
+  <!-- container -->
+  <rect x="350" y="200" width="620" height="190" rx="6" fill="#f3f5f4" stroke="#1d2b27" stroke-width="2.5"/>
+  <line x1="350" y1="232" x2="970" y2="232" stroke="#9aa39f"/>
+  <text x="660" y="300" text-anchor="middle" font-size="20" font-weight="bold">press container (hooklift)</text>
+  <text x="660" y="324" text-anchor="middle" font-size="14" fill="#4a5652">tare ~3–4 t · waste up to ~6 t</text>
+  <!-- hook bar -->
+  <path d="M970 236 h26 v40 h-26" fill="none" stroke="#1d2b27" stroke-width="4"/>
+  <!-- runners and rollers -->
+  <rect x="360" y="390" width="600" height="8" fill="#6b7570"/>
+  <circle cx="930" cy="404" r="11" fill="#4a5652"/>
+  <!-- RFID tag -->
+  <rect x="900" y="248" width="40" height="22" rx="3" fill="#ffffff" stroke="#1f6f5a" stroke-width="2"/>
+  <text x="920" y="263" text-anchor="middle" font-size="11" fill="#1f6f5a" font-weight="bold">RFID</text>
+
+  <!-- weigh rail -->
+  <rect x="352" y="398" width="620" height="16" fill="#9aa39f" stroke="#4a5652"/>
+  <!-- end stop + guide -->
+  <rect x="352" y="380" width="10" height="34" fill="#4a5652"/>
+  <!-- load cells -->
+  <g fill="#f2a541" stroke="#8a5a12" stroke-width="2">
+    <rect x="392" y="414" width="56" height="16" rx="3"/>
+    <rect x="862" y="414" width="56" height="16" rx="3"/>
+  </g>
+  <!-- junction box -->
+  <rect x="600" y="410" width="44" height="20" rx="3" fill="#ffffff" stroke="#1f6f5a" stroke-width="2"/>
+  <text x="622" y="424" text-anchor="middle" font-size="11" fill="#1f6f5a" font-weight="bold">JB</text>
+  <!-- cable to cabinet -->
+  <path d="M600 424 C 520 470, 300 470, 226 392" fill="none" stroke="#1f6f5a" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+
+  <!-- uplink to cloud -->
+  <path d="M165 330 L165 150" fill="none" stroke="#1f6f5a" stroke-width="3" marker-end="url(#arr)"/>
+  <rect x="40" y="96" width="290" height="50" rx="25" fill="#e6f2ee" stroke="#1f6f5a" stroke-width="2"/>
+  <text x="185" y="118" text-anchor="middle" font-size="14" font-weight="bold" fill="#1f6f5a">SMART cloud · Weight Check</text>
+  <text x="185" y="136" text-anchor="middle" font-size="12" fill="#1f6f5a">existing modem, no new SIM</text>
+
+  <!-- hooklift direction -->
+  <path d="M1010 255 L1130 255" stroke="#6b7570" stroke-width="2.5" marker-end="url(#arrg)"/>
+  <text x="1070" y="244" text-anchor="middle" font-size="13" fill="#4a5652">hooklift pulls</text>
+  <text x="1070" y="276" text-anchor="middle" font-size="13" fill="#4a5652">container away</text>
+
+  <!-- callouts -->
+  <g font-size="14">
+    <circle cx="420" cy="500" r="13" fill="#f2a541"/><text x="420" y="505" text-anchor="middle" font-weight="bold">1</text>
+    <line x1="420" y1="487" x2="420" y2="432" stroke="#8a5a12" stroke-width="1.5"/>
+    <circle cx="700" cy="500" r="13" fill="#9aa39f"/><text x="700" y="505" text-anchor="middle" font-weight="bold">2</text>
+    <line x1="700" y1="487" x2="700" y2="415" stroke="#4a5652" stroke-width="1.5"/>
+    <circle cx="205" cy="500" r="13" fill="#9aa39f"/><text x="205" y="505" text-anchor="middle" font-weight="bold">3</text>
+    <line x1="205" y1="487" x2="205" y2="431" stroke="#4a5652" stroke-width="1.5"/>
+    <circle cx="622" cy="560" r="13" fill="#e6f2ee" stroke="#1f6f5a"/><text x="622" y="565" text-anchor="middle" font-weight="bold" fill="#1f6f5a">4</text>
+    <line x1="622" y1="547" x2="622" y2="431" stroke="#1f6f5a" stroke-width="1.5"/>
+    <line x1="920" y1="203" x2="920" y2="248" stroke="#1f6f5a" stroke-width="1.5"/>
+    <circle cx="920" cy="190" r="13" fill="#e6f2ee" stroke="#1f6f5a"/><text x="920" y="195" text-anchor="middle" font-weight="bold" fill="#1f6f5a">5</text>
+  </g>
+
+  <!-- legend -->
+  <g font-size="14">
+    <text x="40" y="604"><tspan font-weight="bold">1</tspan> 4 × 10 t shear-beam load cells (C3, IP68, stainless), lift-off restraints · 2 of 4 visible</text>
+    <text x="40" y="628"><tspan font-weight="bold">2</tspan> 2 low-profile galvanised weigh rails (≤ 80 mm) with guides and end stops: same position every time</text>
+    <text x="40" y="652"><tspan font-weight="bold">3</tspan> shim plate lifts the compactor by the rail height, so the container still docks to the ram</text>
+    <text x="40" y="676"><tspan font-weight="bold">4</tspan> junction box keeps the 4 cells separate (per-cell diagnostics) · <tspan font-weight="bold">5</tspan> RFID tag, only where containers are swapped</text>
+  </g>
+
+  <!-- how a lift is weighed -->
+  <g transform="translate(790,500)">
+    <rect x="0" y="0" width="370" height="130" rx="8" fill="#f4f6f5" stroke="#b9c0bc"/>
+    <text x="16" y="24" font-size="14" font-weight="bold">How one lift is weighed</text>
+    <text x="16" y="48" font-size="13">a · gross = stable reading, ram idle ≥ 2 min</text>
+    <text x="16" y="70" font-size="13">b · container away → frame reads 0 = <tspan font-weight="bold">auto-zero</tspan></text>
+    <text x="16" y="92" font-size="13">c · empty container back → <tspan font-weight="bold">tare</tspan></text>
+    <text x="16" y="114" font-size="13">d · collected kg = gross (a) − tare (c)</text>
+  </g>
+</svg>
