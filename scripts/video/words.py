@@ -1,10 +1,10 @@
-"""When each word is spoken in the voice clips → submission/video/words.json (used by timeline.py).
+"""When each word is spoken in the voice clips → scripts/video/words.json (used by timeline.py).
 
 The video times its captions, text animations, camera moves and sound effects to these words, so re-run this
 after regenerating a clip. It needs faster-whisper, which wants Python ≤ 3.12 (not the project venv):
 
     uv venv --python 3.12 /tmp/whisper && VIRTUAL_ENV=/tmp/whisper uv pip install faster-whisper
-    FFMPEG=/path/to/ffmpeg /tmp/whisper/bin/python submission/video/words.py
+    FFMPEG=/path/to/ffmpeg /tmp/whisper/bin/python scripts/video/words.py
 
 Whisper's word times are good to about 0.1 s, except around numbers ("three hundred and forty-six" becomes "346"
 and can land late). Caption start times therefore stay in timeline.CAPTIONS, measured with silencedetect.

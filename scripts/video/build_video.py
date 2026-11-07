@@ -1,8 +1,8 @@
 """Render the peer-vote video from the assets and the ElevenLabs audio.
 
-    python submission/video/make_assets.py http://localhost:8501         # once, with the app running
-    python submission/video/build_video.py [--out NAME] [--preview]       # → submission/video/build/NAME.mp4
-    python submission/video/build_video.py --stills 3.2,14.0              # single frames → build/stills/
+    python scripts/video/make_assets.py http://localhost:8501         # once, with the app running
+    python scripts/video/build_video.py [--out NAME] [--preview]       # → scripts/video/build/NAME.mp4
+    python scripts/video/build_video.py --stills 3.2,14.0              # single frames → build/stills/
 
 Every frame is composed with Pillow. The camera holds each framing still, snaps or glides to the next one on the
 spoken words and shakes briefly on the four big impacts. The video opens on the chart's blank background and fades

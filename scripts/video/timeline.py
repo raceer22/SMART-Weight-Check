@@ -3,8 +3,8 @@
 Caption start times come from ffmpeg silencedetect on the ElevenLabs clips (pauses between sentences); the time of
 every word comes from words.json (words.py, faster-whisper). Camera moves, text animations and sound effects are
 cued to words with cue(), so they follow a regenerated clip. If a clip is regenerated, re-measure both:
-    ffmpeg -i submission/video/audio/05.mp3 -af silencedetect=noise=-40dB:d=0.15 -f null -
-    python submission/video/words.py          (see its docstring for the faster-whisper setup)
+    ffmpeg -i scripts/video/audio/05.mp3 -af silencedetect=noise=-40dB:d=0.15 -f null -
+    python scripts/video/words.py          (see its docstring for the faster-whisper setup)
 """
 import difflib
 import json

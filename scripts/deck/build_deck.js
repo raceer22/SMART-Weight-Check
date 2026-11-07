@@ -1,6 +1,6 @@
 // Builds submission/pitch_deck.pptx (P03-P05). Run from the repo root:
 //   npm install pptxgenjs@3.12.0 react-icons@5.4.0 react@18.3.1 react-dom@18.3.1 sharp@0.33.5   (once, anywhere)
-//   NODE_PATH=<that node_modules> node submission/deck_src/build_deck.js
+//   NODE_PATH=<that node_modules> APPLY_THEME=<pptx skill>/scripts/apply_theme.js node scripts/deck/build_deck.js
 // Every number on the slides comes from notes/FINDINGS.md and our_business_case/ (synthetic data).
 const path = require("path");
 const pptxgen = require("pptxgenjs");

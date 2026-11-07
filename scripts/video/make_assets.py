@@ -2,9 +2,9 @@
 
 Start the app, then run from the repo root:
     streamlit run app/app.py --server.headless true
-    python submission/video/make_assets.py [http://localhost:8501] [--cards-only]
+    python scripts/video/make_assets.py [http://localhost:8501] [--cards-only]
 
-Writes submission/video/build/assets/*.png, boxes.json (element boxes in the app stills) and parts.json (every
+Writes scripts/video/build/assets/*.png, boxes.json (element boxes in the app stills) and parts.json (every
 card is a background plus one transparent image per text block, so build_video.py can animate each block on its
 word). Needs Playwright with Chromium and an internet connection (Poppins from Google Fonts and GitHub, Vega from
 jsDelivr). Synthetic data only.

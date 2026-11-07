@@ -33,7 +33,7 @@ Paste the **voice line** exactly. Numbers are written as words so they are read 
 - **Export** MP3 or WAV, 44.1 kHz, and name the files `01.mp3` … `08.mp3`.
 - **Music:** about 2:10 of instrumental, calm, modern, minimal electronic, about 100 BPM, no vocals → `music.mp3`. It sits about 20 dB under the voice and fades out on the end card.
 - **Sound effect:** one short, soft UI tick for the clicks → `tick.mp3`. The other effects are synthesised (see below).
-- Put everything in `submission/video/audio/` (ignored by git). Check that your ElevenLabs plan covers this use; the licence goes into `submission/THIRD_PARTY.md`.
+- Put everything in `scripts/video/audio/` (ignored by git). Check that your ElevenLabs plan covers this use; the licence goes into `submission/THIRD_PARTY.md`.
 
 ## Sound effects
 
@@ -55,19 +55,19 @@ Effects prompts that fit:
 
 ## Build the video
 
-Audio clips, music and the tick go in `submission/video/audio/` as `01.mp3` … `08.mp3`, `music.mp3`, `tick.mp3`.
+Audio clips, music and the tick go in `scripts/video/audio/` as `01.mp3` … `08.mp3`, `music.mp3`, `tick.mp3`.
 Clip lengths and sentence starts (silencedetect) are in `timeline.py`; the time of every word is in `words.json`.
 Re-measure both if a clip is regenerated (`words.py` needs faster-whisper, see its docstring).
 
 ```bash
 streamlit run app/app.py --server.headless true                  # the app, for the stills
-python submission/video/make_assets.py http://localhost:8501      # app stills, chart, layered cards (~1 min)
-FFMPEG=/path/to/ffmpeg-with-libx264 python submission/video/build_video.py --out smart_weight_check
-python submission/video/build_video.py --stills 12.6,40.5         # single frames to check framing
-python submission/video/build_video.py --preview --out preview    # 960×540, 15 fps, to check timing
+python scripts/video/make_assets.py http://localhost:8501      # app stills, chart, layered cards (~1 min)
+FFMPEG=/path/to/ffmpeg-with-libx264 python scripts/video/build_video.py --out smart_weight_check
+python scripts/video/build_video.py --stills 12.6,40.5         # single frames to check framing
+python scripts/video/build_video.py --preview --out preview    # 960×540, 15 fps, to check timing
 ```
 
-Output: `submission/video/build/smart_weight_check.mp4`, 1920×1080, 30 fps, H.264 + AAC, 1:49.7. The video opens on
+Output: `scripts/video/build/smart_weight_check.mp4`, 1920×1080, 30 fps, H.264 + AAC, 1:49.7. The video opens on
 a blank background, so upload `build/smart_weight_check_thumbnail.png` (written by every full render: the finished July
 chart with €346) as the thumbnail wherever the platform allows it. Without a libx264 build, `build_video.py` falls back to OpenH264 at 14 Mbit/s. The static ffmpeg from
 `pip install imageio-ffmpeg` has libx264.

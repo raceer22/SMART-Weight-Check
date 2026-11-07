@@ -8,7 +8,7 @@ The brief asks us to identify every third-party library, model, dataset or servi
 |---|---|---|
 | Europress × Since AI Hackathon 2026 synthetic dataset and generator, v1.0.1 (`data/`, `src/europress_data/`, `baselines/`, `docs/`, `examples/`, `tests/`) | no separate licence file; the README says use of the data and of team results follows the **Since AI Hackathon 2026 rules** | entirely synthetic, no personal data; prices are hypothetical. Check the event rules before any use outside the hackathon |
 
-Our own work on top of it: `app/`, `.streamlit/`, `notes/`, `configs/our_params.yaml`, `our_business_case/`, `scripts/app_screenshots.py`, `tests/test_inbox.py`, `submission/`.
+Our own work on top of it: `app/`, `.streamlit/`, `notes/`, `configs/our_params.yaml`, `our_business_case/`, `scripts/app_screenshots.py`, `scripts/deck/`, `scripts/video/`, `tests/test_inbox.py`, `submission/`.
 
 ## Python libraries (runtime and analysis)
 
@@ -41,16 +41,16 @@ All of these are permissive licences that allow commercial use. Apache-2.0 asks 
 
 | tool | licence | used for |
 |---|---|---|
-| PptxGenJS 3.12.0 (Node.js) | MIT | building `submission/pitch_deck.pptx` (`submission/deck_src/build_deck.js`) |
+| PptxGenJS 3.12.0 (Node.js) | MIT | building `submission/pitch_deck.pptx` (`scripts/deck/build_deck.js`) |
 | react-icons 5.4.0 · React / ReactDOM 18.3.1 · sharp 0.33.5 | MIT (icons: Font Awesome Free icons, CC BY 4.0) · MIT · Apache-2.0 | the three icons on slide 3 |
 | LibreOffice | MPL-2.0 | exporting the deck to PDF |
 | Playwright 1.64.1 (Python) with Chromium headless shell | Apache-2.0 / BSD-3-Clause | taking the app screenshots in `notes/screenshots/` (`scripts/app_screenshots.py`) |
 | Mozilla Firefox (headless) | MPL-2.0 | rendering the concept illustration (SVG → PNG) |
 | ImageMagick 7.1.2 | ImageMagick licence (Apache-2.0-style) | cropping images |
-| ElevenLabs: text to speech, music and sound effects | the team's ElevenLabs subscription terms; check that the plan covers commercial use before reusing the audio | voiceover, background music and the click sound of the peer-vote video (`submission/video/`). The other sound effects (whooshes, pops, hits) are synthesised by our own code, `submission/video/sfx.py` |
+| ElevenLabs: text to speech, music and sound effects | the team's ElevenLabs subscription terms; check that the plan covers commercial use before reusing the audio | voiceover, background music and the click sound of the peer-vote video (`scripts/video/`). The other sound effects (whooshes, pops, hits) are synthesised by our own code, `scripts/video/sfx.py` |
 | FFmpeg (static build from imageio-ffmpeg, with libx264) | GPL-3.0 for this build; the licence covers the tool, not the video it encodes | mixing the audio and encoding the video |
 | Vega 6, Vega-Lite 6.4, vega-embed 7 (loaded from jsDelivr) | BSD-3-Clause | the cold-open chart of the video |
-| faster-whisper 1.2 with the Whisper small.en model | MIT (both) | when each word is spoken in the voice clips, so captions, text and camera moves land on the word (`submission/video/words.py`, run outside the project venv); not part of the video |
+| faster-whisper 1.2 with the Whisper small.en model | MIT (both) | when each word is spoken in the voice clips, so captions, text and camera moves land on the word (`scripts/video/words.py`, run outside the project venv); not part of the video |
 | Poppins font files (Google Fonts GitHub) | SIL Open Font License 1.1 | captions and the € counter drawn into the video frames |
 
 ## Models and AI services

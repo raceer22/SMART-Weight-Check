@@ -4,7 +4,7 @@
 
 **Status:** 9 of 11 tasks are done. **P10 (rehearse twice with a timer) and P11 (submit) need a person.** Everything they need is ready.
 
-- **Deck:** `submission/pitch_deck.pptx` and `.pdf`, 9 slides + 2 backup slides, with speaker notes. Rebuild: `submission/deck_src/build_deck.js`.
+- **Deck:** `submission/pitch_deck.pptx` and `.pdf`, 9 slides + 2 backup slides, with speaker notes. Rebuild: `scripts/deck/build_deck.js`.
 - **Script and outline:** `notes/PITCH.md`, with a 5-minute script and a 3-minute cut.
 - **Jury entry point:** `submission/README.md`. It maps the brief's three deliverables and every evaluation criterion to a file.
 
