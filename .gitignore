@@ -9,4 +9,4 @@ scripts/video/audio/
 scripts/video/build/
 *.mp4
 !submission/pitch_video.mp4
-
+.notes/
