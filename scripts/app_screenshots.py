@@ -5,7 +5,7 @@ Start the app first, then run this from the repo root:
     python scripts/app_screenshots.py [http://localhost:8501]
 
 Needs Playwright with Chromium: pip install playwright && python -m playwright install chromium.
-Writes notes/screenshots/*.png and copies the three deck screenshots into submission/img/.
+Writes notes/screenshots/*.png and copies the ones the deck and 2_SOFTWARE_DEMO.md use into submission/img/.
 """
 import shutil
 import sys
@@ -95,8 +95,11 @@ def main() -> None:
         page.screenshot(path=SHOTS / "05_CMP-00047_no_ticket_and_scale_check.png")
         browser.close()
 
-    shutil.copy(SHOTS / "00_inbox_top.png", IMG / "demo_inbox.png")
-    shutil.copy(SHOTS / "04_CMP-00046_one_approved.png", IMG / "backup_proposals.png")
+    for shot, name in [("00_inbox_top", "demo_inbox"), ("02_why_CMP-00046_wasted_trips", "demo_why_CMP-00046"),
+                       ("03_why_CMP-00042_shared_truck", "demo_why_CMP-00042"),
+                       ("04_CMP-00046_one_approved", "backup_proposals"),
+                       ("05_CMP-00047_no_ticket_and_scale_check", "demo_CMP-00047_no_ticket")]:
+        shutil.copy(SHOTS / f"{shot}.png", IMG / f"{name}.png")
     print("wrote", sorted(f.name for f in SHOTS.glob("*.png")))
 
 

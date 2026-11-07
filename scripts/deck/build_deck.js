@@ -1,7 +1,7 @@
-// Builds submission/pitch_deck.pptx (P03-P05). Run from the repo root:
+// Builds submission/pitch_deck.pptx. Run from the repo root:
 //   npm install pptxgenjs@3.12.0 react-icons@5.4.0 react@18.3.1 react-dom@18.3.1 sharp@0.33.5   (once, anywhere)
 //   NODE_PATH=<that node_modules> APPLY_THEME=<pptx skill>/scripts/apply_theme.js node scripts/deck/build_deck.js
-// Every number on the slides comes from notes/FINDINGS.md and our_business_case/ (synthetic data).
+// Every number on the slides comes from the submission documents and our_business_case/ (synthetic data).
 const path = require("path");
 const pptxgen = require("pptxgenjs");
 const React = require("react");
@@ -100,7 +100,7 @@ async function icon(Comp, color = "#FFFFFF") {
   text(s, "CMP-00046 · cardboard · Lohja · Jul–Sep 2026. Top: fill % · bottom: container weight, kg (simulated). Dashed lines: trips without a lift.", { x: 0.6, y: 4.2, w: 7.9, h: 0.5, fontSize: 11, color: C.accent3, objectName: "chart caption" });
   card(s, 0.6, 4.95, 7.9, 1.7, "takeaway card");
   text(s, [
-    { text: "July: the fill reading stuck at 88 % while the scale read ~0 kg. Four trucks came for nothing.", options: { breakLine: true } },
+    { text: "July: the fill reading stuck at 88 % while the scale read only 20–35 kg. Four trucks came for nothing.", options: { breakLine: true } },
     { text: "Nobody did anything wrong. Nobody could see it.", options: { bold: true, color: C.text2 } },
   ], { x: 0.85, y: 5.15, w: 7.4, h: 1.35, fontSize: 18, valign: "middle", objectName: "takeaway text" });
   stat(s, 9.0, 1.5, 3.8, "2.3×", "€ per tonne vs the contract benchmark: €258 vs €110 (estimated)", "stat 1");
@@ -229,7 +229,7 @@ async function icon(Comp, color = "#FFFFFF") {
     valGridLine: { color: "DDE3E0", size: 0.75 }, catGridLine: { style: "none" },
     showValue: false,
   });
-  text(s, "Competition data, 10,342 shared single-load tickets; examples/weighing_accuracy_value.py (estimated)", { x: 0.6, y: 6.75, w: 7.9, h: 0.25, fontSize: 10, color: C.accent3, objectName: "chart source" });
+  text(s, "Competition data: 10,342 shared single-load weighbridge tickets (estimated)", { x: 0.6, y: 6.75, w: 7.9, h: 0.25, fontSize: 10, color: C.accent3, objectName: "chart source" });
   stat(s, 9.0, 1.5, 3.8, "≤ 1.75 %", "keeps ≥ 95 % of 3 t loads within ±100 kg: the challenge target", "stat a");
   stat(s, 9.0, 3.2, 3.8, "> 2.5 %", "and checking the operator's tonnage stops working", "stat b", C.accent5);
   stat(s, 9.0, 4.9, 3.8, "7 %", "best estimate without a scale (ML or rotating kit): a free value scan, not an invoice check", "stat c", C.accent3);
@@ -291,7 +291,7 @@ async function icon(Comp, color = "#FFFFFF") {
   pres.addSection({ title: "Appendix" });
   const backup = [
     ["Backup: proposals, a human decides", "submission/img/backup_proposals.png", 820, "CMP-00046: proposals with a reason and a check; one approved, with Undo. Weight rules add the early lifts on 4 and 11 September."],
-    ["Backup: a lift without a ticket", "notes/screenshots/05_CMP-00047_no_ticket_and_scale_check.png", 826, "CMP-00047: two lifts invoiced without a shared ticket differ from the device weight, so the proposal is to ask for the ticket. The scale-check note points at the device, not the operator."],
+    ["Backup: a lift without a ticket", "submission/img/demo_CMP-00047_no_ticket.png", 826, "CMP-00047: two lifts invoiced without a shared ticket differ from the device weight, so the proposal is to ask for the ticket. The scale-check note points at the device, not the operator."],
   ];
   for (const [title, img, hpx, cap] of backup) {
     s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
@@ -300,7 +300,7 @@ async function icon(Comp, color = "#FFFFFF") {
     s.addImage({ path: IMG(img), x: 0.6, y: 1.45, w, h, objectName: "backup screenshot", altText: title });
     s.addShape(pres.shapes.RECTANGLE, { x: 0.6, y: 1.45, w, h, fill: { type: "none" }, line: { color: C.accent6, width: 1 }, objectName: "screenshot frame" });
     text(s, cap, { x: 0.6 + w + 0.35, y: 1.45, w: 12.7 - (0.6 + w + 0.35), h: 2.6, fontSize: 15, objectName: "backup caption" });
-    s.addNotes("Backup slide if the live demo fails. All screenshots: notes/screenshots/.");
+    s.addNotes("Backup slide if the live demo fails.");
   }
 
   s = pres.addSlide({ masterName: "CONTENT", sectionTitle: "Appendix" });
@@ -310,17 +310,15 @@ async function icon(Comp, color = "#FFFFFF") {
   text(s, [
     "python -m venv .venv && source .venv/bin/activate",
     'pip install -e ".[dev,app]"',
-    "python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv",
-    "python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv",
-    "streamlit run app/app.py",
+    "streamlit run app/app.py               # opens the decision inbox",
   ].map((t, i, a) => ({ text: t, options: { breakLine: i < a.length - 1 } })), { x: 0.85, y: 2.05, w: 11.6, h: 1.65, fontSize: 13, fontFace: "Courier New", paraSpaceAfter: 3, valign: "middle", objectName: "commands" });
-  text(s, "Where everything is", { x: 0.6, y: 3.95, w: 12.1, h: 0.45, fontSize: 20, bold: true, fontFace: THEME.headFontFace, objectName: "where heading" });
+  text(s, "The documents, in the submission folder", { x: 0.6, y: 3.95, w: 12.1, h: 0.45, fontSize: 20, bold: true, fontFace: THEME.headFontFace, objectName: "where heading" });
   const where = [
-    "submission/1_WEIGHING_CONCEPT.md: sensor, BOM, calibration, validation",
-    "submission/2_SOFTWARE_DEMO.md: walkthrough, SMART integration",
-    "submission/3_BUSINESS_CASE.md: value, pricing, sensitivity, limits",
-    "submission/THIRD_PARTY.md: every library, dataset and service, with licence",
-    "notes/FINDINGS.md: every number with its source table or script",
+    "README.md: where each evaluation criterion is answered",
+    "1_WEIGHING_CONCEPT.md: sensor, BOM, calibration, validation",
+    "2_SOFTWARE_DEMO.md: walkthrough, SMART integration, code map",
+    "3_BUSINESS_CASE.md: value, pricing, sensitivity, limits",
+    "THIRD_PARTY.md: every library, dataset and service, with licence",
   ];
   text(s, where.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < where.length - 1 } })), { x: 0.6, y: 4.45, w: 12.1, h: 1.6, fontSize: 14, paraSpaceAfter: 2, objectName: "where list" });
   text(s, "Data: Europress × Since AI synthetic dataset v1.0.1 (use per the hackathon rules). Code: Python with numpy, pandas, DuckDB, Streamlit, Altair, scikit-learn, matplotlib (BSD, MIT, Apache-2.0 and PSF-style licences, all allow commercial use). AI assistance: Claude (Anthropic) via Claude Code.",

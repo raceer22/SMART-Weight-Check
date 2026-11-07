@@ -71,3 +71,5 @@ Output: `scripts/video/build/smart_weight_check.mp4`, 1920×1080, 30 fps, H.264 
 a blank background, so upload `build/smart_weight_check_thumbnail.png` (written by every full render: the finished July
 chart with €346) as the thumbnail wherever the platform allows it. Without a libx264 build, `build_video.py` falls back to OpenH264 at 14 Mbit/s. The static ffmpeg from
 `pip install imageio-ffmpeg` has libx264.
+
+The submitted cut is `build/smart_weight_check_cut3.mp4`, copied to `submission/pitch_video.mp4` (the one video tracked by git). Copy a new final render there too.

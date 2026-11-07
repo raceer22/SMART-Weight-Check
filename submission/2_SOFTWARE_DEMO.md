@@ -24,13 +24,13 @@ The app runs the contract calculator (Task A) and the rule-based flags (Task B) 
 | **Why?** on a card | the evidence for that compactor: daily fill % and container weight with the decision's lifts in amber; cost per tonne, ratio to the contract benchmark, lifts and tonnes, wasted-trip fees; for weight questions, invoiced kg vs device kg vs the operator's ticket; every lift with its **weight source** (weighbridge ticket, invoice tonnage or device estimate). Unknown weight shows "unknown" and is never filled in | observed / simulated / estimated |
 | More decisions · notes | the rest of the ranked decisions, then notes without € at stake (delays, sorting, scale checks) | estimated |
 
-| ![decision inbox](../notes/screenshots/00_inbox_top.png) | ![why on CMP-00046](../notes/screenshots/02_why_CMP-00046_wasted_trips.png) |
+| ![decision inbox](img/demo_inbox.png) | ![Why? on CMP-00046](img/demo_why_CMP-00046.png) |
 |---|---|
 | The inbox: 40 decisions, €6,210 in question; the biggest is CMP-00042, two shared trucks split equally | **Why?** on CMP-00046: the fill reading stuck at 88 % in July while the scale read 20–35 kg; four trucks came for nothing (€346) |
+| ![Why? on CMP-00042](img/demo_why_CMP-00042.png) | ![CMP-00047](img/demo_CMP-00047_no_ticket.png) |
+| **Why?** on CMP-00042: invoiced 2.94 t and 4.40 t for loads of 580 kg and 1,970 kg; two containers shared a truck and the net was split equally | CMP-00047: two lifts invoiced without a shared ticket differ from the device weight, so Approve asks for the ticket. The scale-check note below points at the device, not the operator |
 
-More screenshots: `notes/screenshots/` (full page, the CMP-00042 evidence, one decision approved, CMP-00047). They are made by `scripts/app_screenshots.py`.
-
-### How decisions are built and ranked (`app/inbox.py`)
+### How decisions are built and ranked
 
 Findings of one kind on one compactor become one decision. The € is what the decision is *about*, never a promised saving: approving only sends a question.
 
@@ -44,7 +44,7 @@ Findings of one kind on one compactor become one decision. The € is what the d
 | cost per tonne above the benchmark | Task B, minus lifts already counted as early lifts, so no € is counted twice | cost above the benchmark × tonnes |
 | notes | delays, contamination, device vs weighbridge, scale check | none |
 
-## Demo path (≈ 75 seconds)
+## Demo path (about 75 seconds)
 
 1. **The inbox opens**: 40 decisions are waiting, €6,210 in question *(estimated)*. The biggest is **CMP-00042**: lift COL-00042-0009 was invoiced 2.94 t *(observed)*; the container held 580 kg *(simulated)*. Two jobs shared a truck and the net was split equally. The other job is CMP-00034 at another site of the same customer, invoiced 2,960 kg for 5,315 kg. The customer total is right; each site's € per tonne is not. Approve sends: re-split shared loads by container weight.
 2. **Why?** on **CMP-00046**, "4 trucks came for nothing": the fill line jumps to 88 % in mid-July and stays there while the weight line stays flat. The amber dashed lines are the wasted trips, €346 *(observed fees)*. € per tonne is 2.3× the contract benchmark *(estimated)*.
@@ -61,8 +61,8 @@ collection_events.collection_id ─ operator_job_ref ─┬─ weighbridge_ticke
                                                      └─ contracts → contract_versions valid on the service date → expected lines (Task A)
 ```
 
-- **Contract cost per lift** comes from `baselines/b1_economic_calculator.py`, which follows `docs/ECONOMIC_MODEL.md` line by line. On quickstart validation it is **exact to the cent** in every cost category (74 events), and it never reports € per tonne where no weight is observable (FINDINGS C01).
-- **Weight check** (`app/weight_rules.py → weight_check`): per lift, the maximum quantity on the per-tonne lines (processing, haul per tonne, material credit, rejection reprocessing) is compared with `device_estimated_collected_kg` and the ticket's `allocated_net_kg`.
+- **Contract cost per lift** comes from the dataset package's contract calculator, which follows the dataset's economic model line by line. On the quickstart validation split it is **exact to the cent** in every cost category (74 events), and it never reports € per tonne where no weight is observable.
+- **Weight check:** per lift, the maximum quantity on the per-tonne lines (processing, haul per tonne, material credit, rejection reprocessing) is compared with `device_estimated_collected_kg` and the ticket's `allocated_net_kg`.
   - Tolerance is max(100 kg, 3.3 %), the dataset's accuracy target.
   - € at stake = difference × the invoice's own € per kg; positive means the invoice works against the customer.
 - **Results on all 50 quickstart devices:** 341 lifts with per-tonne lines.
@@ -77,14 +77,14 @@ collection_events.collection_id ─ operator_job_ref ─┬─ weighbridge_ticke
 
 | source | what it flags | score |
 |---|---|---|
-| Task B baseline (`baselines/b2_rules_anomaly.py`) | unnecessary early lifts on schedules, delays, weight differences, billing discrepancies | quickstart validation macro F1 **0.856** (FINDINGS C04) |
-| Weight rule "precautionary" (`app/weight_rules.py`) | customer-ordered lifts at < 45 % fill just before a weekend or closed day | adds to the baseline: |
+| Task B rule baseline (dataset package) | unnecessary early lifts on schedules, delays, weight differences, billing discrepancies | quickstart validation macro F1 **0.856** |
+| Weight rule "precautionary" | customer-ordered lifts at < 45 % fill just before a weekend or closed day | adds to the baseline: |
 | Weight rule "false-high fill" | on-call lift that moved < 40 % of the device's typical full load, although the fill reading said full; **only the weight can see this** | early-lift F1 0.72 → **0.86** on competition validation (9 extra questions on justified lifts for 111 more real cases) |
 | Weight check | invoice vs ticket mismatches, invoices without a ticket that differ from the device, combined-load re-splits, device scale checks | (no labels; explained in the app) |
 
 **AI or rules?**
 - We use transparent rules for every proposal. A customer or an operator must be able to read *why*, and the rubric asks for explainability.
-- We use ML only where it clearly beats a rule: estimating weight without a scale. Gradient boosting reaches 8.6 % median error against 14.1 % for a density rule, leave-device-out (`notes/weight_without_scale.py`). That estimate feeds the free "value scan", never a billing question.
+- We use ML only where it clearly beats a rule: estimating weight without a scale. Gradient boosting reaches 8.6 % median error against 14.1 % for a density rule, leave-device-out. That estimate feeds the free "value scan", never a billing question.
 
 ## Proposed SMART integration pathway
 
@@ -110,23 +110,23 @@ flowchart LR
 | diagnostics (new) | zero offset when the container is away, per-cell load share, temperature |
 
 **2 · Ingest.**
-- Deduplicate and order buffered messages, as in `telemetry_dedup`: 329 duplicates and 1,651 late messages in quickstart (FINDINGS U07).
+- Deduplicate and order buffered messages, as the dataset's `telemetry_dedup` view does: the quickstart data has 329 duplicate and 1,651 late messages.
 - Build the daily summary.
-- Recompute reconciliation statuses as of each decision. The dataset's naive statuses can see the future (`docs/BENCHMARK.md`).
+- Recompute reconciliation statuses as of each decision. The dataset's own statuses are computed with hindsight, so they can see the future.
 
 **3 · Commercial data.**
 - **Contracts and invoices** come from the customer (upload, or an e-invoice feed with their consent).
-- **Tickets** come from the operator, when shared. The C2 action `REQUEST_WEIGHBRIDGE_DATA` asks for them.
+- **Tickets** come from the operator, when shared. The Task C2 action `REQUEST_WEIGHBRIDGE_DATA` asks for them.
 
-**4 · Engine.** Four steps, one module each, all in Python today:
-- contract cost: `baselines/b1_economic_calculator.py`;
-- weight check and early-lift rules: `app/weight_rules.py`;
-- anomaly rules: `baselines/b2_rules_anomaly.py`;
-- decisions per compactor, ranked by € at stake: `app/inbox.py`.
+**4 · Engine.** Four steps, one module each, all in Python today (see the code map below):
+- contract cost per lift;
+- weight check and weight-based early-lift rules;
+- anomaly rules;
+- decisions per compactor, ranked by € at stake.
 
 All run nightly per customer. The only state they keep is the customer's approve/reject history.
 
-**5 · Proposal API.** One JSON object per proposal, in the shape of `examples/recommendation_api_mock.py`. Example for COL-00047-0009:
+**5 · Proposal API.** One JSON object per proposal, in the shape of the dataset's recommendation API mock. Example for COL-00047-0009:
 
 ```json
 {
@@ -146,7 +146,7 @@ All run nightly per customer. The only state they keep is the customer's approve
 }
 ```
 
-**6 · Portal.** The Streamlit app is the prototype of a "Weight" tab in the SMART customer portal: one inbox per customer, ranked by € at stake (`app/inbox.py`). Approve sends the proposal to the account manager. Every decision is logged and can be undone.
+**6 · Portal.** The Streamlit app is the prototype of a "Weight" tab in the SMART customer portal: one inbox per customer, ranked by € at stake. Approve sends the proposal to the account manager. Every decision is logged and can be undone.
 
 **Rollout.**
 1. Pilot customers on the existing SMART portal, with the weight check computed nightly in the cloud.
@@ -158,14 +158,23 @@ All run nightly per customer. The only state they keep is the customer's approve
 | file | role |
 |---|---|
 | `app/app.py` | the Streamlit demo |
+| `app/inbox.py` | turns findings into decisions per compactor, ranked by € at stake |
 | `app/weight_rules.py` | weight check, device scale check, weight-based early-lift rules |
 | `baselines/b1_economic_calculator.py`, `baselines/b2_rules_anomaly.py` | contract cost and rule baselines (from the dataset package) |
 | `notes/premature_rule.py` | scores the weight-based early-lift rule against the labels |
 | `notes/weight_without_scale.py`, `notes/rotation_experiments.py`, `notes/precision_experiments.py` | can software replace the scale? |
 | `notes/business_case_sensitivity.py` | business-case sensitivity and hardware payback |
-| `notes/explore.py`, `notes/scorecard.py`, `notes/punctuality.py` | Epic 1–2 analysis |
+| `notes/explore.py`, `notes/scorecard.py`, `notes/punctuality.py` | exploration of the weight data, operator scorecard (Task B2), punctuality |
+| `tests/test_inbox.py` | tests of the inbox and of approve / undo in the app |
 
-**Checked:**
-- The app runs for all 50 quickstart devices without errors (Streamlit test runner).
-- `notes/premature_rule.py` reproduces the scores above.
-- The repository's own test suite is unchanged: `python -m pytest`, about 5 minutes.
+**Tested:**
+- The app runs for all 50 quickstart devices without errors (Streamlit test runner), and `tests/test_inbox.py` passes.
+- `notes/premature_rule.py` reproduces the early-lift scores above.
+- The dataset package's own test suite is unchanged: `python -m pytest`, about 5 minutes.
+
+## What the demo does not prove
+
+- It runs only on synthetic data. It has not seen a real invoice, a real weighbridge ticket or a real SMART message.
+- The weight-check questions have no labels in the dataset, so their precision is not measured. Only the early-lift rules are scored.
+- Approve records a decision in the demo; nothing is sent to anyone.
+- The SMART integration pathway is a proposal. No firmware, ingest service or portal tab exists yet, and the proposal API is an illustrative mock.

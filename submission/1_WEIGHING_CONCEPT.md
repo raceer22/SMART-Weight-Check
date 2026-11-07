@@ -1,6 +1,6 @@
 # 1 · Weighing concept: the SMART weigh frame
 
-*Brief part 1, "Get the weight". No physical prototype was built. Costs and the accuracy budget are engineering estimates (hypothetical) to be checked by the validation plan below. All data is synthetic.*
+*Brief deliverable 1, "Get the weight". No physical prototype was built. Costs and the accuracy budget are engineering estimates (hypothetical) to be checked by the validation plan below. All data is synthetic.*
 
 ![SMART weigh frame, side view](img/weigh_frame.png)
 
@@ -10,7 +10,7 @@ Four load cells under the container's standing position, mounted in two low-prof
 
 ## Why this accuracy, and why a scale at all
 
-What a given accuracy is worth, from `examples/weighing_accuracy_value.py` on 10,342 shared single-load tickets (competition data, *estimated*):
+What a given accuracy is worth, simulated on 10,342 shared single-load weighbridge tickets from the competition data (*estimated*):
 
 | scale σ (% of load) | 2.5–3.5 t loads within ±100 kg | median €/t error | detects +10 % overbilling | false alarms |
 |---|---|---|---|---|
@@ -20,7 +20,7 @@ What a given accuracy is worth, from `examples/weighing_accuracy_value.py` on 10
 | 2.5 | 82.1 % | 1.75 % | 92.5 % | 1.8 % |
 | 5 | 53.2 % | 3.37 % | 46.7 % | 2.0 % |
 
-Can software replace the scale? We tested it (`notes/weight_without_scale.py`, `notes/rotation_experiments.py`, leave-device-out against weighbridge truth):
+Can software replace the scale? We tested four methods against weighbridge tickets, leave-device-out (each compactor is estimated by a model that never saw it):
 
 | no-hardware method | median error per lift | per device-year |
 |---|---|---|
@@ -65,7 +65,7 @@ Can software replace the scale? We tested it (`notes/weight_without_scale.py`, `
 
 Four 10 t cells give 40 t of capacity for a gross load of at most ~10 t. The headroom covers the shock when a hooklift drags the container on.
 
-**Is it affordable?** The median customer spends ~€880 per device-month on waste *(estimated)*. The factory option costs about 1.4 months of that spend, the retrofit about 3.9 months. After the €15/month subscription, the factory option pays back in **2.9 years at the median device** (50 % of devices within 3 years). The retrofit takes 8.2 years at the median and pays back within 5 years for only 29 % of devices (`notes/business_case_sensitivity.py`). Hence our rule: **weigh where it pays.** Factory option on every new compactor; retrofit only where the free value scan shows high value.
+**Is it affordable?** The median customer spends ~€880 per device-month on waste *(estimated)*. The factory option costs about 1.4 months of that spend, the retrofit about 3.9 months. After the €15/month subscription, the factory option pays back in **2.9 years at the median device** (50 % of devices within 3 years). The retrofit takes 8.2 years at the median and pays back within 5 years for only 29 % of devices. Hence our rule: **weigh where it pays.** Factory option on every new compactor; retrofit only where the free value scan shows high value.
 
 ## Accuracy budget (engineering estimate, 3 t net load, container tare ~3.5 t)
 
@@ -96,7 +96,7 @@ The 1.5 % design target leaves about 50 % margin for field effects.
    - span with a **known water mass**: a 1,000-litre IBC filled through a calibrated flow meter (1,000 kg ± 0.5 %), placed in the container by forklift, one then two. A technician can bring this in a van; no 2 t test weights or crane are needed. Where there is no forklift, the span comes from the first 5 clean weighbridge tickets.
 3. **In operation, automatic:**
    - **auto-zero** every time the container is away, with a drift alarm above 20 kg;
-   - **rolling span check**: the median ratio of device to ticket over the last 10 clean single-load lifts (shared ticket, weighed tare, no side waste). Above 1 %, the app raises a "check the device scale" proposal for a human to approve. The demo already does this: `app/weight_rules.py → scale_check`.
+   - **rolling span check**: the median ratio of device to ticket over the last 10 clean single-load lifts (shared ticket, weighed tare, no side waste). Above 1 %, the app raises a "check the device scale" proposal for a human to approve. The demo already does this.
 4. **Yearly:** a verification check during the existing preventive maintenance visit.
 
 **Legal metrology:** the frame is a *check* instrument, not a legal-for-trade scale. Billing stays on the operator's weighbridge. Using device weight as the billing basis would need conformity assessment under the EU directive on non-automatic weighing instruments (2014/31/EU). That is out of scope and part of a future hypothesis.
@@ -111,23 +111,35 @@ The cells feed a 4-channel ADC that sits behind the SMART controller, which send
 | mass before and after each lift, net | `collection_events.device_mass_kg_before / _after / device_estimated_collected_kg` |
 | zero offset, per-cell share, temperature | new diagnostic fields, used for the scale-check proposal |
 
-Details: `submission/2_SOFTWARE_DEMO.md`.
+Details: [2 · Software demo](2_SOFTWARE_DEMO.md#proposed-smart-integration-pathway).
 
 ## Validation plan
 
 | phase | where, how long | what we do | pass criteria |
 |---|---|---|---|
-| **0 · desk** (done) | synthetic data | accuracy-value curve (U10); no-scale models (7 %) | shows σ ≤ 1.75 % is needed and software alone is not enough |
+| **0 · desk** (done) | synthetic data | accuracy-vs-value curve; no-scale weight models (7 % at best) | shows σ ≤ 1.75 % is needed and software alone is not enough |
 | **1 · yard test** | Europress yard, 2 weeks, 1 frame, 1 DUO container | IBC water steps 0–1–2–3–4 t; 10 hooklift roll-off/roll-on cycles per step; off-centre loads; readings with the ram running vs idle | σ ≤ 1.0 % at 1–4 t; zero return ≤ 10 kg after roll-off; no reading accepted while the ram runs |
 | **2 · field pilot** | 20 compactors, ≥ 2 streams, ≥ 2 operators, 3 months, sites that share tickets with weighed tare | compare device net with the weighbridge net on single-load lifts without side waste (≈ 240 lifts → 95 % coverage known to ±3 points) | ≥ 95 % of 2.5–3.5 t loads within ±100 kg; median error ≤ 1.5 %; uptime ≥ 98 %; zero drift ≤ 20 kg/month |
 | **3 · winter** | same sites, December–February | the same, plus snow/ice flags and −25 °C | same thresholds; snow flag catches ≥ 90 % of no-compaction mass rises |
 | **gate** | | | pass → factory option on new compactors; fail → strain-gauge variant for €/t reporting only |
 
-The weighbridge reference itself has σ ≈ 12 kg plus 20 kg resolution (≈ 0.5 % on 3 t; `notes/precision_experiments.py`). So about 1 % is the best accuracy any field test against weighbridges can prove.
+The weighbridge reference itself has σ ≈ 12 kg plus 20 kg resolution (≈ 0.5 % on 3 t). So about 1 % is the best accuracy any field test against weighbridges can prove.
 
 ## Limitations
 
-- The dataset cannot validate hardware. It "depicts a future scenario in which most devices have integrated weighing" (docs/ASSUMPTIONS_AND_LIMITATIONS.md).
+- The dataset cannot validate hardware. In its own words, it "depicts a future scenario in which most devices have integrated weighing".
 - Accuracy figures for load cells and strain gauges are vendor and patent claims, not independent compactor tests.
 - Costs are indicative, without supplier quotes. Installation time depends on the site (slab condition, access).
 - Side waste and loose overflow will always be invisible to a container scale.
+
+## Reproduce these numbers
+
+From the repository root, after the setup in [2 · Software demo](2_SOFTWARE_DEMO.md#run-it-about-5-minutes):
+
+| numbers | command |
+|---|---|
+| accuracy vs value | `python examples/weighing_accuracy_value.py data/competition/public`; the 1.75 % row with `--sigmas 1.5,1.75,2,2.25` added (the random draws depend on which sigmas are listed, so a row can move by 1–2 points between lists) |
+| no-scale methods: rule, ML, density from the last 5 tickets | `python notes/weight_without_scale.py` |
+| rotating weighing kit | `python notes/rotation_experiments.py` |
+| precision of the weighbridge reference | `python notes/precision_experiments.py` |
+| hardware payback | `python notes/business_case_sensitivity.py` (after the calculator, see [3 · Business case](3_BUSINESS_CASE.md#reproduce-these-numbers)) |

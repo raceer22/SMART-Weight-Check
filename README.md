@@ -11,7 +11,7 @@
 | Weighing concept (part 1) | [`submission/1_WEIGHING_CONCEPT.md`](submission/1_WEIGHING_CONCEPT.md): load-cell weigh frame, σ 1.5 % target, €1,200 factory / €3,400 retrofit, calibration, validation plan |
 | Software demo (part 2) | [`submission/2_SOFTWARE_DEMO.md`](submission/2_SOFTWARE_DEMO.md): `app/app.py`, traceable economics, SMART integration pathway |
 | Business case | [`submission/3_BUSINESS_CASE.md`](submission/3_BUSINESS_CASE.md): €15 per device-month priced from value, sensitivity, what is not proven |
-| Pitch | [`submission/pitch_deck.pptx`](submission/pitch_deck.pptx) / [`.pdf`](submission/pitch_deck.pdf), script in [`notes/PITCH.md`](notes/PITCH.md) |
+| Pitch | [`submission/pitch_deck.pdf`](submission/pitch_deck.pdf) / [`.pptx`](submission/pitch_deck.pptx) with speaker notes; 1:50 video [`submission/pitch_video.mp4`](submission/pitch_video.mp4) |
 | Licences | [`submission/THIRD_PARTY.md`](submission/THIRD_PARTY.md) |
 
 ### Run the demo
@@ -39,7 +39,7 @@ python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv
 ### Reproduce the analysis
 
 ```bash
-python notes/explore.py                                                   # Epic 1 tables and charts (quickstart)
+python notes/explore.py                                                   # tables and charts of the weight data (quickstart)
 python examples/weighing_accuracy_value.py data/competition/public        # what each scale accuracy is worth
 python notes/weight_without_scale.py data/competition/public              # can software replace the scale? (~2 min)
 python notes/premature_rule.py data/quickstart/public my_task_b.csv       # weight-based early-lift rule vs baseline

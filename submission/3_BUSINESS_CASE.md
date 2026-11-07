@@ -1,11 +1,11 @@
 # 3 · Customer value and business case: SMART Weight Check
 
-*Brief deliverable 3. Customer value is **estimated** from the synthetic competition data (52 public customers, 447 devices). Prices, costs, adoption and realisation shares are **hypothetical**: our own parameters, each justified in `configs/our_params.yaml`. Nothing here is a Europress price, a market finding or a demonstrated saving. Europress is not a party to waste transport or treatment today.*
+*Brief deliverable 3. Customer value is **estimated** from the synthetic competition data (52 public customers, 447 devices). Prices, costs, adoption and realisation shares are **hypothetical**: our own parameters, each with its reason in the parameter file (see [Reproduce these numbers](#reproduce-these-numbers)). Nothing here is a Europress price, a market finding or a demonstrated saving. Europress is not a party to waste transport or treatment today.*
 
 ## The service
 
 **SMART Weight Check** is a SMART add-on for customers who own Europress compactors. Every month it:
-1. **Weighs** every lift at the source, with the SMART weigh frame (`1_WEIGHING_CONCEPT.md`).
+1. **Weighs** every lift at the source, with the SMART weigh frame ([1 · Weighing concept](1_WEIGHING_CONCEPT.md)).
 2. **Checks** every lift and every per-tonne invoice line against the device weight, the operator's ticket and the customer's contract.
 3. **Proposes** actions with a reason and a check before acting. The customer approves, rejects or undoes each one: dispute a line, ask for a ticket, re-split a combined load, change a threshold or schedule, check the scale.
 
@@ -30,7 +30,7 @@ Where it comes from (realisable, per year): contestable service charges €102 k
 
 The app reports all four from records, so a pilot customer can see the benefit directly instead of relying on our estimate.
 
-**A concrete case** (FINDINGS C03): compactor CMP-00046 paid €258 per tonne, 2.3× its contract benchmark, plus €346 for four wasted trips. Those trips happened while its fill reading was stuck at 88 % and its scale read ~0 kg.
+**A concrete case:** compactor CMP-00046 paid €258 per tonne, 2.3× its contract benchmark, plus €346 for four wasted trips. Those trips happened while its fill reading was stuck at 88 % and its scale read only 20–35 kg.
 
 ## Commercial model for Europress
 
@@ -52,7 +52,7 @@ The app reports all four from records, so a pilot customer can see the benefit d
 - Revenue €11.0 k/year; operating and support costs €5.7 k; one-off onboarding €10.7 k.
 - Year 1: **−€5.4 k**; then **+€5.4 k/year**; payback **2.0 years**.
 
-### Sensitivity (B08): yearly profit after onboarding, € (hypothetical)
+### Sensitivity: yearly profit after onboarding, € (hypothetical)
 
 | price €/device-month | adoption 10 % | adoption 25 % | adoption 40 % |
 |---|---|---|---|
@@ -71,13 +71,6 @@ The app reports all four from records, so a pilot customer can see the benefit d
 
   → **weigh where it pays.**
 
-Full tables: `our_business_case/sensitivity.md`. Reproduce:
-
-```bash
-python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case
-python notes/business_case_sensitivity.py
-```
-
 ### Being honest about the size
 
 On this synthetic sample the subscription earns only thousands of euros a year. It is a low-risk first step that fits Europress's role today. The larger value for Europress is:
@@ -87,7 +80,7 @@ On this synthetic sample the subscription earns only thousands of euros a year. 
 ## How it becomes part of SMART (productisation)
 
 1. **Now:** the value scan runs on existing SMART data plus uploaded invoices. The "Weight" tab is in the SMART customer portal (the Streamlit demo is its prototype).
-2. **Next 6 months:** weigh-frame yard test and 20-site pilot (`1_WEIGHING_CONCEPT.md`). Weight Check sold to pilot customers at €15 per device-month, or 20 % of verified savings.
+2. **Next 6 months:** weigh-frame yard test and 20-site pilot ([validation plan](1_WEIGHING_CONCEPT.md#validation-plan)). Weight Check sold to pilot customers at €15 per device-month, or 20 % of verified savings.
 3. **Next 12–18 months:** factory weighing option on new compactors; retrofit offered where the value scan shows payback within 5 years; proposal API for customers' purchasing systems.
 4. **Later, hypothesis:** offer a per-tonne service once verified weight and operator agreements exist.
 
@@ -95,7 +88,7 @@ On this synthetic sample the subscription earns only thousands of euros a year. 
 
 **Neutral by design:** combined loads, side waste and device scale issues are explained and kept apart from billing questions. A difference is a question, not an accusation.
 
-## Assumptions (all hypothetical, see `configs/our_params.yaml`)
+## Assumptions (all hypothetical)
 - Realisation shares: billing 0.7, over-servicing 0.35, contract 0.25, operator performance 0.25, tendering 0.4, contamination 0. They come from the dataset's published rules (dispute recovery 0.9, renegotiation success 0.5, tender success 0.8) and its simulated counterfactuals (cutting lifts realises 30–39 % of the naive saving).
 - Cost to serve: €800 onboarding per customer, €100 per device, €3 per device-month for cloud, €50 per customer-month for an analyst.
 - Adoption: 10 / 25 / 40 % of eligible customers; a customer buys only if value ≥ 3× fee.
@@ -104,8 +97,19 @@ On this synthetic sample the subscription earns only thousands of euros a year. 
 
 ## What remains untested
 - **Willingness to pay** €15 per device-month: no customer was interviewed.
-- **Real savings:** the world is synthetic and tariffs are hypothetical. Simulated counterfactuals are not causal evidence (`docs/ECONOMIC_MODEL.md` §6).
+- **Real savings:** the world is synthetic and tariffs are hypothetical. Simulated counterfactuals are not causal evidence, as the dataset's economic model itself states.
 - **Hardware accuracy** σ 1.5 % on a real compactor, in winter, under hooklift loading; and the **hardware cost**.
 - **Operator acceptance:** of device weight as evidence, of ticket requests (the dataset assumes 60 % comply), and of re-split combined loads.
 - **Safety of avoiding "early" lifts:** hygiene, overflow and site reasons make some of them right.
 - **Future models:** billing on device weight would need a legal-for-trade instrument (EU directive 2014/31/EU on non-automatic weighing instruments) and a new role for Europress.
+
+## Reproduce these numbers
+
+From the repository root, after the setup in [2 · Software demo](2_SOFTWARE_DEMO.md#run-it-about-5-minutes):
+
+```bash
+python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case
+python notes/business_case_sensitivity.py
+```
+
+The first command runs the dataset package's business-case calculator with our parameters (`configs/our_params.yaml`, every value with its reason). The second adds the price sweep, the sensitivity tables and the hardware payback. Both write their tables to `our_business_case/`.
