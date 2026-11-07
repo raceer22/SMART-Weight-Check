@@ -1,13 +1,13 @@
 ---
 id: "b02-brainstorm-5-service-ideas-and-vote-on-one-2026-11-07"
-status: "backlog"
+status: "done"
 priority: "high"
 assignee: null
 epic: "3 · Europress business model"
 dueDate: null
 created: "2026-11-07T09:00:00.000Z"
-modified: "2026-11-07T09:00:00.000Z"
-completedAt: null
+modified: "2026-11-07T12:40:00.000Z"
+completedAt: "2026-11-07T12:40:00.000Z"
 labels: ["task-d", "team", "beginner"]
 order: "b0c"
 ---
@@ -24,7 +24,10 @@ order: "b0c"
 4. Write the winner + 1 sentence “who pays and why” in FINDINGS.md.
 
 ## Done when
-- [ ] One chosen idea is written down.
+- [x] One chosen idea is written down.
 
 ## Help
 - Ideas where Europress is *in the middle* of the value chain are fine but must be labelled **hypothesis**.
+
+## Result
+- No team vote was possible, so five ideas were scored on value in the data, use of weight, fit with today's role and revenue. Winner: **SMART Weight Check** (free value scan as entry tier, weighing hardware as enabler, per-tonne full service kept as a labelled hypothesis). FINDINGS.md → B02.

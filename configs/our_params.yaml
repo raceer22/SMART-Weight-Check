@@ -1,0 +1,73 @@
+# ---------------------------------------------------------------------------
+# OUR business-case parameters: "SMART Weight Check" (Tasks B03-B06, Task D).
+#
+# Service: a SMART add-on that checks every lift's cost and every per-tonne invoice line against the
+# device's own weight and the customer's contract, and turns differences into proposals a human approves.
+#
+# Every value below is OUR hypothetical assumption, justified with value evidence from the synthetic
+# competition data (52 public customers, 447 devices) and the dataset's own published rules. Nothing here is
+# a Europress price, a Europress cost structure or validated willingness to pay. Europress is currently not a
+# party to waste transport or treatment; all prices in the dataset are hypothetical.
+#
+# Run:   python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case
+# Then:  python notes/business_case_sensitivity.py      (B08 tables, hardware payback, future hypotheses)
+# ---------------------------------------------------------------------------
+status: "TEAM PARAMETERS - SMART Weight Check (hypothetical, justified in notes/FINDINGS.md > Business model)"
+
+pricing:
+  # Value-based: realisable value per device-month (our realisation shares below) has a 25th / 50th / 75th
+  # percentile of EUR 20 / 36 / 72 across the 52 customers (estimated, notes/business_case_sensitivity.py).
+  # With the 3x purchase rule a customer pays at most a third of what it gains, so:
+  #   10 = entry price, below a third of the median value (EUR 12): most customers qualify
+  #   15 = base case: the price that maximises fee revenue in the 5-60 EUR sweep of the sensitivity script
+  #   25 = premium, about a third of the 75th percentile value (EUR 24): only the high-value fleets qualify
+  # For comparison: EUR 15 is 1.7 % of the median customer's waste spend per device-month (EUR 879, estimated).
+  price_per_device_month_eur: [10, 15, 25]
+  price_per_site_month_eur: null           # not used: value scales with devices (lifts, tonnes), not with sites
+  share_of_verified_savings_pct: 20        # outcome-based alternative for sceptical customers: 20 % of what is
+                                           # actually recovered (credit notes, avoided lifts); shown per customer only
+costs:
+  # Cost to serve the SOFTWARE service. The weighing hardware is sold separately as equipment (factory option
+  # or retrofit kit, see submission/1_WEIGHING_CONCEPT.md); its payback is checked in the sensitivity script.
+  onboarding_per_customer_eur: 800         # ~1 analyst day (EUR 600) to load contract versions and tariffs and map
+                                           # invoice line types, plus a kick-off call (EUR 200)
+  onboarding_per_device_eur: 100           # ~1.5 h: link device to contract and operator job refs in SMART, check the
+                                           # scale's zero and span against its first shared weighbridge tickets
+  operating_cost_per_device_month_eur: 3   # cloud compute + storage for hourly telemetry and monthly reconciliation;
+                                           # the SMART modem and data plan already exist, so no new connectivity cost
+  customer_support_per_customer_month_eur: 50   # ~1 h/month of an analyst who reviews proposals before the
+                                                # customer sees them (human approval) and answers questions
+adoption:
+  # Share of ELIGIBLE customers (value >= 3x fee) who actually buy in year 1. Sold to existing SMART customers
+  # through the existing account managers, so no cold acquisition. 10 = cautious, 25 = base, 40 = optimistic.
+  adoption_share_of_eligible_pct: [10, 25, 40]
+  purchase_condition_value_multiple: 3     # a B2B buyer approves a tool that returns >= 3x its fee (rule of thumb);
+                                           # 2 is tested in the sensitivity script
+value_realisation:
+  # Share of identified value we assume is really realised. Grounded in the dataset's published rules
+  # (configs/assumptions.yaml -> operator_actions) and simulated outcomes (labels_dev/decision_outcomes).
+  billing_review: 0.7        # dispute_recovery_rate 0.9 x ~0.8 that the customer files the dispute and the flag holds
+                             # (Task B baseline precision on billing families is ~1.0 on validation, we haircut it)
+  over_servicing: 0.35       # simulated counterfactuals: cutting lifts realises 30-39 % of the naive lift saving
+                             # (REDUCE_FREQUENCY 0.39, RAISE_THRESHOLD 0.30) because hygiene, overflow and
+                             # emergency lifts eat the rest; 0.35 is the middle
+  contamination: 0.0         # not part of this service: quality is graded only by the operator and weight cannot
+                             # see contamination (docs/ASSUMPTIONS_AND_LIMITATIONS.md A)
+  contract_review: 0.25      # renegotiation_success_prob 0.5 x ~0.5 of customers who actually open a renegotiation
+  operator_performance: 0.25 # emergency, side-waste and wasted-trip charges are mostly legitimate; weight-based
+                             # ordering avoids some (C03: 4 wasted trips caused by a stuck fill reading), so 1 in 4
+  operator_tendering: 0.4    # tender_success_prob 0.8 x ~0.5 of eligible customers who actually run a tender
+future_models:
+  # FUTURE HYPOTHESES - Europress in the middle of the value chain. Kept OFF in the main case so that the main
+  # case only uses today's role. notes/business_case_sensitivity.py reports them separately, labelled hypothesis.
+  transport_procurement:
+    enabled: false
+    discount_on_logistics_pct: 5
+    realisation: 0.5
+  tonne_based_full_service:
+    enabled: false
+    margin_on_customer_spend_pct: 3
+  materials_marketplace:
+    enabled: false
+    credit_uplift_eur_per_t: 5
+    realisation: 0.5

@@ -1,13 +1,13 @@
 ---
 id: "u12-pick-our-weighing-accuracy-target-2026-11-07"
-status: "backlog"
+status: "done"
 priority: "medium"
 assignee: null
 epic: "1 · Understand the weight data"
 dueDate: null
 created: "2026-11-07T09:00:00.000Z"
-modified: "2026-11-07T09:00:00.000Z"
-completedAt: null
+modified: "2026-11-07T12:40:00.000Z"
+completedAt: "2026-11-07T12:40:00.000Z"
 labels: ["weight", "decision"]
 order: "b0L"
 ---
@@ -23,4 +23,7 @@ order: "b0L"
 3. Write 3 bullets: concept, accuracy, what that accuracy lets the customer check.
 
 ## Done when
-- [ ] 3 bullets are in FINDINGS.md under `## Weight`, ready for a slide.
+- [x] 3 bullets are in FINDINGS.md under `## Weight`, ready for a slide.
+
+## Result
+- Decided: load-cell weigh frame (4 × 10 t shear-beam cells in low-profile rails under the container), design target σ = 1.5 % → 97–98 % of 3 t loads within ±100 kg. Three bullets in FINDINGS.md `## Weight` → U12; full concept in `submission/1_WEIGHING_CONCEPT.md`.

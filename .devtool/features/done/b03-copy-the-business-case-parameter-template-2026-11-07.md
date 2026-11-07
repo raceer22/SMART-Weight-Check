@@ -1,13 +1,13 @@
 ---
 id: "b03-copy-the-business-case-parameter-template-2026-11-07"
-status: "backlog"
+status: "done"
 priority: "medium"
 assignee: null
 epic: "3 · Europress business model"
 dueDate: null
 created: "2026-11-07T09:00:00.000Z"
-modified: "2026-11-07T09:00:00.000Z"
-completedAt: null
+modified: "2026-11-07T12:40:00.000Z"
+completedAt: "2026-11-07T12:40:00.000Z"
 labels: ["task-d", "beginner"]
 order: "b0d"
 ---
@@ -23,4 +23,7 @@ order: "b0d"
 3. Look at `configs/business_case_example_params.yaml` to see a filled-in example.
 
 ## Done when
-- [ ] `configs/our_params.yaml` exists.
+- [x] `configs/our_params.yaml` exists.
+
+## Result
+- `configs/our_params.yaml` created from the template.

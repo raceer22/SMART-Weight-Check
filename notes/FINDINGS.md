@@ -1,3 +1,9 @@
+# Our pitch in one sentence (P01)
+
+> For businesses that pay for waste by the lift and by the tonne but only ever see the weight their operator reports, **SMART Weight Check** uses an independent scale in the Europress compactor to check every lift and every per-tonne invoice line against the contract, and turns each difference into a proposal a human approves, so they pay for the service they actually received.
+
+*All data is synthetic. Every € figure below is estimated from synthetic records or a hypothetical assumption, not a demonstrated saving.*
+
 # Summary — the weight data in 5 sentences (U13)
 
 1. Each compactor reports an hourly fill-level estimate and (on 47 of 50 devices) a container mass in kg, and the collected weight per lift is estimated as mass before minus mass after the lift — in this dataset that weighing is a *simulated future scenario*, not something deployed today.
@@ -185,11 +191,26 @@ Reference = 10,342 shared single-load weighbridge tickets (competition data), ab
 
 Sources: [US11162834B2 – Weight-measurement retrofitting for waste compactors](https://patents.google.com/patent/US11162834), [US12379240B1 – container weighing with load cells](https://patents.google.com/patent/US12379240), [Vulcan roll-off on-board scale (Trailer/Body Builders)](https://www.trailer-bodybuilders.com/archive/article/21723735/vulcan-offers-on-board-scale-for-roll-offs), [Recycling Product News – on-board scale for roll-offs](https://www.recyclingproductnews.com/article/8417/on-board-scale-built-for-roll-offs), [Anderson-Negele Microcell bolt-on sensor](https://www.anderson-negele.com/uk/wp-content/uploads/sites/11/2021/04/Microcell_L-Cell_at_a_glance_60034_1.0_en_eu.pdf), [Applied Measurements bolt-on sensors](https://directindustry.com/prod/applied-measurements/product-11673-862661.html), [Bolt-on force sensors for retrofit weighing (automation.com)](https://www.automation.com/article/bolt-on-force-sensors-for-reliable-retrofit-weighi)
 
-### U12 · Our weighing accuracy target 
+### U12 · Our weighing accuracy target (decided)
 
-- **Concept:** load-pin load cells in a retrofit base frame / roller axles under the container — the only one of the three that is ours (not the hauler's) and plausibly reaches ~1–1.5 %.
-- **Accuracy:** design target **σ = 1.5 % of the load (15 kg floor)** → 97–98 % of 3 t loads within ±100 kg, median €/t error ~1.1 % (U10 table); σ 1.75 % is the minimum that still hits the ~95 % challenge target.
-- **What it lets the customer check:** flag ~95 % of invoices where tonnage is overbilled by +10 %, with ~1 % false alarms, and see their real cost per tonne per container — as an independent check against the operator's weighbridge, never as the billing basis.
+- **Concept:** a **load-cell weigh frame** under the container's standing position: two low-profile rails with four 10 t shear-beam load cells, read by a 4-channel module in the SMART cabinet. Retrofit kit for the installed base, factory option on new compactors. It is the only one of the U11 options that is owned by Europress/the customer (not the hauler) and plausibly reaches 1–1.5 %. Full concept: `submission/1_WEIGHING_CONCEPT.md`.
+- **Accuracy:** design target **σ = 1.5 % of the load (15 kg floor)** → 97–98 % of 3 t loads within ±100 kg, median €/t error ~1.1 % (U10 table). σ 1.75 % is the minimum that still hits the ~95 % challenge target, and above ~2.5 % the overbilling check stops working.
+- **What it lets the customer check:** flag ~95 % of invoices where tonnage is overbilled by +10 %, with ~1 % false alarms, and see their real cost per tonne per container, as an independent check against the operator's weighbridge, never as the billing basis.
+
+### Weighing without a scale on every container (research) — `notes/weight_without_scale.py`, `notes/rotation_experiments.py`, `notes/precision_experiments.py`, competition data
+Truth = shared single-load weighbridge net (no side waste). Leave-device-out, so a device never trains on itself.
+
+| variant | median abs error per lift | 3 t loads within ±100 kg |
+|---|---|---|
+| A stream profile, no ML (density × volume × fill) | 14.1 % | 16 % |
+| B ML (gradient boosting: stream, press data, sector) | 8.6 % | 27 % |
+| C rotation kit, 3 months on each device | 6.9 % | 31 % |
+| f learn density from the device's last 5 shared tickets (no kit) | 7.0 % | – |
+| D integrated scale on every device (dataset reference) | 2.7 % | 68 % |
+- Errors shrink when summed: 7.2 % per lift → 5.8 % per device-month → **4.3 % per device-year** (rotation method b). Good enough for a €/t trend, **not** for checking an invoice line (needs σ ≤ ~2.5 %, U10). *(estimated)*
+- The error is worst at low fill (< 40 %: 14 %), exactly the lifts where "was this lift necessary?" matters. The fill sensor alone jitters by σ 2.3 points between quiet hours.
+- ML beats the transparent density rule (8.6 % vs 14.1 %), so we use ML only here, for the no-hardware estimate; every proposal stays rule-based and explainable.
+- Averaging quiet readings or a rolling gain correction does not push the simulated scale below ~1.7 % median error, and the weighbridge itself (σ 12 kg + 20 kg resolution ≈ 0.5 % on 3 t) cannot verify anything better than ~1 %. → **Decision:** a real scale is needed for invoice checks; the no-scale model becomes the free "value scan" that shows where a scale pays.
 
 ## Customer value
 
@@ -290,21 +311,104 @@ On time = the lift happened within ±2 h of the scheduled time. Mean of the mont
 - Neutral wording for the pitch: “OP-C was on time in 39 % of visits”, not a judgement of the operator. Lateness can come from orders placed late or access problems at the site.
 
 ### C08–C14 · Customer screen and demo app — `notes/customer_screen_sketch.png`, `app/app.py`
-- **Sketch (C08):** one page, top to bottom: device picker → fill % chart and weight chart (two charts, one axis each) → € per tonne, benchmark ratio, lifts and tonnes, fees for trips without a lift → every lift with its weight source → proposals with Approve / Reject. ⚠ Still needs the team's agreement.
+- **Sketch (C08):** one page, top to bottom: device picker → fill % chart and weight chart (two charts, one axis each) → € per tonne, benchmark ratio, lifts and tonnes, fees for trips without a lift → every lift with its weight source → proposals with Approve / Reject. Agreed: the built app follows it, with one addition (the weight check, below).
 - **Run the app:** `pip install -e ".[app]"`, create `my_task_a.csv` (C01) and `my_task_b.csv` (C04), then `streamlit run app/app.py`. It opens on CMP-00046, the C03 story device.
 - **Weight never made up:** € per tonne = lift cost ÷ tonnes, using only lifts with a weight source. A lift without one shows “unknown”. Quickstart has no such lift, but CMP-00049's first lift has a 0 kg ticket and shows “unknown”.
 - **Proposals:** rule-based flags from the Task B baseline, each with what was seen, why and what to check before acting. Approve / Reject only records a demo decision, and Undo reverses it.
 - **Evidence tags (C14):** every number has an observed / simulated / estimated / hypothetical caption or column tag. The footer says “All data is synthetic. Not Europress data.”
 - The chart caption says **simulated**, not “observed” as the C11 task text suggests. Device weighing is a simulated future scenario (U02), so “observed” would over-claim.
 - The chart uses the highest valid reading of the day for both fill and weight. The C11 hint used `mass_kg_last_valid`, which drops on lift days while fill does not (U06).
-- The app shows the baseline flags only. The better premature rule from C05 is not in the app, so CMP-00046's low-fill September lifts appear in the lift table but not as proposals.
+- **C05 decision:** the better premature rule is now in the app (`app/weight_rules.py`, shared with `notes/premature_rule.py`). Proposals always need a human, so finding 111 more real cases is worth 9 more questions on justified lifts. CMP-00046's lifts on 4 and 11 September now appear as proposals; the 1 September lift (a Tuesday, site open next day) still does not.
+
+### Weight check — the product feature (`app/weight_rules.py` → app section "Weight check"), quickstart, all 50 devices
+Per lift: invoiced tonnes (per-tonne lines: processing, haul per tonne, material credit, rejection) *(observed)* vs device weight *(simulated)* vs the operator's ticket *(observed, when shared)*. Tolerance max(100 kg, 3.3 %), the dataset's accuracy target *(hypothetical)*. € at stake = difference × the invoice's own € per kg *(estimated)*.
+
+| result | lifts | what it means |
+|---|---|---|
+| agrees | 205 | invoice and device weight within tolerance |
+| device differs from ticket | 58 | invoice = ticket, the device disagrees → a question about the **device scale**, not the operator |
+| explained: combined load | 29 | two jobs weighed together, net split equally; the device shows the real per-container split |
+| no device weight | 28 | no sensor or a sensor fault |
+| explained: side waste | 9 | loose waste loaded next to the container; the container scale cannot see it |
+| in the customer's favour | 8 | no action |
+| review: no ticket / invoice vs ticket | 4 | the only lift-level billing questions |
+- 341 lifts carry per-tonne lines. Only **4** become billing questions; **13 of 47** weighing devices get one "check the scale" proposal because their device repeatedly disagrees with a matching invoice and ticket. That fits U10: the simulated sensor is below target, which is why the concept has a rolling weighbridge-referenced span check.
+- **Combined loads answer an open question:** don't drop them, re-split them by device weight. Example *(observed tickets, simulated device)*: CMP-00042 and CMP-00034 (same customer) shared a truck; the equal split billed CMP-00042's site for 2.94 t when its container held 580 kg, about €299 of per-tonne charges at the wrong site. The customer's total is right; each site's € per tonne is not. Nobody did anything wrong.
+- CMP-00046 (the story device) has no per-tonne lines: its contract bills per lift and per km, so the weight changes its € per tonne, not its invoice. The demo switches to CMP-00042 and CMP-00047 for the weight check.
 
 ## Business model
 
+### B01 · Rubric for Task D and E (docs/BENCHMARK.md) — and where we meet it
+- [x] **Evidence separation:** every figure tagged observed / estimated / simulated / hypothetical (app captions and column help, this file, `configs/our_params.yaml` comments).
+- [x] **Traceability:** row-level: lift → job ref → weighbridge ticket → contract → invoice lines (Task A baseline; app lift table and weight check show each step).
+- [x] **Constraints and uncertainty:** quantified: hygiene/overflow limits via simulated counterfactuals (over-servicing realises 30–39 %), sensor quality (85.5 % VALID), missing tickets (63 of 465), side waste, combined loads, tolerance ±100 kg / 3.3 %, run-to-run noise ±1–2 points.
+- [x] **Pricing and adoption reasoning:** prices from the value per device-month distribution, a price sweep and a price × adoption sensitivity table (B04, B08).
+- [x] **Human approval:** every proposal has a rationale, a "check before acting" step and Approve / Reject / Undo; nothing executes.
+- [x] **Avoids over-claiming:** B09 list below; "synthetic" on the app, the docs and the money slides.
+- [x] **Neutral tone towards operators:** combined loads, side waste and device scale issues are separated from billing questions; P09 wording check done.
+
+### B02 · Five service ideas and the choice
+No team vote was possible, so the ideas were scored 1–3 on five criteria.
+
+| # | idea | who pays and why | value in the data | uses the weight | today's role | revenue | total |
+|---|---|---|---|---|---|---|---|
+| 1 | **SMART Weight Check**: check every lift and per-tonne invoice line against device weight and contract, proposals a human approves | customer, per device-month: billing corrections, avoided lifts, better terms | 3 | 3 | 3 | 2 | **11** |
+| 2 | Monthly weight and €/t report per site (also for sustainability reporting) | customer: transparency | 2 | 2 | 3 | 1 | 8 |
+| 3 | Operator tendering help: scorecard + verified tonnage for the tender pack | customer, per tender | 2 | 2 | 2 | 1 | 7 |
+| 4 | Weighing as a compactor option (factory) and retrofit kit | customer, as equipment | 2 | 3 | 3 | 2 | 10 |
+| 5 | *Hypothesis:* per-tonne full service, Europress procures transport and treatment | customer, one €/t price | 3 | 3 | 1 | 3 | 10 |
+- **Chosen: #1 SMART Weight Check**, with #2 as the free entry tier ("value scan", no hardware), #4 as the hardware that enables it, and #5 kept as a clearly labelled long-term hypothesis.
+- **Who pays and why:** the waste-producing customer pays **€15 per device per month** because the check returns a median **€36 per device-month** of realisable value *(estimated)*, about 2.4× the fee, from billing corrections, avoided lifts, contestable service charges and better contract terms.
+
+### B03–B06 · Our parameters — `configs/our_params.yaml` (all hypothetical, each with its reason in the file)
+| parameter | value | why |
+|---|---|---|
+| price per device-month | **10 / 15 / 25 €** | realisable value per device-month: 25th / 50th / 75th percentile €20 / €36 / €72; €15 maximises fee revenue under the 3× rule (B08 sweep); €25 ≈ 75th percentile / 3 |
+| outcome-based alternative | 20 % of verified savings | for customers who won't pay up front |
+| onboarding | €800 per customer, €100 per device | ~1 analyst day to load contracts and map invoice lines; ~1.5 h per device incl. a scale check against first tickets |
+| operating cost | €3 per device-month | cloud compute and storage; SMART modem and data plan already exist |
+| support | €50 per customer-month | ~1 h of an analyst who reviews proposals before the customer sees them |
+| adoption | 10 / 25 / 40 % of eligible | existing SMART customers via account managers (warm channel) |
+| purchase rule | value ≥ 3× fee | B2B rule of thumb; 2× and 4× tested |
+| realisation | billing 0.7 · over-servicing 0.35 · contamination 0 · contract 0.25 · operator performance 0.25 · tendering 0.4 | from the dataset's published rules (dispute recovery 0.9, renegotiation success 0.5, tender success 0.8) and simulated counterfactuals (lift cuts realise 30–39 % of the naive saving); contamination is out of scope because weight cannot see quality |
+| future models | off in the main case | reported separately as hypotheses |
+
+### B07 · Calculator result — `python baselines/business_case.py competition --params configs/our_params.yaml --out our_business_case`
+Competition data, 52 public customers, 447 devices, annual waste spend €5.19 M *(estimated)*.
+- **Customer value:** identified **€1.18 M/year (22.8 % of spend)**, realisable with our shares **€332 k/year (6.4 % of spend)** *(estimated)*. Biggest realisable levers: operator performance €102 k, over-servicing €81 k, contract review €60 k, tendering €58 k, billing review €31 k.
+- **Base case (€15, 25 % adoption):** 23 of 52 customers eligible, 5.8 adopt (61 devices). Revenue **€11.0 k/year**, operating + support €5.7 k, one-off onboarding €10.7 k → year 1 **−€5.4 k**, then **+€5.4 k/year**, **payback 2.0 years** *(hypothetical)*. Per adopting device: €180 revenue vs ~€92 cost to serve per year.
+- **The money is small on this sample, and we say so.** The subscription is a beachhead. The larger value for Europress is (1) weighing as a reason to choose a Europress compactor (factory option), and (2) verified weight as the prerequisite for the per-tonne models in B08 §9 (≈ €156 k/year gross margin on this same sample at 3 %, a hypothesis).
+- Outputs: `our_business_case/business_case.md`, `business_case_customers.csv`, `business_case_scenarios.csv`.
+
+### B08 · Sensitivity — `python notes/business_case_sensitivity.py` → `our_business_case/sensitivity.md`
+Yearly profit after onboarding (steady state: fee revenue − operating cost − support), EUR, hypothetical:
+
+| price €/device-month | adoption 10 % | adoption 25 % | adoption 40 % |
+|---|---|---|---|
+| 10 | 943 | 2,358 | 3,773 |
+| **15** | 2,148 | **5,370** | 8,592 |
+| 25 | 1,735 | 4,338 | 6,941 |
+- **Which assumption matters most? Price.** At €10 the service takes 6.5 years to pay back its onboarding, because it attracts small customers who cost more to support than they pay; at €15–25 it pays back in 1–2 years. One-at-a-time swing in 3-year profit: price €16.5 k > support cost €12.4 k > operating cost €11.0 k > value realisation €6.9 k ≈ onboarding €6.9 k > adoption €6.5 k > purchase rule €5.4 k.
+- **Who to sell to:** at €15, customers with 16+ devices bring ~€4.0 k/year profit each, 6–15 devices ~€0.7 k, and 2–5 devices lose ~€0.2 k (support > fee). → Analyst-supported service from ~6 devices; self-service for small fleets.
+- **Hardware payback for the customer** (value after the €15 fee): factory option €1,200 → 2.9 years at the median device, 50 % of devices within 3 years; retrofit frame €3,400 → 8.2 years at the median, only 29 % within 5 years. → **Weigh where it pays:** factory option on new compactors, retrofit only where the value scan shows high value.
+- **Future hypotheses** (not today's role, all 52 customers, per year): transport procurement €96 k customer value (5 % × 0.5), materials marketplace €59 k customer value (+€5/t × 0.5), tonne-based full service €156 k gross margin for Europress (3 % of spend).
+
+### B09 · What we have NOT proven (docs/ECONOMIC_MODEL.md §6, docs/ASSUMPTIONS_AND_LIMITATIONS.md)
+- We have not shown that **any customer would pay €15 per device-month**: no customer was interviewed; the price is derived from synthetic value.
+- We have not shown that the **identified value is real**: tariffs are hypothetical, the world is synthetic, and realisation shares are our assumptions. Only over-servicing is grounded in simulated counterfactuals, and a simulated counterfactual is not causal evidence.
+- We have not shown that a **load-cell frame reaches σ 1.5 % on a real compactor**, in a Finnish winter, under hooklift loading: the accuracy budget is an engineering estimate, nothing was built or tested, and the dataset cannot validate hardware.
+- We have not shown the **hardware costs** (€1,200 factory, €3,400 retrofit): indicative BOM, no supplier quotes.
+- We have not shown that **operators accept device weight as evidence**, share tickets on request (the dataset assumes 60 %), or re-split combined loads.
+- We have not shown that **avoiding "early" lifts is safe**: hygiene rules, overflow and site reasons make some of them right (23 EARLY_JUSTIFIED labels in quickstart).
+- We have not shown that the **future models** are possible: billing on device weight would need a legal-for-trade scale (EU non-automatic weighing instruments directive 2014/31/EU) and a role Europress does not have today.
+
 ## Open questions
-- U12 concept and σ target were proposed during the Epic 1 analysis and still need a team decision.
-- U11 accuracy figures are vendor/patent claims; none are independent tests on a compactor.
-- Should combined-load tickets be excluded from any reconciliation, or re-split using device weights?
-- C08: the team still has to look at the customer screen sketch and agree on it.
-- C05: should the better premature rule go into our Task B submission and the app? It adds 9 wrongly flagged justified lifts on competition validation for 111 more correct ones.
-- C03: are CMP-00046's September low-fill lifts really unnecessary? Their labels are in the hidden test period.
+- U11 accuracy figures are vendor/patent claims; none are independent tests on a compactor. → Phase 1 yard test in the validation plan.
+- C03: are CMP-00046's September low-fill lifts really unnecessary? Their labels are in the hidden test period. The app asks, it does not decide.
+- Would a customer pay €15 per device-month? Only customer interviews can answer this (next step 1 in the pitch).
+
+### Resolved
+- U12 concept and σ target: decided (load-cell weigh frame, σ 1.5 %).
+- Combined-load tickets: re-split by device weight for cost allocation between sites; don't drop them.
+- C08 sketch: the built app follows it.
+- C05 rule: in the app, because proposals always need a human.

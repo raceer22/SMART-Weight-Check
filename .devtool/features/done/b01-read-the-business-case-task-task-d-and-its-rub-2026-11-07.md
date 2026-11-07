@@ -1,13 +1,13 @@
 ---
 id: "b01-read-the-business-case-task-task-d-and-its-rub-2026-11-07"
-status: "backlog"
+status: "done"
 priority: "high"
 assignee: null
 epic: "3 · Europress business model"
 dueDate: null
 created: "2026-11-07T09:00:00.000Z"
-modified: "2026-11-07T09:00:00.000Z"
-completedAt: null
+modified: "2026-11-07T12:40:00.000Z"
+completedAt: "2026-11-07T12:40:00.000Z"
 labels: ["task-d", "reading", "beginner"]
 order: "b0b"
 ---
@@ -22,4 +22,7 @@ order: "b0b"
 2. Write the 7 rubric criteria into FINDINGS.md as a checklist.
 
 ## Done when
-- [ ] The rubric checklist is in FINDINGS.md.
+- [x] The rubric checklist is in FINDINGS.md.
+
+## Result
+- Rubric checklist (7 criteria, each with where we meet it) in FINDINGS.md → B01.

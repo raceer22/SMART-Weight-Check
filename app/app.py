@@ -1,9 +1,13 @@
-"""SMART Weight View: the customer demo (Epic 2, tasks C09–C14).
+"""SMART Weight View: the customer demo of "SMART Weight Check" (Epic 2, tasks C09–C14, plus the weight check).
 
 Run from the repo root:
     python baselines/b1_economic_calculator.py data/quickstart/public my_task_a.csv   # C01
     python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv         # C04
     streamlit run app/app.py
+
+Sections: device picker · fill and weight charts · cost per tonne and weight source · weight check (invoiced
+tonnes vs device weight vs weighbridge ticket) · proposals (Task B baseline flags + weight-based rules from
+app/weight_rules.py), each one approved or rejected by a human.
 
 Every number on the page carries an evidence tag (docs/BENCHMARK.md, rubric for D and E):
     observed      read straight from a record (collection event, weighbridge ticket, invoice line)
@@ -20,7 +24,9 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "app"))
 from europress_data.sdk import open_dataset  # noqa: E402
+from weight_rules import premature_extra, scale_check, weight_check  # noqa: E402
 
 DATA = ROOT / "data" / "quickstart" / "public"
 TASK_A = ROOT / "my_task_a.csv"
@@ -73,6 +79,18 @@ def task_csv(path: Path) -> pd.DataFrame | None:
     return pd.read_csv(path) if path.exists() else None
 
 
+@st.cache_data
+def weight_table(device_id: str) -> pd.DataFrame:
+    cur = dataset().cursor()
+    cur.execute("SET TimeZone='UTC'")
+    return weight_check(cur, device_id)
+
+
+@st.cache_data
+def early_lifts() -> pd.DataFrame:
+    return premature_extra(DATA)
+
+
 def eur(x: float) -> str:
     return f"€{x:,.0f}"
 
@@ -116,7 +134,9 @@ devices = query("""SELECT d.device_id, d.material_stream, d.collection_policy, d
                    FROM devices d JOIN sites s USING (site_id) ORDER BY 1""")
 ids = devices.device_id
 info = devices.set_index("device_id")
-device = st.selectbox("Device", ids, index=int((ids == STORY_DEVICE).idxmax()) if (ids == STORY_DEVICE).any() else 0,
+start = st.query_params.get("device", STORY_DEVICE)  # e.g. ?device=CMP-00042 opens that device directly
+start = start if (ids == start).any() else STORY_DEVICE
+device = st.selectbox("Device", ids, index=int((ids == start).idxmax()) if (ids == start).any() else 0,
                       format_func=lambda d: f"{d} · {info.loc[d, 'material_stream'].replace('_', ' ')}")
 d = info.loc[device]
 if d.collection_policy == "ON_CALL":
@@ -209,12 +229,66 @@ else:
     })
     tag("Every lift: fill before = simulated · kg = observed or simulated (see weight source) · € = estimated, hypothetical tariffs")
 
+# ---------- Weight check: invoiced tonnes vs device weight vs weighbridge ticket ----------
+st.subheader("Weight check: does the invoiced tonnage match what the container weighed?")
+st.markdown("The operator's weighbridge stays the billing basis. The device weight is the customer's own, independent check.")
+wc = weight_table(device)
+scale_note = scale_check(wc)
+if wc.empty:
+    st.info("This device's invoices have no per-tonne lines: its contract bills per lift and per km. "
+            "The weight still shows the real € per tonne above, but there is no tonnage on the invoice to check.")
+else:
+    review = wc.result.str.startswith("review")
+    explained = wc.result.str.startswith("explained")
+    checked = wc.device_kg.notna()
+    k1, k2, k3, k4 = st.columns(4)
+    with k1:
+        st.metric("Lifts with per-tonne lines", f"{len(wc)}", border=True)
+        tag(f"observed – invoice lines; {int(checked.sum())} with a device weight (simulated)")
+    with k2:
+        st.metric("Agree within tolerance", f"{int((wc.result == 'agrees').sum())}", border=True)
+        tag("tolerance max(100 kg, 3.3 %) – hypothetical, the dataset's accuracy target")
+    with k3:
+        st.metric("Explained differences", f"{int(explained.sum())}", border=True)
+        tag("combined loads split equally, side waste – observed from the ticket and driver report")
+    with k4:
+        st.metric("To review", f"{int(review.sum())}", border=True)
+        stake = wc.eur_at_stake.where(review & (wc.eur_at_stake > 0)).sum()
+        tag(f"estimated – {eur(stake)} of per-tonne charges at stake" if review.any() else "nothing to review")
+    shown = pd.DataFrame({
+        "date": wc.actual_at.dt.tz_convert("Europe/Helsinki").dt.strftime("%d %b"),
+        "lift": wc.collection_id,
+        "device kg": wc.device_kg.map(lambda x: f"{x:,.0f}" if pd.notna(x) else "–"),
+        "ticket kg": wc.ticket_kg.map(lambda x: f"{x:,.0f}" if pd.notna(x) else "not shared"),
+        "invoiced kg": wc.invoiced_kg.map(lambda x: f"{x:,.0f}"),
+        "invoice − device kg": wc.diff_kg.map(lambda x: f"{x:+,.0f}" if pd.notna(x) else "–"),
+        "€ at stake": wc.eur_at_stake.map(lambda x: f"{x:+,.2f}" if pd.notna(x) else "–"),
+        "result": wc.result,
+        "why": wc.explanation,
+    })
+    st.dataframe(shown, hide_index=True, height=min(36 * (len(shown) + 1) + 4, 640), column_config={
+        "why": st.column_config.TextColumn(width="large"),
+        "device kg": st.column_config.TextColumn(help="simulated – container mass before minus after the lift"),
+        "ticket kg": st.column_config.TextColumn(help="observed – operator weighbridge ticket, when shared"),
+        "invoiced kg": st.column_config.TextColumn(help="observed – tonnage on the per-tonne invoice lines"),
+        "€ at stake": st.column_config.TextColumn(help="estimated – difference × the invoice's own € per kg; "
+                                                  "positive = the invoice works against the customer"),
+    })
+    tag("A difference is a question, not a verdict: combined loads, side waste, tares and the device's own calibration "
+        "all cause differences that are nobody's fault.")
+if scale_note:
+    st.warning(f"**Device scale check suggested.** {scale_note}")
+
 # ---------- C13 · flagged issues as proposals ----------
 st.subheader("Proposals")
 st.markdown("**Proposals. A human must approve each one.**")
+when = events.set_index("collection_id").actual_at.fillna(events.set_index("collection_id").scheduled_at)
+ev = events.set_index("collection_id")
+props = []  # one dict per proposal: key, lift, what, why, check, source
+
 b = task_csv(TASK_B)
 if b is None:
-    st.warning("Flags not found. Run this first, then reload:")
+    st.warning("Baseline flags not found, so only the weight-based proposals are shown. Run this first, then reload:")
     st.code("python baselines/b2_rules_anomaly.py data/quickstart/public my_task_b.csv")
 else:
     lines = query(f"""SELECT l.invoice_line_id, l.line_type, l.amount_eur, c.collection_id FROM invoice_lines l
@@ -223,74 +297,98 @@ else:
     line_flags = b[b.entity_type == "invoice_line"].merge(lines, left_on="entity_id", right_on="invoice_line_id")
     flags = pd.concat([col_flags, line_flags], ignore_index=True)
     flags["family"] = flags.label_family.str.split(":").str[0]
-    when = events.set_index("collection_id").actual_at.fillna(events.set_index("collection_id").scheduled_at)
-    flags = flags.assign(when=flags.collection_id.map(when)).sort_values("when").reset_index(drop=True)
+    wb = query(f"""SELECT c.collection_id, w.allocated_net_kg FROM collection_events c
+                   JOIN weighbridge_tickets w USING (operator_job_ref) WHERE c.device_id = '{device}'""").drop_duplicates("collection_id").set_index("collection_id")
+    cost = a.set_index("collection_id") if a is not None else pd.DataFrame()
 
-    if flags.empty:
-        st.info("No issues flagged for this device by the rule-based check.")
+    def why(r) -> str:
+        e = ev.loc[r.collection_id] if r.collection_id in ev.index else None
+        if r.family == "WEIGHT_DISCREPANCY" and e is not None and r.collection_id in wb.index:
+            return (f"Device {e.device_estimated_collected_kg:,.0f} kg (simulated) vs weighbridge "
+                    f"{wb.loc[r.collection_id, 'allocated_net_kg']:,.0f} kg (observed).")
+        if r.family == "DELAYED_COLLECTION" and e is not None and pd.notna(e.actual_at):
+            late = (e.actual_at - e.scheduled_at).total_seconds() / 3600
+            if late > 24:
+                return (f"Planned {local(e.scheduled_at)}, lifted {local(e.actual_at)} Finnish time, "
+                        f"{late:,.0f} h later (observed).")
+            return "The container reported FULL for 12 or more of the 72 hours before the lift (simulated)."
+        if r.family == "PREMATURE_UNJUSTIFIED" and e is not None:
+            return f"Lifted at {e.device_fill_pct_before:.0f} % fill (simulated)."
+        if r.family == "COST_PER_T_HIGH" and r.collection_id in cost.index:
+            c = cost.loc[r.collection_id]
+            return f"{eur(c.collection_cost_eur_per_t)} per tonne vs benchmark {eur(c.benchmark_eur_per_t)} (estimated)."
+        if pd.notna(r.get("line_type")):
+            return f"Invoice line {r.line_type.replace('_', ' ').lower()}, {eur(r.amount_eur)} (observed)."
+        return "Flagged by the rule-based check."
+
+    for _, r in flags.iterrows():
+        title, check = FAMILY.get(r.family, (r.family, ""))
+        props.append({"key": f"{r.entity_id}|{r.family}", "lift": r.collection_id, "what": title, "why": why(r),
+                      "check": check, "source": "baseline rule (Task B)"})
+
+# weight-based rules (app/weight_rules.py): early lifts the fill reading cannot see, and the weight check
+flagged_early = {p["lift"] for p in props if p["what"] == FAMILY["PREMATURE_UNJUSTIFIED"][0]}
+for _, r in early_lifts()[lambda x: x.collection_id.isin(events.collection_id)].iterrows():
+    if r.collection_id in flagged_early:
+        continue
+    e = ev.loc[r.collection_id]
+    if r.rule == "precautionary":
+        why_text = (f"Customer-requested lift at {r.fill_pct:.0f} % fill on {local(e.actual_at)}, just before a weekend or a closed day "
+                    f"(simulated fill, observed calendar); it moved {r.kg:,.0f} kg.")
     else:
-        ev = events.set_index("collection_id")
-        wb = query(f"""SELECT c.collection_id, w.allocated_net_kg FROM collection_events c
-                       JOIN weighbridge_tickets w USING (operator_job_ref) WHERE c.device_id = '{device}'""").drop_duplicates("collection_id").set_index("collection_id")
-        cost = a.set_index("collection_id") if a is not None else pd.DataFrame()
+        why_text = (f"The fill reading said full, but the lift moved only {r.kg:,.0f} kg, {r.share_of_full:.0%} of this device's "
+                    "typical full load (simulated). Only the weight shows this.")
+    props.append({"key": f"{r.collection_id}|EARLY|{r.rule}", "lift": r.collection_id, "what": FAMILY["PREMATURE_UNJUSTIFIED"][0],
+                  "why": why_text, "check": "Check the reason for the order with the site before changing the on-call rule.",
+                  "source": f"weight rule: {r.rule}"})
+for _, r in wc[wc.proposal.notna()].iterrows() if not wc.empty else []:
+    props.append({"key": f"{r.collection_id}|WEIGHT|{r.result}", "lift": r.collection_id,
+                  "what": "Re-split a combined load" if r.result.startswith("explained") else "Invoiced tonnage needs a look",
+                  "why": r.explanation, "check": r.proposal, "source": "weight check"})
+if scale_note:
+    props.append({"key": f"{device}|SCALE", "lift": "whole device", "what": "Check the device scale", "why": scale_note,
+                  "check": "Maintenance visit or remote zero/span check before the next billing period.", "source": "weight check"})
 
-        def why(r) -> str:
-            e = ev.loc[r.collection_id] if r.collection_id in ev.index else None
-            if r.family == "WEIGHT_DISCREPANCY" and e is not None and r.collection_id in wb.index:
-                return (f"Device {e.device_estimated_collected_kg:,.0f} kg (simulated) vs weighbridge "
-                        f"{wb.loc[r.collection_id, 'allocated_net_kg']:,.0f} kg (observed).")
-            if r.family == "DELAYED_COLLECTION" and e is not None and pd.notna(e.actual_at):
-                late = (e.actual_at - e.scheduled_at).total_seconds() / 3600
-                if late > 24:
-                    return (f"Planned {local(e.scheduled_at)}, lifted {local(e.actual_at)} Finnish time, "
-                            f"{late:,.0f} h later (observed).")
-                return "The container reported FULL for 12 or more of the 72 hours before the lift (simulated)." 
-            if r.family == "PREMATURE_UNJUSTIFIED" and e is not None:
-                return f"Lifted at {e.device_fill_pct_before:.0f} % fill (simulated)."
-            if r.family == "COST_PER_T_HIGH" and r.collection_id in cost.index:
-                c = cost.loc[r.collection_id]
-                return f"{eur(c.collection_cost_eur_per_t)} per tonne vs benchmark {eur(c.benchmark_eur_per_t)} (estimated)."
-            if pd.notna(r.get("line_type")):
-                return f"Invoice line {r.line_type.replace('_', ' ').lower()}, {eur(r.amount_eur)} (observed)."
-            return "Flagged by the rule-based check."
+P = pd.DataFrame(props, columns=["key", "lift", "what", "why", "check", "source"])
+if P.empty:
+    st.info("No proposals for this device.")
+else:
+    P["when"] = P.lift.map(when)
+    P = P.sort_values("when", na_position="last").reset_index(drop=True)
+    st.dataframe(P[["lift", "what", "why", "check", "source"]].rename(columns={"check": "check before acting"}), hide_index=True)
+    tag("estimated – rule-based flags (Task B baseline) and weight-based rules (app/weight_rules.py). "
+        "A flag is a question, not a verdict.")
 
-        flags["what"] = flags.family.map(lambda f: FAMILY.get(f, (f, ""))[0])
-        flags["why"] = flags.apply(why, axis=1)
-        flags["check before acting"] = flags.family.map(lambda f: FAMILY.get(f, ("", ""))[1])
-        st.dataframe(flags[["collection_id", "what", "why", "check before acting"]].rename(columns={"collection_id": "lift"}),
-                     hide_index=True)
-        tag("estimated – rule-based flags (Task B baseline). A flag is a question, not a verdict.")
+    decisions = st.session_state.setdefault("decisions", {})
+    FIRST = 8
 
-        decisions = st.session_state.setdefault("decisions", {})
-        FIRST = 8
+    def card(r) -> None:
+        key = f"{device}|{r.key}"
+        with st.container(border=True):
+            left, right = st.columns([5, 2], vertical_alignment="center")
+            with left:
+                st.markdown(f"**{r.what}** · {r.lift}")
+                st.caption(f"{r.why} {r.check}")
+            with right:
+                state = decisions.get(key)
+                if state is None:
+                    ok_col, no_col = st.columns(2)
+                    if ok_col.button("Approve", key=f"ok-{key}", icon=":material/check:"):
+                        decisions[key] = "approved"; st.rerun()
+                    if no_col.button("Reject", key=f"no-{key}"):
+                        decisions[key] = "rejected"; st.rerun()
+                else:
+                    (st.success if state == "approved" else st.info)(f"{state.capitalize()} (demo)")
+                    if st.button("Undo", key=f"undo-{key}", type="tertiary"):
+                        decisions.pop(key); st.rerun()
 
-        def card(r) -> None:
-            key = f"{device}|{r.entity_id}|{r.family}"
-            with st.container(border=True):
-                left, right = st.columns([5, 2], vertical_alignment="center")
-                with left:
-                    st.markdown(f"**{r.what}** · {r.collection_id}")
-                    st.caption(f"{r.why} {r['check before acting']}")
-                with right:
-                    state = decisions.get(key)
-                    if state is None:
-                        ok_col, no_col = st.columns(2)
-                        if ok_col.button("Approve", key=f"ok-{key}", icon=":material/check:"):
-                            decisions[key] = "approved"; st.rerun()
-                        if no_col.button("Reject", key=f"no-{key}"):
-                            decisions[key] = "rejected"; st.rerun()
-                    else:
-                        (st.success if state == "approved" else st.info)(f"{state.capitalize()} (demo)")
-                        if st.button("Undo", key=f"undo-{key}", type="tertiary"):
-                            decisions.pop(key); st.rerun()
-
-        for _, r in flags.head(FIRST).iterrows():
-            card(r)
-        if len(flags) > FIRST:
-            with st.expander(f"Show {len(flags) - FIRST} more proposals"):
-                for _, r in flags.iloc[FIRST:].iterrows():
-                    card(r)
-        st.caption("Approve sends the proposal to the account manager (demo only, nothing is executed). Every decision can be undone.")
+    for _, r in P.head(FIRST).iterrows():
+        card(r)
+    if len(P) > FIRST:
+        with st.expander(f"Show {len(P) - FIRST} more proposals"):
+            for _, r in P.iloc[FIRST:].iterrows():
+                card(r)
+    st.caption("Approve sends the proposal to the account manager (demo only, nothing is executed). Every decision can be undone.")
 
 # ---------- C14 · footer ----------
 st.divider()
