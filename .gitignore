@@ -3,3 +3,8 @@ __pycache__/
 .venv/
 my_*.csv
 .DS_Store
+# video: audio and renders stay out of git (script and build files are tracked)
+submission/video/audio/
+submission/video/build/
+*.mp4
+
